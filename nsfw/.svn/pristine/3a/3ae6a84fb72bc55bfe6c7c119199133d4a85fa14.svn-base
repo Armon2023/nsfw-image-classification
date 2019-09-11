@@ -1,0 +1,43 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * apk解析失败.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class APKError extends BaseBean {
+
+    private static final long serialVersionUID = 3322651177632290311L;
+    /** id. */
+    private String uuid;
+    /** 错误类型. */
+    private Integer errorType;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Integer getErrorType() {
+        return errorType;
+    }
+
+    public void setErrorType(Integer errorType) {
+        this.errorType = errorType;
+    }
+
+    @Override
+    public String toString() {
+        return "APKError{" +
+                "uuid='" + uuid + '\'' +
+                ", errorType=" + errorType +
+                '}';
+    }
+}

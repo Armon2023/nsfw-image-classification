@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="bdap.service.SystemCacheService"
+          class="net.cnki.bdap.frame.business.sysmnt.serviceimpl.SystemCacheServiceImpl"/>
+
+    <bean id="bdap.service.SystemService"
+          class="net.cnki.bdap.frame.business.sysmnt.serviceimpl.SystemServiceImpl"/>
+
+    <bean id="bdapCache"
+          class="net.cnki.bdap.cache.base.BdapCacheImpl"/>
+
+    <bean id="bdap.service.APPDataService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.APPDataServiceImpl"/>
+
+    <bean id="bdap.service.APKErrorService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.APKErrorServiceImpl"/>
+
+    <bean id="bdap.service.CreatPlanResultService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.CreatPlanResultServiceImpl"/>
+
+    <bean id="bdap.service.CreatPlanService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.TaskListServiceImpl"/>
+
+    <bean id="bdap.service.DetectionModelResultService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.DetectionModelResultServiceImpl"/>
+
+    <bean id="bdap.service.SystemUserService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.SystemUserServiceImpl"/>
+
+    <bean id="bdap.service.ResultMessageService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.ResultMessageServiceImpl"/>
+
+    <bean id="bdap.service.PerformanceResultService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.PerformanceResultServiceImpl"/>
+
+    <bean id="bdap.service.PRSMessageService"
+          class="net.cnki.bdap.apps.prs.business.serviceimpl.PRSMessageServiceImpl"/>
+
+</beans>

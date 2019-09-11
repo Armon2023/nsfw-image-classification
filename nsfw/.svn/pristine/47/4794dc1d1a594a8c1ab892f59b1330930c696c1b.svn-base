@@ -1,0 +1,122 @@
+package net.cnki.bdap.business.system.serviceimpl;
+
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.util.ObjectUtils;
+
+import net.cnki.bdap.business.base.BdapServiceImpl;
+import net.cnki.bdap.business.system.service.BJCommunityService;
+import net.cnki.bdap.persistence.system.bean.BJCommunity;
+
+/**
+ * 社区信息Service实现类。
+ * 
+ * @author wangxu
+ * @version 2018年11月28日11:28:27
+ * @since jdk_1.8.0_31
+ */
+public class BJCommunityServiceImpl extends BdapServiceImpl<BJCommunity> implements BJCommunityService {
+
+	final private String FULL_TIME_FLAG1 = "专";
+	final private String FULL_TIME_FLAG2 = "全";
+
+	/**
+	 * 根据当前街道属内的所有社区网格信息。
+	 * 
+	 * @param streetId
+	 *            街道/镇 ID。
+	 * @return BJCommunity list 社区结果集合。
+	 */
+	public List<BJCommunity> getAllCommunity(Integer streetId) {
+		List<BJCommunity> allCommunity = new ArrayList<>();
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(BJCommunity.class);
+		criteria.add(Restrictions.eq("streetId", streetId));
+		allCommunity = this.findByCriteria(criteria);
+
+		return allCommunity;
+	}
+
+	/**
+	 * 获取当前街道所有社区集合。
+	 * 
+	 * @param list
+	 *            List<BJCommunity> 社区所有网格信息。
+	 * @return List<String> 社区结果集合。
+	 */
+	public List<String> getStreetCommunity(List<BJCommunity> list) {
+		List<String> communityList = new ArrayList<>();
+
+		// 遍历所有社区信息,获取社区名。
+		if (!ObjectUtils.isEmpty(list)) {
+			for (BJCommunity community : list) {
+				if (!community.getCommunity().equals("无")) {
+					communityList.add(community.getCommunity());
+				}
+			}
+		}
+		// list去重
+		this.removeDuplicate(communityList);
+
+		return communityList;
+	}
+
+	/**
+	 * 获取当前社区所有网格员信息。
+	 * 
+	 * @param community
+	 *            社区名。
+	 * @return List<BJCommunity> 当前社区网格员集合。
+	 */
+	public List<BJCommunity> getGridMember(String community) {
+		List<BJCommunity> allMember = new ArrayList<>();
+		List<BJCommunity> members = new ArrayList<>();
+
+		DetachedCriteria criteria = DetachedCriteria.forClass(BJCommunity.class);
+		criteria.add(Restrictions.eq("community", community));
+		criteria.addOrder(Order.asc("gridId"));
+		allMember = this.findByCriteria(criteria);
+
+		for (BJCommunity member : allMember) {
+			if (!isFullTime(member.getFullorparttime())) {
+				member.setTel(null);
+			}
+			members.add(member);
+		}
+
+		return allMember;
+	}
+
+	/**
+	 * 判断是否是全职。
+	 * 
+	 * @param 去重对象list。
+	 * @return 无重复list。
+	 */
+	private boolean isFullTime(String fullorparttime) {
+
+		if (!ObjectUtils.isEmpty(fullorparttime)
+				&& (fullorparttime.contains(FULL_TIME_FLAG1) || fullorparttime.contains(FULL_TIME_FLAG2))) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * list去重。
+	 * 
+	 * @param 去重对象list。
+	 * @return 无重复list。
+	 */
+	private void removeDuplicate(List<String> list) {
+		LinkedHashSet<String> set = new LinkedHashSet<String>(list.size());
+		set.addAll(list);
+		list.clear();
+		list.addAll(set);
+	}
+}

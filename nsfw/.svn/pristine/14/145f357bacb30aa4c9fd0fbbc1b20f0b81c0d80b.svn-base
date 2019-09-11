@@ -1,0 +1,249 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+%>
+<html>
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+	
+	<link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+	<link rel="bookmark" href="<%=basePath%>/favicon.ico" />
+	<link rel="stylesheet" href="<%=basePath%>/static/lib/weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/jquery-weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/sys.css">
+	<script src="<%=basePath%>/static/lib/jquery-2.1.4.js"></script>
+	<script src="<%=basePath%>/static/js/jquery-weui.js"></script>
+
+ 
+<style>
+.bodystyle {
+	background-color: #eeeeee;
+	width: 100%;
+	height: 100%;
+}
+   
+.demos-header {
+	background: url(<%=basePath%>/static/images/bluetop.png) no-repeat;       
+	background-size: 100% 100%;
+}
+   
+.streetBody {
+	margin: 5%;
+	width: 90%;
+	background-color: #ffffff;
+	overflow: hidden
+}
+   
+.streetBody div {
+	width: 50%;
+	font-size: 15px;
+	line-height: 3;
+}
+
+.ulClass{
+	background-color: #ffffff;
+	line-height: 2;
+	padding:5%;
+} 
+  
+li {
+	list-style-type: none;
+	cursor:pointer;
+}
+
+.liClass {
+	list-style-type: none;
+	padding-left: 15%;
+	cursor:pointer;
+	box-shadow:0 0 2px #bcc4ca;
+	padding-top: 15px;
+	/* border: 1px solid #eeeeee; */
+}
+
+a {
+	color: #524f4e;
+	text-decoration: none;
+	font-weight: bold;
+}
+.liClass a {
+	width:90%;
+	display:inline-block;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	white-space: nowrap;
+}  
+li a img {
+	width: 19px;
+	vertical-align: middle;
+	margin-right: 3px;
+} 
+/* 灰色分割线 */
+.grayline{
+	border-top:1px solid #D9D9DA;
+	margin-top: 20px;
+	padding:10px 0;
+}
+
+/* 蓝色分隔符 */
+.delimiter{  
+	height:20px; 
+	border-left:3px #1E407C solid;
+	padding-left: 10px;
+}      
+</style> 
+<script type="text/javascript">
+function submitCommunity(name){
+	var commuForm = document.getElementById("commuForm");
+	document.getElementById("community").value=name;
+	commuForm.submit();
+}
+</script>
+</head>
+
+<body ontouchstart class="bodystyle">
+<form action="<%=basePath%>/gridMember" method="post" id="commuForm">
+	<header class='demos-header'>
+		<h1 class="demos-title">${streetName}</h1>
+	</header>
+	<div  style="float:right;margin:5px 5%;">
+		<a href="<%=basePath%>/index"  class="weui-btn weui-btn_mini weui-btn_default">返回首页</a>
+	</div>
+	
+	<c:choose>
+		<c:when test="${not empty communitys}">
+			<div class="streetBody">
+				<div style="float:left;">
+					<ul>
+						<input type="hidden" value="" id="community" name="community"/>
+						<c:choose>
+							<c:when test="${not empty communitys}">
+								<c:forEach items="${communitys}" var="community" varStatus="vs">
+										<c:choose>
+											<c:when test="${vs.index % 2 !=1}">
+												<li class="liClass">
+													<a href="javascript:return void(0);" onclick="submitCommunity('${community}')" title="${community}"> 
+														<img src="<%=basePath%>/static/images/SQ.png" alt="" >
+														${community}
+													</a>
+												</li>
+											</c:when>
+										</c:choose>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</ul>
+				</div>
+				<div style="float:right;">
+					<ul>
+						<c:choose>
+							<c:when test="${not empty communitys}">
+								<c:forEach items="${communitys}" var="community" varStatus="vs">
+										<c:choose>
+											<c:when test="${vs.index % 2 ==1}">
+												<li class="liClass">
+													<a href="javascript:return void(0);" onclick="submitCommunity('${community}')"  title="${community}">
+														<img src="<%=basePath%>/static/images/SQ.png" alt="" > 
+														${community}
+													</a>
+												</li>
+											</c:when>
+										</c:choose>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</ul>
+				</div>
+				
+			</div>
+		</c:when>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${empty communitys and empty membersInfo}">
+			<div class="streetBody">
+				<div class="dataBody" style="margin:10px 0;">
+					<h2 style="margin:10px 5px 5px 20px;">暂无数据！</h2>
+				</div>
+			</div>
+		</c:when>
+	</c:choose>
+	
+	<c:choose>
+		<c:when test="${not empty membersInfo}">
+			<div style="margin-bottom:15px;font-size: 15px;"  class="bodystyle">
+				<ul class="ulClass">	
+					<li class="grayline">
+						<span class="delimiter"><font>网格员队伍</font></span>
+					</li>
+						<c:choose>
+							<c:when test="${not empty membersInfo}">
+								<c:forEach items="${membersInfo}" var="member" varStatus="vs">
+											
+									<table style="font-size: 15px;width: 90%; margin-left: 5%;">
+										<c:if test="${not empty member.name}">
+											<tr>
+												<td class="lefttd">姓名</td>
+												<td>${member.name}</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty member.sex}">
+											<tr>
+												<td class="lefttd">性别</td>
+												<td>${member.sex}</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty member.nation}">
+											<tr>
+												<td class="lefttd">民族</td>
+												<td>${member.nation}</td>
+											</tr>
+										</c:if>
+										<c:if test="${not empty member.politicalstatus}">
+											<tr>
+												<td class="lefttd">政治面貌</td>
+												<td>${member.politicalstatus}</td>
+											</tr>	
+										</c:if>
+										<c:if test="${not empty member.gridId}">
+											<tr>
+												<td class="lefttd">所属网格编号</td>
+												<td>${member.gridId}</td>
+											</tr>	
+										</c:if>
+										<c:if test="${not empty member.duty}">
+											<tr>
+												<td class="lefttd">职务</td>
+												<td>${member.duty}</td>
+											</tr>	
+										</c:if>
+										<c:if test="${not empty member.tel}">
+											<tr>
+												<td class="lefttd">联系方式</td>
+												<td>${member.tel}</td>
+											</tr>	
+										</c:if>
+									</table>
+									<br>
+									<c:if test="${!vs.last}" >
+										<li><div class="line"></div></li>
+									</c:if>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+				</ul>
+			</div>	
+		</c:when>
+	</c:choose>		
+	
+	<div style="height: 10px; width: 100%; float: left; position: fixed; bottom: 0;">
+		<img src="<%=basePath%>/static/images/bottom.png" alt=""
+			style="width: 100%; height: 100%">
+	</div>
+</form>
+</body>
+</html>

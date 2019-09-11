@@ -1,0 +1,57 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import net.cnki.bdap.apps.prs.business.service.PRSMessageService;
+import net.cnki.bdap.apps.prs.persistence.bean.BdapSystem;
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.frame.ccmsg.serviceimpl.SerializeTool;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+import org.springframework.jms.core.JmsTemplate;
+import org.springframework.jms.core.MessageCreator;
+
+import javax.annotation.Resource;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Session;
+import java.io.IOException;
+
+/**
+ * PRSMessage Service实现类.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-11 14:42
+ */
+public class PRSMessageServiceImpl extends BdapServiceImpl<BdapSystem> implements PRSMessageService {
+
+    @Resource(name = "jmsTemplate")
+    private JmsTemplate jmsTemplate;
+
+    @Resource(name = "invokeResultMsgDest")
+    private Destination invokeResultMsgDest;
+
+
+    /* (non-Javadoc)
+     * @see cn.org.ccs.kmis.business.ccmsg.service.KmisMessageService#publishToSupport(cn.org.ccs.kmis.persistence.knowledgecenter.bean.CcsKnowledge)
+     */
+    @Override
+    public boolean sendMessage(ResultMessage message) {
+        boolean flag = true;
+        jmsTemplate.send(invokeResultMsgDest, new MessageCreator() {
+            @Override
+            public Message createMessage(Session session) throws JMSException {
+                Message reMsg = null;
+                try {
+                    reMsg = session.createTextMessage(SerializeTool.object2String(message));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return reMsg;
+            }
+        });
+
+        return flag;
+
+    }
+
+}

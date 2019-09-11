@@ -1,0 +1,32 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.PerformanceResult;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 功耗测试结果service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:19
+ */
+public interface PerformanceResultService extends BdapService<PerformanceResult> {
+
+    /**
+     * 接收保存功耗信息.
+     *
+     * @param powerInfos 功耗信息.
+     *
+     * @return String.
+     */
+    public String upSendResultPower(String powerInfos);
+
+    /**
+     * 根据ID查询.
+     *
+     * @param id PerformanceResult id .
+     *
+     * @return String
+     */
+    public String findById(String id);
+}

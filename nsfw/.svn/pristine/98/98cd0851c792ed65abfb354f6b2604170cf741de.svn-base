@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.apps.prs.persistence.bean.APPData" table="PRS_APP_DATA">
+		<id name="id" type="java.lang.String">
+			<column name="ID" length="32" sql-type="char(32)" not-null="true">
+				<comment>ID</comment>
+			</column>
+		</id>
+		<property name="itemId" type="java.lang.Integer">
+			<column name="ITEM_ID" length="11" not-null="false">
+				<comment>项目ID</comment>
+			</column>
+		</property>
+		<property name="contentId" type="java.lang.String">
+			<column name="CONTENT_ID" length="12" not-null="false">
+				<comment>内容ID</comment>
+			</column>
+		</property>
+		<property name="regOrd" type="java.lang.Integer">
+			<column name="REG_ORD" length="11">
+				<comment>reg ord</comment>
+			</column>
+		</property>
+		<property name="APPName" type="java.lang.String">
+			<column name="APP_NAME" length="255" not-null="false">
+				<comment>APP名称</comment>
+			</column>
+		</property>
+		<property name="packageName" type="java.lang.String">
+			<column name="PACKAGE_NAME" length="255">
+				<comment>包名</comment>
+			</column>
+		</property>
+		<property name="binaryInfo" type="text">
+			<column name="BINARY_INFO" length="65535" not-null="true">
+				<comment>第二部分信息（分辨率、下载URL）</comment>
+			</column>
+		</property>
+
+		<property name="createdBy" type="java.lang.String">
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String">
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp">
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer">
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

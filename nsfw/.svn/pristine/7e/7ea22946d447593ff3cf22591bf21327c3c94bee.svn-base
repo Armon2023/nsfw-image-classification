@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="bdap.service.BdapNLPService" class="net.cnki.bdap.nlp.serviceimpl.BdapNLPServiceImpl" />
+
+	<bean id="bdap.service.NLPResultService" class="net.cnki.bdap.nlp.serviceimpl.NLPResultServiceImpl" />
+	<bean id="bdap.service.NLPResultIssueService" class="net.cnki.bdap.nlp.serviceimpl.NLPResultIssueServiceImpl" />
+
+	<bean id="bdap.service.NLPAllFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPAllFBWDServiceImpl" />
+	<bean id="bdap.service.NLPCrimeFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPCrimeFBWDServiceImpl" />
+	<bean id="bdap.service.NLPGameFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPGameFBWDServiceImpl" />
+	<bean id="bdap.service.NLPGovMisspellService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPGovMisspellServiceImpl" />
+	<bean id="bdap.service.NLPLeaderMisspellService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPLeaderMisspellServiceImpl" />
+	<bean id="bdap.service.NLPMisspellWordService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPMisspellWordServiceImpl" />
+	<bean id="bdap.service.NLPNaturalScienceFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPNaturalScienceFBWDServiceImpl" />
+	<bean id="bdap.service.NLPOtherFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPOtherFBWDServiceImpl" />
+	<bean id="bdap.service.NLPPinyinFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPPinyinFBWDServiceImpl" />
+	<bean id="bdap.service.NLPPoliticsFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPPoliticsFBWDServiceImpl" />
+	<bean id="bdap.service.NLPPornographicFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPPornographicFBWDServiceImpl" />
+	<bean id="bdap.service.NLPReactionaryFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPReactionaryFBWDServiceImpl" />
+	<bean id="bdap.service.NLPSocialScienceFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPSocialScienceFBWDServiceImpl" />
+	<bean id="bdap.service.NLPSuperstitionFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPSuperstitionFBWDServiceImpl" />
+	<bean id="bdap.service.NLPTaiwanMisspellService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPTaiwanMisspellServiceImpl" />
+	<bean id="bdap.service.NLPTraditionalChineseFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPTraditionalChineseFBWDServiceImpl" />
+	<bean id="bdap.service.NLPUncommonFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPUncommonFBWDServiceImpl" />
+	<bean id="bdap.service.NLPWEBPageFBWDService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPWEBPageFBWDServiceImpl" />
+	<bean id="bdap.service.NLPWordCnService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPWordCnServiceImpl" />
+	<bean id="bdap.service.NLPWordEnService"
+		class="net.cnki.bdap.nlp.serviceimpl.model.NLPWordEnServiceImpl" />
+
+</beans>

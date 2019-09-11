@@ -1,0 +1,160 @@
+package net.cnki.bdap.business.nsfw.serviceImpl;
+
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import net.cnki.bdap.business.nsfw.service.NsfwFileService;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.*;
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import static org.junit.Assert.*;
+
+/**
+ * tensorflow接口性能测试 .
+ *
+ * @author chenxiang
+ * @version 2019/5/2813:48
+ * @since jdk_1.8.0_144
+ */
+public class NsfwFileServiceImplTest {
+
+    private Logger logger = LoggerFactory.getLogger(NsfwFileServiceImplTest.class);
+
+    private String tfServerUrl = "http://localhost:8868/eval?image=";
+    @Test
+    public void uploadVideo() {
+
+        String videoDir = "D:\\local\\nsfw\\videos\\20190308\\1552007722724\\";
+        String videoPath = videoDir + "video1.mp4";
+        String imagesPath = videoDir + "images";
+        File imagesFileDir = new File(imagesPath);
+        if (!imagesFileDir.exists() && !imagesFileDir.isDirectory()) {
+            imagesFileDir.mkdirs();
+        }
+        long start = System.currentTimeMillis();
+        executeOpenCV(videoPath, imagesPath);
+        long mid = System.currentTimeMillis();
+        boolean isSensitive = false;
+        File imageDir = new File(imagesPath);
+        for (File imageFile : imageDir.listFiles()) {
+            // get image url
+
+            BigDecimal nsfwValue = getImageTFValue(imageFile.getAbsolutePath());
+            // 判断图片是否为敏感图片。
+            logger.info(imageFile.getName()+":"+nsfwValue);
+        }
+        long end = System.currentTimeMillis();
+        logger.info("executeOpenCV Time:"+(mid-start)+"ms");
+        logger.info("executeTensorflow Time:"+(end-mid)+"ms");
+    }
+
+
+    private String executeOpenCV(String videoFilePath, String outputDir) {
+        try {
+            String cmmd = String.format("java -jar D:/local/nsfw/cnki.bdap.opencv-2.1.jar %s %s", videoFilePath, outputDir);
+            Process p = Runtime.getRuntime().exec(cmmd);
+
+            InputStream is = p.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String flag = "";
+            StringBuffer flagBuffer = new StringBuffer("");
+            //获取进程的标准输入流
+            final InputStream ipStream = p.getInputStream();
+            //获取进城的错误流
+            final InputStream errorStream = p.getErrorStream();
+            //启动两个线程，一个线程负责读标准输出流，另一个负责读标准错误流
+            new Thread() {
+                public void run() {
+                    BufferedReader br1 = new BufferedReader(new InputStreamReader(ipStream));
+                    try {
+                        String line1 = null;
+                        while ((line1 = br1.readLine()) != null) {
+                            if (line1 != null) {
+                                flagBuffer.append(line1) ;
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            ipStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+
+            new Thread() {
+                public void run() {
+                    BufferedReader br2 = new BufferedReader(new InputStreamReader(errorStream));
+                    try {
+                        String line2 = null;
+                        while ((line2 = br2.readLine()) != null) { }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            errorStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+            p.waitFor();
+            flag += flagBuffer.toString();
+            return flag;
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
+
+    private BigDecimal getImageTFValue(String path) {
+        try {
+            String identifyUrl = tfServerUrl + path;
+            String result = this.loadJson(identifyUrl);
+            JsonObject resultObj = new JsonParser().parse(result).getAsJsonObject();
+            return resultObj.get("porn").getAsBigDecimal();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new BigDecimal(0);
+        }
+    }
+
+
+    /**
+     * @param url 图片鉴定地址。
+     * @return String 黄色内容指数。
+     */
+    private String loadJson(String url) {
+        StringBuilder json = new StringBuilder();
+        try {
+            URL urlObject = new URL(url);
+            // 打开和URL之间的连接。
+            URLConnection uc = urlObject.openConnection();
+            // 定义BufferedReader输入流来读取URL的响应
+            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+            String inputLine = null;
+            while ((inputLine = in.readLine()) != null) {
+                json.append(inputLine);
+            }
+            in.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+}

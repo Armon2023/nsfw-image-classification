@@ -1,0 +1,718 @@
+package net.cnki.bdap.business.nsfw.serviceImpl;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.List;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.business.nsfw.service.ForbiddenBooksService;
+import net.cnki.bdap.business.nsfw.service.ForbiddenWordsService;
+import net.cnki.bdap.business.nsfw.service.NsfwFileService;
+import net.cnki.bdap.business.nsfw.service.NsfwFileTaskService;
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFile;
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFileTask;
+import net.cnki.bdap.playground.picuture.BdapPictureProcessor;
+import net.cnki.bdap.playground.speech.BdapSpeechProcessor;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * @author wangxu
+ * @version 2018年11月27日16:32:07
+ * @since jdk_1.8.0_31
+ */
+public class NsfwFileServiceImpl extends BdapServiceImpl<NsfwFile> implements NsfwFileService {
+
+    private String redLineIndex;
+    private String nsfwServerUrl;
+    private String tfServerUrl;
+    private String localImageUrl;
+    private String localImagePath;
+    private String localVideoPath;
+    private String localAudioPath;
+    private String localServerPath;
+    private String imageFilter;
+    private String videoFilter;
+    private String audioFilter;
+    private String opencvCmd;
+
+    private String apiId;
+    private String apiKey;
+    private String secretKey;
+    //0雅虎 1tensorflow 2百度。
+    private int mode;
+
+    /**
+     * 当前是否存在上传成功文件.
+     */
+    public static String uploadState = "";
+
+    /**
+     * 当前是否存在上传成功文件.
+     */
+    public static final String PORN = "porn";
+
+    public Logger logger = LoggerFactory.getLogger(NsfwFileServiceImpl.class);
+
+    /**
+     * 开启线程异步上传文件。
+     *
+     * @param file jpg,png,bmp,gif,svg,jpeg,bmp\mp4\wav,pcm,amr .
+     * @return .
+     */
+    @Override
+    public void uploadFile(NsfwFile file) throws Exception {
+
+        NsfwFileService nsfwFileService = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        String result = "";
+        if (!ObjectUtils.isEmpty(file.getCfile().getOriginalFilename())) {
+            String fullName = file.getCfile().getOriginalFilename();
+            // 获取文件后缀。
+            String type = fullName.substring(fullName.lastIndexOf(".") + 1);
+            if (isImage(type)) {
+                result = nsfwFileService.uploadImage(file.getCfile());
+            } else if (isVideo(type)) {
+                result = nsfwFileService.uploadVideo(file.getCfile());
+            } else if (isAudio(type)) {
+                result = nsfwFileService.uploadAudio(file.getCfile());
+            }
+            uploadState = result;
+        }
+    }
+
+    /**
+     * @param file 上传的图片
+     * @return url 上传后服务器存放的路径。
+     */
+    @Override
+    public String uploadImage(MultipartFile file) throws Exception {
+        String fileName = file.getOriginalFilename();
+        String tempFileName = "" + System.currentTimeMillis();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String formatDatePath = dateFormat.format(new Date());
+        InputStream inputStream = file.getInputStream();
+        String millis = String.valueOf(System.currentTimeMillis());
+
+        String fileAbsDir = localImagePath + formatDatePath + "\\" + millis;
+        String fileAbsPath = localImagePath + formatDatePath + "\\" + millis + "\\" + tempFileName;
+
+        // 如果当前日期的文件夹不存在,则创建一个。
+        File imageDir = new File(fileAbsDir);
+        if (!imageDir.exists() && !imageDir.isDirectory()) {
+            // 创建目录
+            imageDir.mkdirs();
+        }
+        this.saveFile(inputStream, fileAbsPath);
+
+        // 拼接图片鉴定地址.
+        String relPath = formatDatePath + "/" + millis + "/" + tempFileName;
+        String imageUrl = localImageUrl + relPath;
+
+        BigDecimal nsfwValue = getImageNsfwValue(imageUrl, fileAbsPath, mode);
+        BigDecimal line = new BigDecimal(redLineIndex);
+
+        // 判断是否为敏感内容。
+        boolean isSensitive = false;
+        if (nsfwValue.compareTo(line) == 1) {
+            isSensitive = true;
+        }
+
+        BdapPictureProcessor sp = new BdapPictureProcessor();
+        String message = sp.process(fileAbsPath);
+
+        // 存入历史表中。
+        this.saveToDb(fileName, fileAbsPath, isSensitive, nsfwValue.toPlainString(), message);
+        return nsfwValue.toPlainString();
+    }
+
+    private void saveToDb(String fileName, String filePath, boolean isSensitive, String index, String message) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formatDatePath = dateFormat.format(new Date());
+
+        NsfwFile nsfwFile = new NsfwFile();
+        nsfwFile.setFileName(fileName);
+        nsfwFile.setFilePath(filePath);
+        nsfwFile.setIsNsfwFile(isSensitive ? 1 : 0);
+        nsfwFile.setSexIndex(index);
+        nsfwFile.setUpdatedTime();
+        nsfwFile.setCreatedTime();
+        nsfwFile.setUploadTime(formatDatePath);
+        nsfwFile.setContent(message);
+
+        NsfwFileService fileService = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        fileService.saveOrUpdate(nsfwFile);
+
+        NsfwFileTask fileTask = new NsfwFileTask();
+        fileTask.setFileName(fileName);
+        fileTask.setFilePath(filePath);
+        fileTask.setIsNsfwFile(isSensitive ? 1 : 0);
+        fileTask.setSexIndex(index);
+        fileTask.setUpdatedTime();
+        fileTask.setCreatedTime();
+        fileTask.setUploadTime(formatDatePath);
+
+        NsfwFileTaskService taskService = BdapServiceFactory.instance().getService(NsfwFileTaskService.class);
+        taskService.saveOrUpdate(fileTask);
+
+    }
+
+    /**
+     * @param file 上传的视频文件
+     * @return url 上传后服务器存放的路径。
+     */
+    @Override
+    public String uploadVideo(MultipartFile file) throws Exception {
+        String originalFileName = file.getOriginalFilename();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String formatDatePath = dateFormat.format(new Date());
+        InputStream inputStream = file.getInputStream();
+
+        // 拼接图片鉴定地址.
+        String millis = String.valueOf(System.currentTimeMillis());
+        String videoDir = localVideoPath + formatDatePath + "/" + millis;
+        String videoPath = videoDir + "/" + originalFileName;
+        String imagesPath = videoDir + "/" + "images";
+
+        File videoDirFile = new File(imagesPath);
+        if (!videoDirFile.exists() && !videoDirFile.isDirectory()) {
+            videoDirFile.mkdirs();
+        }
+
+        this.saveFile(inputStream, videoPath);
+
+        executeOpenCV(videoPath, imagesPath);
+
+        boolean isSensitive = false;
+        File imageDir = new File(imagesPath);
+        for (File imageFile : imageDir.listFiles()) {
+            // get image url
+            String imageUrl = localServerPath + "videos/" + formatDatePath + "/" + millis + "/images/"
+                    + imageFile.getName();
+            // get index from nsfw server.
+            BigDecimal nsfwValue = getImageNsfwValue(imageUrl, imageFile.getAbsolutePath(), mode);
+            // 判断图片是否为敏感图片。
+            BigDecimal baseLine = new BigDecimal(redLineIndex);
+            if (nsfwValue.compareTo(baseLine) == 1) {
+                isSensitive = true;
+                saveToDb(originalFileName, videoPath, isSensitive, nsfwValue.toPlainString(), "");
+                break;
+            }
+        }
+        if (isSensitive == false) {
+            saveToDb(originalFileName, videoPath, isSensitive, "", "");
+        }
+
+        // 删除图片文件夹。
+        delImageFile(imagesPath);
+
+        return videoDir;
+    }
+
+    /**
+     * @param file 上传的音频文件
+     * @return url 上传后服务器存放的路径。
+     */
+    @Override
+    public String uploadAudio(MultipartFile file) throws Exception {
+        String originalFileName = file.getOriginalFilename();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        String formatDatePath = dateFormat.format(new Date());
+        InputStream inputStream = file.getInputStream();
+
+        // 拼接音频转换地址.
+        String millis = String.valueOf(System.currentTimeMillis());
+        String audioDir = localAudioPath + formatDatePath + "/" + millis;
+        String audioPath = audioDir + "/" + originalFileName;
+
+        File audioDirFile = new File(audioDir);
+        if (!audioDirFile.exists() && !audioDirFile.isDirectory()) {
+            audioDirFile.mkdirs();
+        }
+
+        this.saveFile(inputStream, audioPath);
+
+        String content = this.processSpeech(audioPath);
+        if (content.length() > 1000) {
+            content = content.substring(0, 999);
+        }
+        // 数据入库。
+        ForbiddenBooksService bookService = BdapServiceFactory.instance().getService(ForbiddenBooksService.class);
+        ForbiddenWordsService wordService = BdapServiceFactory.instance().getService(ForbiddenWordsService.class);
+        NsfwFileService nService = BdapServiceFactory.instance().getService(NsfwFileService.class);
+
+        NsfwFile sFile = new NsfwFile();
+        sFile.setFileName(originalFileName);
+        sFile.setFilePath(audioPath);
+        sFile.setContent(content);
+        // 判断是否为敏感内容
+        boolean isSensitive = (bookService.isNsfw(content) || wordService.isNsfw(content));
+        sFile.setIsNsfwFile(isSensitive ? 1 : 0);
+
+        // 上传时间。
+        SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String datePath = date.format(new Date());
+        sFile.setUploadTime(datePath);
+
+        nService.saveOrUpdate(sFile);
+
+        // 存入定时任务表。
+        NsfwFileTask fileTask = new NsfwFileTask();
+        fileTask.setFileName(originalFileName);
+        fileTask.setFilePath(audioPath);
+        fileTask.setIsNsfwFile(isSensitive ? 1 : 0);
+        fileTask.setAudioContent(content);
+        fileTask.setUpdatedTime();
+        fileTask.setCreatedTime();
+        fileTask.setUploadTime(formatDatePath);
+
+        NsfwFileTaskService taskService = BdapServiceFactory.instance().getService(NsfwFileTaskService.class);
+        taskService.saveOrUpdate(fileTask);
+
+        return audioDir;
+    }
+
+    private String processSpeech(String path) {
+        BdapSpeechProcessor sp = new BdapSpeechProcessor();
+        // 返回音频的文字内容。
+        String message = sp.process(path);
+        return message;
+    }
+
+    private String executeOpenCV(String videoFilePath, String outputDir) {
+        try {
+            String cmmd = String.format(opencvCmd, videoFilePath, outputDir);
+            Process p = Runtime.getRuntime().exec(cmmd);
+
+            InputStream is = p.getInputStream();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String flag = "";
+            StringBuffer flagBuffer = new StringBuffer("");
+            //获取进程的标准输入流
+            final InputStream ipStream = p.getInputStream();
+            //获取进城的错误流
+            final InputStream errorStream = p.getErrorStream();
+            //启动两个线程，一个线程负责读标准输出流，另一个负责读标准错误流
+            new Thread() {
+                public void run() {
+                    BufferedReader br1 = new BufferedReader(new InputStreamReader(ipStream));
+                    try {
+                        String line1 = null;
+                        while ((line1 = br1.readLine()) != null) {
+                            if (line1 != null) {
+                                flagBuffer.append(line1);
+                            }
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            ipStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+
+            new Thread() {
+                public void run() {
+                    BufferedReader br2 = new BufferedReader(new InputStreamReader(errorStream));
+                    try {
+                        String line2 = null;
+                        while ((line2 = br2.readLine()) != null) {
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            errorStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+            p.waitFor();
+            flag += flagBuffer.toString();
+            return flag;
+        } catch (Exception e) {
+            return "";
+        }
+
+    }
+
+    /**
+     * 调用雅虎nsfw、tensorflow、baidu API程序实现鉴黄。
+     *
+     * @param url 图片url。
+     * @param absolutePath 图片绝对路径。
+     * @return BigDecimal。
+     */
+    private BigDecimal getImageNsfwValue(String url, String absolutePath, int mode) {
+
+        if (mode == 0) {
+            //调用雅虎nsfw
+            try {
+                String identifyUrl = nsfwServerUrl + url;
+                String result = this.loadJson(identifyUrl);
+                BigDecimal value = new BigDecimal(result);
+                return value;
+            } catch (Exception e) {
+                return new BigDecimal(0);
+            }
+        } else if (mode == 1) {
+            // 调用tenforflow程序实现鉴黄。
+            try {
+                String identifyUrl = tfServerUrl + url;
+                logger.info(identifyUrl);
+                String result = this.loadJson(identifyUrl);
+                JsonObject resultObj = new JsonParser().parse(result).getAsJsonObject();
+                return resultObj.get(PORN).getAsBigDecimal();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new BigDecimal(0);
+            }
+        } else if (mode == 2) {
+            //调用百度api实现鉴黄。
+            try {
+                BdapPictureProcessor processor = new BdapPictureProcessor();
+                String result = processor.processPicContent(absolutePath);
+                JsonObject resultObj = new JsonParser().parse(result).getAsJsonObject();
+                JsonArray resultArray = resultObj.get("result").getAsJsonObject().get("antiporn").getAsJsonObject().get("result").getAsJsonArray();
+                return resultArray.get(1).getAsJsonObject().get("probability").getAsBigDecimal();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return new BigDecimal(0);
+            }
+        }
+        return new BigDecimal(0);
+
+    }
+
+
+    private void saveFile(InputStream inputStream, String url) throws IOException {
+        FileOutputStream fs = new FileOutputStream(url);
+
+        byte[] buffer = new byte[1024 * 1024];
+        int byteread = 0;
+        while ((byteread = inputStream.read(buffer)) != -1) {
+            fs.write(buffer, 0, byteread);
+            fs.flush();
+        }
+        fs.close();
+        inputStream.close();
+    }
+
+    /**
+     * @param type 文件格式。
+     * @return boolean 布尔类型。
+     */
+    @Override
+    public boolean isImage(String type) {
+        if (null != type && imageFilter.indexOf(type.toLowerCase()) >= 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param type 文件格式(视频)。
+     * @return boolean 布尔类型。
+     */
+    @Override
+    public boolean isVideo(String type) {
+        if (null != type && videoFilter.indexOf(type.toLowerCase()) >= 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param type 文件格式(音频)。
+     * @return boolean 布尔类型。
+     */
+    @Override
+    public boolean isAudio(String type) {
+        if (null != type && audioFilter.indexOf(type.toLowerCase()) >= 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param url 图片鉴定地址。
+     * @return String 黄色内容指数。
+     */
+    @Override
+    public String loadJson(String url) {
+        StringBuilder json = new StringBuilder();
+        try {
+            URL urlObject = new URL(url);
+            // 打开和URL之间的连接。
+            URLConnection uc = urlObject.openConnection();
+            // 定义BufferedReader输入流来读取URL的响应
+            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+            String inputLine = null;
+            while ((inputLine = in.readLine()) != null) {
+                json.append(inputLine);
+            }
+            in.close();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return json.toString();
+    }
+
+    /**
+     * 加载上传文件列表.
+     */
+    @Override
+    public List<NsfwFile> loadNsfwTable() {
+        NsfwFileService service = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        List<NsfwFile> lists = service.findAll();
+        Collections.sort(lists, new Comparator<NsfwFile>() {
+            @Override
+            public int compare(NsfwFile nsfw1, NsfwFile nsfw2) {
+                // 正序排列.
+                return nsfw1.getUploadTime().compareTo(nsfw2.getUploadTime());
+            }
+        });
+
+        // 倒序
+        Collections.reverse(lists);
+        // 取前200条数据.
+        if (lists.size() > 50) {
+            lists = lists.subList(0, 50);
+        }
+
+        return lists;
+
+    }
+
+    ;
+
+    /**
+     * 删除视频切割生成的图片.
+     */
+    private void delImageFile(String path) {
+
+        File file = new File(path);
+
+        if (file.isFile() || file.list() == null) {
+            file.delete();
+        } else {
+            File[] files = file.listFiles();
+            for (File a : files) {
+                a.delete();
+            }
+            file.delete();
+        }
+    }
+
+    /**
+     * 根据检索条件检索全部符合的项目。
+     *
+     * @param nsfw 检索条件信息。
+     * @return List<NsfwFile>.
+     */
+    @Override
+    public List<NsfwFile> searchFileList(NsfwFile nsfw) {
+        NsfwFileService service = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        String hsql = " FROM NsfwFile WHERE 1=1 and DELETED < 0 ";
+        List<Object> paramList = new ArrayList<>();
+        // 文件名称。
+        if (!ObjectUtils.isEmpty(nsfw.getFileName())) {
+            hsql += " and FILE_NAME like ? ";
+            paramList.add("%" + nsfw.getFileName() + "%");
+        }
+        // 上传时间。
+        if (!ObjectUtils.isEmpty(nsfw.getStartTime()) && !"null".equals(nsfw.getStartTime())) {
+            hsql += " and UPLOAD_TIME >= ? ";
+            paramList.add(nsfw.getStartTime());
+        }
+        // 结束时间。
+        if (!ObjectUtils.isEmpty(nsfw.getEndTime()) && !"null".equals(nsfw.getStartTime())) {
+            hsql += " and UPLOAD_TIME <= ? ";
+            paramList.add(nsfw.getEndTime());
+        }
+
+        List<Object> tmp = new ArrayList<Object>();
+        Object[] params = null;
+        //
+        if (paramList.size() > 0) {
+            for (Object str : paramList) {
+                if (str != null && !"".equals(str) && !ObjectUtils.isEmpty(str)) {
+                    tmp.add(str);
+                }
+            }
+            params = tmp.toArray();
+        }
+
+        List<NsfwFile> results = service.findByHSQL(hsql, params);
+        Collections.sort(results, new Comparator<NsfwFile>() {
+            @Override
+            public int compare(NsfwFile nsfw1, NsfwFile nsfw2) {
+                // 正序排列.
+                return nsfw1.getUploadTime().compareTo(nsfw2.getUploadTime());
+            }
+        });
+
+        // 倒序
+        Collections.reverse(results);
+        // 取前200条数据.
+        if (results.size() > 50) {
+            results = results.subList(0, 50);
+        }
+
+        return results;
+    }
+
+    public String getLocalImagePath() {
+        return localImagePath;
+    }
+
+    public void setLocalImagePath(String localImagePath) {
+        this.localImagePath = localImagePath;
+    }
+
+    public String getLocalImageUrl() {
+        return localImageUrl;
+    }
+
+    public void setLocalImageUrl(String localImageUrl) {
+        this.localImageUrl = localImageUrl;
+    }
+
+    public String getNsfwServerUrl() {
+        return nsfwServerUrl;
+    }
+
+    public void setNsfwServerUrl(String nsfwServerUrl) {
+        this.nsfwServerUrl = nsfwServerUrl;
+    }
+
+    public String getLocalVideoPath() {
+        return localVideoPath;
+    }
+
+    public void setLocalVideoPath(String localVideoPath) {
+        this.localVideoPath = localVideoPath;
+    }
+
+    public String getLocalAudioPath() {
+        return localAudioPath;
+    }
+
+    public void setLocalAudioPath(String localAudioPath) {
+        this.localAudioPath = localAudioPath;
+    }
+
+    public String getLocalServerPath() {
+        return localServerPath;
+    }
+
+    public void setLocalServerPath(String localServerPath) {
+        this.localServerPath = localServerPath;
+    }
+
+    public String getImageFilter() {
+        return imageFilter;
+    }
+
+    public void setImageFilter(String imageFilter) {
+        this.imageFilter = imageFilter;
+    }
+
+    public String getVideoFilter() {
+        return videoFilter;
+    }
+
+    public void setVideoFilter(String videoFilter) {
+        this.videoFilter = videoFilter;
+    }
+
+    public String getAudioFilter() {
+        return audioFilter;
+    }
+
+    public void setAudioFilter(String audioFilter) {
+        this.audioFilter = audioFilter;
+    }
+
+    public String getOpencvCmd() {
+        return opencvCmd;
+    }
+
+    public void setOpencvCmd(String opencvCmd) {
+        this.opencvCmd = opencvCmd;
+    }
+
+    public String getRedLineIndex() {
+        return redLineIndex;
+    }
+
+    public void setRedLineIndex(String redLineIndex) {
+        this.redLineIndex = redLineIndex;
+    }
+
+    public String getApiId() {
+        return apiId;
+    }
+
+    public void setApiId(String apiId) {
+        this.apiId = apiId;
+    }
+
+    public String getApiKey() {
+        return apiKey;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+
+    public String getTfServerUrl() {
+        return tfServerUrl;
+    }
+
+    public void setTfServerUrl(String tfServerUrl) {
+        this.tfServerUrl = tfServerUrl;
+    }
+
+    public void setMode(int mode) {
+        this.mode = mode;
+    }
+}

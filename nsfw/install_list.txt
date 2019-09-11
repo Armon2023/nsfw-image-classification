@@ -1,0 +1,28 @@
+﻿tornado              5.1.1
+pip install tornado==5.1.1
+tensorflow           1.13.1
+numpy                1.16.2
+Python 3.5.0
+
+
+
+sudo apt update
+sudo apt install python3-dev python3-pip
+sudo pip3 install -U virtualenv  # system-wide install
+
+创建一个新的虚拟环境，方法是选择 Python 解析器并创建一个 ./venv 目录来存放它：
+virtualenv --system-site-packages -p python3 ./venv
+
+使用特定于 shell 的命令激活该虚拟环境：
+source ./venv/bin/activate  # sh, bash, ksh, or zsh
+
+pip install --upgrade pip
+pip list  # show packages installed within the virtual environment
+
+pip install --upgrade tensorflow
+
+验证安装效果：
+python -c "import tensorflow as tf; tf.enable_eager_execution(); print(tf.reduce_sum(tf.random_normal([1000, 1000])))"
+
+退出 virtualenv，请使用以下命令：
+deactivate  # don't exit until you're done using TensorFlow   

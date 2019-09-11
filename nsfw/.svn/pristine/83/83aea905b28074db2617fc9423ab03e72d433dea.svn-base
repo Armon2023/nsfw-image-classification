@@ -1,0 +1,16 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import net.cnki.bdap.apps.prs.business.service.APKErrorService;
+import net.cnki.bdap.apps.prs.persistence.bean.APKError;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+
+/**
+ * apk解析失败serviceImpl.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:20
+ */
+public class APKErrorServiceImpl extends BdapServiceImpl<APKError> implements APKErrorService {
+
+}

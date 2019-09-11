@@ -1,0 +1,65 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 功耗测试结果.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class PerformanceResult extends BaseBean {
+    private static final long serialVersionUID = 2336112884433619311L;
+
+    /** 结果ID. */
+    private String id;
+    /** 功耗测试任务ID. */
+    private String uuid;
+    /** 功耗信息（Summary/Duration/Drop...）. */
+    private String powerInfos;
+    /** 报告文件存放地址. */
+    private String url;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getPowerInfos() {
+        return powerInfos;
+    }
+
+    public void setPowerInfos(String powerInfos) {
+        this.powerInfos = powerInfos;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return "PerformanceResult{" +
+                "id='" + id + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", powerInfos='" + powerInfos + '\'' +
+                ", url='" + url + '\'' +
+                '}';
+    }
+}

@@ -1,0 +1,247 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+import net.cnki.bdap.persistence.base.CurrentUser;
+
+import java.util.Date;
+
+/**
+ * PRS用户.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class SystemUser extends BaseBean {
+    private static final long serialVersionUID = 5556510880052619311L;
+
+    public static final String PASSWORD = "password";
+    public static final String EMAIL = "email";
+
+    /** 用户ID。 */
+    private Integer userId;
+    /** 员工ID。 */
+    private String staffId;
+    /** 员工编号。 */
+    private String staffCode;
+    /** 用户姓名。 */
+    private String username;
+    /** 英文用户姓名。 */
+    private String usernameEn;
+    /** 邮箱。 */
+    private String email;
+    /** 密码。 */
+    private String password;
+    /** 登录账号。 */
+    private String loginAccount;
+    /** 手机。 */
+    private String phone;
+    /** 用户类型。 */
+    private String userType;
+
+    /**
+     * 获取用户员工ID。
+     *
+     * @return String 员工ID。
+     */
+    public String getStaffId() {
+        return staffId;
+    }
+
+    /**
+     * 设定用户员工ID。
+     *
+     * @param staffId 员工ID。
+     */
+    public void setStaffId(String staffId) {
+        this.staffId = staffId;
+    }
+
+    /**
+     * 获取用户员工编号。
+     *
+     * @return String 用户员工编号。
+     */
+    public String getStaffCode() {
+        return staffCode;
+    }
+
+    /**
+     * 设定用户员工编号。
+     *
+     * @param staffCode 用户员工编号。
+     */
+    public void setStaffCode(String staffCode) {
+        this.staffCode = staffCode;
+    }
+
+    /**
+     * 获取用户邮箱。
+     *
+     * @return String 用户邮箱。
+     */
+    public String getEmail() {
+        return this.email;
+    }
+
+    /**
+     * 设定用户Email。
+     *
+     * @param email 邮箱。
+     */
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    /**
+     * 获取用户ID。
+     *
+     * @return Integer 用户Id。
+     */
+    public Integer getUserId() {
+        return userId;
+    }
+
+    /**
+     * 设定用户Id。
+     *
+     * @param userId 用户Id
+     */
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+
+    /**
+     * 获取用户姓名。
+     *
+     * @return String 用户姓名。
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * 设定用户 姓名。
+     *
+     * @param userName 用户姓名。
+     */
+    public void setUsername(String userName) {
+        this.username = userName;
+    }
+
+    /**
+     * 获取用户英文名。
+     *
+     * @return String 用户英文名。
+     */
+    public String getUsernameEn() {
+        return usernameEn;
+    }
+
+    /**
+     * 设定用户英文名。
+     *
+     * @param usernameEn 用户英文名。
+     */
+    public void setUsernameEn(String usernameEn) {
+        this.usernameEn = usernameEn;
+    }
+
+    /**
+     * 获取用户登录密码。
+     *
+     * @return String 用户登录密码。
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * 设定用户登录密码。
+     *
+     * @param password 密码。
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * 获取用户登录账号。
+     *
+     * @return 获取用户登录账号。
+     */
+    public String getLoginAccount() {
+        return loginAccount;
+    }
+
+    /**
+     * 设定用户登录用账号。
+     *
+     * @param loginAccount 登录账号。
+     */
+    public void setLoginAccount(String loginAccount) {
+        this.loginAccount = loginAccount;
+    }
+
+    /**
+     * 获取用户电话。
+     *
+     * @return String 电话号码。
+     */
+    public String getPhone() {
+        return phone;
+    }
+
+    /**
+     * 设定用户电话。
+     *
+     * @param phone 电话号码。
+     */
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    /**
+     * 获取用户联系。
+     *
+     * @return String 用户类型。
+     */
+    public String getUserType() {
+        return userType;
+    }
+
+    /**
+     * 设定用户类型。
+     *
+     * @param userType 用户类型。
+     */
+    public void setUserType(String userType) {
+        this.userType = userType;
+    }
+
+
+    private CurrentUser currentUser = null;
+
+    public CurrentUser getCurrentUser() {
+        if (null != currentUser) {
+            return currentUser;
+        }
+
+        if (this.userId != null && userId > 0 && username != null) {
+            currentUser = new CurrentUser();
+            currentUser.setEmail(this.getEmail());
+            currentUser.setPassword(this.getPassword());
+            currentUser.setPhone(this.getPhone());
+            currentUser.setStaffCode(this.getStaffCode());
+            currentUser.setStaffId(this.getStaffId());
+            currentUser.setUserId(this.getUserId());
+            currentUser.setUsername(this.getUsername());
+            currentUser.setUsernameEn(this.getUsernameEn());
+            currentUser.setUserType(this.getUserType());
+            currentUser.setLastLoginDate(new Date());
+        }
+        return currentUser;
+    }
+
+}

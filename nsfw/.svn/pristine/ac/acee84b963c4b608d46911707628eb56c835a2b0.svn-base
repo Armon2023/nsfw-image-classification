@@ -1,0 +1,186 @@
+(function($){
+    $.fn.validationEngineLanguage = function(){
+    };
+    $.validationEngineLanguage = {
+        newLang: function(){
+            $.validationEngineLanguage.allRules = {
+        		"chineseAndLetterSp": {
+                    "regex": /^[\u0391-\uFFE5A-Za-z]+$/,
+                    "alertText": "* 请输入字母和汉字"
+                },
+                "numAndFloat": {
+                    "regex": /^\d+(\.\d+)?$/,
+                    "alertText": "* 只允许输入小数或整数"
+                },
+                "required": { // Add your regex rules here, you can take telephone as an example
+                    "regex": "none",
+                    "alertText": "* 此字段必填.",
+                    "alertTextCheckboxMultiple": "* 请选择一个选项",
+                    "alertTextCheckboxe": "* 这个复选框是必需的",
+                    "alertTextDateRange": "* 两个日期范围字段都是必需的"
+                },
+                "dateRange": {
+                    "regex": "none",
+                    "alertText": "* 无效的 ",
+                    "alertText2": "日期范围"
+                },
+                "dateTimeRange": {
+                    "regex": "none",
+                    "alertText": "* 无效的 ",
+                    "alertText2": "日期时间范围"
+                },
+                "minSize": {
+                    "regex": "none",
+                    "alertText": "* 最少允许 ",
+                    "alertText2": " 个字符"
+                },
+                "maxSize": {
+                    "regex": "none",
+                    "alertText": "* 最多允许 ",
+                    "alertText2": " 个字符"
+                },
+				"groupRequired": {
+                    "regex": "none",
+                    "alertText": "* 必须填写下列字段之一"
+                },
+                "min": {
+                    "regex": "none",
+                    "alertText": "* 最小值是 "
+                },
+                "max": {
+                    "regex": "none",
+                    "alertText": "* 最大值是 "
+                },
+                "past": {
+                    "regex": "none",
+                    "alertText": "* 日期之前 "
+                },
+                "future": {
+                    "regex": "none",
+                    "alertText": "* 过去日期 "
+                },	
+                "maxCheckbox": {
+                    "regex": "none",
+                    "alertText": "* 最多允许 ",
+                    "alertText2": " 个选项"
+                },
+                "minCheckbox": {
+                    "regex": "none",
+                    "alertText": "* 请选择 ",
+                    "alertText2": " 选项"
+                },
+                "equals": {
+                    "regex": "none",
+                    "alertText": "* 字段不匹配"
+                },
+                "creditCard": {
+                    "regex": "none",
+                    "alertText": "* 信用卡号码无效"
+                },
+                "phone": {
+                    // credit: jquery.h5validate.js / orefalo
+                	//"regex": /^([\+][0-9]{1,3}[ \.\-])?([\(]{1}[0-9]{2,6}[\)])?([0-9 \.\-\/]{3,20})((x|ext|extension)[ ]?[0-9]{1,4})?$/,
+                    "regex": /^[1][3,4,5,7,8][0-9]{9}$/,
+                    "alertText": "* 请输入有效的电话号码"
+                },
+                "email": {
+                    // Shamelessly lifted from Scott Gonzalez via the Bassistance Validation plugin http://projects.scottsplayground.com/email_address_validation/
+                    "regex": /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i,
+                    "alertText": "* 请输入有效的电子邮件地址"
+                },
+                "integer": {
+                    "regex": /^[\-\+]?\d+$/,
+                    "alertText": "* 请输入有效的整数"
+                },
+                "number": {
+                    // Number, including positive, negative, and floating decimal. credit: orefalo
+                    "regex": /^[\-\+]?(([0-9]+)([\.,]([0-9]+))?|([\.,]([0-9]+))?)$/,
+                    "alertText": "* 请输入有效的浮点十进制数"
+                },
+                "date": {
+                    "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$/,
+                    "alertText": "* 请使用YYY-MM-DD格式的日期"
+                },
+                "ipv4": {
+                    "regex": /^((([01]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))[.]){3}(([0-1]?[0-9]{1,2})|(2[0-4][0-9])|(25[0-5]))$/,
+                    "alertText": "* 请输入有效IP地址"
+                },
+                "url": {
+                    "regex": /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i,
+                    "alertText": "* 请输入有效地址"
+                },
+                "onlyNumberSp": {
+                    "regex": /^[0-9\ ]+$/,
+                    "alertText": "* 请仅使用数字"
+                },
+                "onlyLetterSp": {
+                    "regex": /^[a-zA-Z\ \']+$/,
+                    "alertText": "* 请仅使用字母"
+                },
+                "onlyLetterNumber": {
+                    "regex": /^[0-9a-zA-Z]+$/,
+                    "alertText": "* 不允许特殊字符"
+                },
+                "onlyChinese": {
+                	"regex": /^[A-Za-z0-9\u4e00-\u9fa5\.]+$/, 
+                	"alertText": "* 不允许特殊字符"
+                },
+                // --- CUSTOM RULES -- Those are specific to the demos, they can be removed or changed to your likings
+                "ajaxUserCall": {
+                    "url": "ajaxValidateFieldUser",
+                    // you may want to pass extra data on the ajax call
+                    "extraData": "name=eric",
+                    "alertText": "* 此用户已被占用",
+                    "alertTextLoad": "* 正在验证，请等待"
+                },
+				"ajaxUserCallPhp": {
+                    "url": "phpajax/ajaxValidateFieldUser.php",
+                    // you may want to pass extra data on the ajax call
+                    "extraData": "name=eric",
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    "alertTextOk": "* 此用户名可用",
+                    "alertText": "* 此用户已被占用",
+                    "alertTextLoad": "* 正在验证，请等待"
+                },
+                "ajaxNameCall": {
+                    // remote json service location
+                    "url": "ajaxValidateFieldName",
+                    // error
+                    "alertText": "* 这个用户名已被占用",
+                    // if you provide an "alertTextOk", it will show as a green prompt when the field validates
+                    "alertTextOk": "* 此用户名可用",
+                    // speaks by itself
+                    "alertTextLoad": "* 正在验证，请等待"
+                },
+				 "ajaxNameCallPhp": {
+	                    // remote json service location
+	                    "url": "phpajax/ajaxValidateFieldName.php",
+	                    // error
+	                    "alertText": "* 这个用户名已被占用",
+	                    // speaks by itself
+	                    "alertTextLoad": "* 正在验证，请等待."
+	                },
+                "validate2fields": {
+                    "alertText": "* 请输入您好."
+                },
+	            //tls warning:homegrown not fielded 
+                "dateFormat":{
+                    "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])$|^(?:(?:(?:0?[13578]|1[02])(\/|-)31)|(?:(?:0?[1,3-9]|1[0-2])(\/|-)(?:29|30)))(\/|-)(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(?:(?:0?[1-9]|1[0-2])(\/|-)(?:0?[1-9]|1\d|2[0-8]))(\/|-)(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^(0?2(\/|-)29)(\/|-)(?:(?:0[48]00|[13579][26]00|[2468][048]00)|(?:\d\d)?(?:0[48]|[2468][048]|[13579][26]))$/,
+                    "alertText": "* 无效的日期"
+                },
+                //tls warning:homegrown not fielded 
+				"dateTimeFormat": {
+	                "regex": /^\d{4}[\/\-](0?[1-9]|1[012])[\/\-](0?[1-9]|[12][0-9]|3[01])\s+(1[012]|0?[1-9]){1}:(0?[1-5]|[0-6][0-9]){1}:(0?[0-6]|[0-6][0-9]){1}\s+(am|pm|AM|PM){1}$|^(?:(?:(?:0?[13578]|1[02])(\/|-)31)|(?:(?:0?[1,3-9]|1[0-2])(\/|-)(?:29|30)))(\/|-)(?:[1-9]\d\d\d|\d[1-9]\d\d|\d\d[1-9]\d|\d\d\d[1-9])$|^((1[012]|0?[1-9]){1}\/(0?[1-9]|[12][0-9]|3[01]){1}\/\d{2,4}\s+(1[012]|0?[1-9]){1}:(0?[1-5]|[0-6][0-9]){1}:(0?[0-6]|[0-6][0-9]){1}\s+(am|pm|AM|PM){1})$/,
+                    "alertText": "* 无效日期格式",
+                    "alertText2": "预期格式: ",
+                    "alertText3": "mm/dd/yyyy hh:mm:ss AM|PM or ", 
+                    "alertText4": "yyyy-mm-dd hh:mm:ss AM|PM"
+	            }
+            };
+            
+        }
+    };
+
+    $.validationEngineLanguage.newLang();
+    
+})(jQuery);

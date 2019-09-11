@@ -1,0 +1,37 @@
+package net.cnki.bdap.apps.prs.business.listener;
+
+import net.cnki.bdap.apps.prs.business.service.ResultMessageService;
+import net.cnki.bdap.apps.prs.persistence.bean.BdapSystem;
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.frame.ccmsg.serviceimpl.SerializeTool;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+import javax.jms.Message;
+import javax.jms.MessageListener;
+import javax.jms.TextMessage;
+
+/**
+ * 返回消息.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-11 14:58
+ */
+public class InvokeResultMsgListener implements MessageListener {
+
+    @Override
+    public void onMessage(Message msg) {
+        try {
+            TextMessage txtMsg = (TextMessage) msg;
+            BdapSystem result = SerializeTool.getObjectFromString(txtMsg.getText(), BdapSystem.class);
+            // 返回消息.
+            ResultMessageService resultMessageService = BdapServiceFactory.instance().getService(ResultMessageService.class);
+            ResultMessage ResultMessage = resultMessageService.findById(Integer.valueOf(result.getEntityId()));
+            System.out.println(result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}

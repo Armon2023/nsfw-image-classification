@@ -1,0 +1,26 @@
+package net.cnki.bdap.business.system.service;
+
+
+import java.util.List;
+
+import net.cnki.bdap.persistence.system.bean.BJStreet;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 区县信息Service。
+ * 
+ * @author wangxu
+ * @version 2018年11月27日17:41:40
+ * @since jdk_1.8.0_31
+ */
+public interface BJStreetService extends BdapService<BJStreet> {
+	
+	/**
+     * 根据当前区属内的所有街道。
+     * 
+     * @param  district 区名称。
+     * @return BJStreet list BJStreet结果集合。
+     */
+    public List<BJStreet> getAllStreet(String district);
+    
+}

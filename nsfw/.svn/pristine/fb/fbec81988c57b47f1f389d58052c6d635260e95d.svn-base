@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.CreatPlanResult;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 创建任务结果service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:17
+ */
+public interface CreatPlanResultService extends BdapService<CreatPlanResult> {
+}

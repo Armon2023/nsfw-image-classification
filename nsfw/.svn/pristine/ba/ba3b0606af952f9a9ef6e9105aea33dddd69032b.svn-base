@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd ">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.persistence.system.bean.SystemMaster" table="SYS_MNT_MASTER">
+		<id name="id" type="java.lang.Integer" column="MASTER_ID">
+			<generator class="identity"/>
+		</id>
+		<many-to-one name="masterType" class="net.cnki.bdap.persistence.system.bean.SystemMasterType" cascade="persist" fetch="select">
+			<column name="MASTER_TYPE_ID" not-null="true"></column>
+		</many-to-one>
+		<property name="order" type="java.lang.Integer">
+			<column name="OPTION_ORDER" not-null="true">
+				<comment>序号</comment>
+			</column>
+		</property>
+		<property name="key" type="java.lang.String">
+			<column name="OPTION_KEY" not-null="true" length="128">
+				<comment>英文名称</comment>
+			</column>
+		</property>
+		<property name="value" type="java.lang.String">
+			<column name="OPTION_VALUE" not-null="true" length="128">
+				<comment>中文名称</comment>
+			</column>
+		</property>
+		<property name="isDefault" type="java.lang.Integer">
+			<column name="IS_DEFAULT_OPTION" not-null="false" default="0">
+				<comment>中文名称</comment>
+			</column>
+		</property>
+		<property name="typeCode" type="java.lang.Integer">
+			<column name="TYPE_CODE" not-null="true">
+				<comment>类型编号</comment>
+			</column>
+		</property>
+		<property name="isLeaf" type="java.lang.Boolean">
+			<column name="IS_LEAF" not-null="true">
+				<comment>是否是叶子节点</comment>
+			</column>
+		</property>
+		<property name="isBranch" type="java.lang.Boolean">
+			<column name="IS_BRANCH" not-null="true">
+				<comment>是否有子节点</comment>
+			</column>
+		</property>
+		<property name="status" type="java.lang.Integer">
+			<column name="OPTION_STATUS" not-null="false">
+				<comment>状态</comment>
+			</column>
+		</property>
+		
+		<property name="createdBy" type="java.lang.String" >
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String" >
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp" >
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer" >
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

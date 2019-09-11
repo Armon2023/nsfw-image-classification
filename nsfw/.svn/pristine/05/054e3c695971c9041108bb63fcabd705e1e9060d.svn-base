@@ -1,0 +1,18 @@
+package net.cnki.bdap.business.system.serviceimpl;
+
+import net.cnki.bdap.business.base.BdapServiceImpl;
+import net.cnki.bdap.business.system.service.BJCountyService;
+import net.cnki.bdap.persistence.system.bean.BJCounty;
+
+/**
+ * 区县信息Service实现类。
+ * 
+ * @author wangxu
+ * @version 2018年11月27日16:32:07
+ * @since jdk_1.8.0_31
+ */
+public class BJCountyServiceImpl extends BdapServiceImpl<BJCounty> implements BJCountyService {
+
+
+
+}

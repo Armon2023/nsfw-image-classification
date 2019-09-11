@@ -1,0 +1,123 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+%>
+<html>
+<script>
+function prompt(type,classId,Idname,message){
+	var tsMesg;
+	var tsClass;
+	if(type == 'warning'){			//警告warning
+		tsClass = 'nWarning';
+		tsMesg = 'WARNING';
+	}else if(type == 'information'){	//消息information
+		tsClass = 'nInformation';
+		tsMesg = 'INFORMATION';
+	}else if(type == 'success'){		//成功success
+		tsClass = 'nSuccess';
+		tsMesg = 'SUCCESS';
+	}else if(type == 'failure'){		//失败failure
+		tsClass = 'nFailure';
+		tsMesg = 'FAILURE';
+	}
+	
+	var rnd = Math.round(Math.random() * (999999 - 100000)) + 100000;
+    (function () {
+      if ($(".showMessge").length > 0) {
+        $(".showMessge").remove();
+      }
+      if(classId == 'class'){
+      	$('.' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong>'+message+'</p>' + '</div>');
+      }else if(classId == 'id'){
+      	$('#' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong'+message+'</p>' + '</div>');
+      }
+      setTimeout(function () {
+        $("#show_messge_" + rnd).remove()
+      }, 3000)
+    })(rnd);
+}
+</script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+	
+	<link rel="stylesheet" href="<%=basePath%>/static/css/bootstrap.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/style.css">
+	<script src="<%=basePath%>/static/js/jquery-1.11.1.min.js"></script>
+    <title>文件上传</title>
+    <style>
+    	html,body{height:100%}
+    	.title{margin-top: 90px;text-align:center;color: #ffffff;}
+    	.grid_2{text-align: center;margin-top:60px}
+    	#uploadBtn{width:70px;height:32px;line-height:32px;text-align:center;padding:0;background:#fffff;}
+    	#uploadBtn:hover {background:#31b0d5;color: #ffffff;}
+    	#file_name{width: 400px;height: 30px;border: 1px solid #D4D4D4;}
+ 		a.input {width:70px;height:32px;line-height:32px;background:#3091d1;text-align:center;display:inline-block;overflow:hidden;position:relative;top:11px;}
+ 		a.input:hover {background:#31b0d5;color: #ffffff;}
+ 		a{text-decoration:none;color:#FFF;}
+ 		#cfile {opacity:0;filter:alpha(opacity=0);font-size:100px;position:absolute;top:0;right:0;width: 70px;height: 30px}
+    </style>
+  </head>
+  <body style="background: url(<%=basePath%>/static/img/40.png);background-size:100% 100%;background-repeat:no-repeat;">
+    <div class="contact">
+		<div class="container">
+			<form action="" enctype="multipart/form-data" id="uploadForm" method="post">
+				<div class="content_middle_bottom">
+		          <h1 class="title">文件上传</h1>
+				</div>
+				<div class="col-sm-12 grid_2">
+				   <h3></h3>
+			       <form>
+					   <input type="text" class="file_name" id="file_name" readonly="readonly" style="color:#00FF00"/>
+			          	<a href="javascript:void(0);" class="input">浏览
+			            	<input type="file" id="cfile" class="cfile" name="cfile" >
+			          	</a>
+					   <input id="uploadBtn" type="submit" value="提交">
+				   </form>
+			    </div>
+				<div class="clearfix"> </div>
+			 </form>
+		</div>
+	</div>
+  </body>
+</html>
+<script>
+$(function() {
+	$("#uploadBtn").bind("click" , saveFile);
+})
+function saveFile(){
+		var path = "<%=basePath%>/up/uploadFile";
+		var form = new FormData(document.getElementById("uploadForm")); 
+		$.ajax({
+			type:"POST",
+			data: form,
+			url:path,
+			contentType: false,
+			processData : false,
+			async : false,  
+			success : function(data) {
+				if(data != ""){
+					var aStr = data.split(",");
+					var result = aStr[1];
+					var msg = aStr[0];
+					
+					prompt(msg, "class", "warn", result);
+				} 
+			},
+			error : function(data) {
+				alert(data);
+			}
+		});
+} 
+
+$(function(){
+    $("#cfile").change(function(){  
+        $("#file_name").val($("#cfile").val());  
+    })
+});
+
+</script>

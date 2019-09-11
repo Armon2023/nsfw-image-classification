@@ -1,0 +1,55 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 通用返回消息.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class ResultMessage extends BaseBean {
+    private static final long serialVersionUID = 2336510887752619311L;
+
+    /** 结果ID. */
+    private String id;
+    /** 执行成功或失败的状态. */
+    private Integer code;
+    /** 执行错误的错误信息. */
+    private String message;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "ResultMessage{" +
+                "id='" + id + '\'' +
+                ", code=" + code +
+                ", message='" + message + '\'' +
+                '}';
+    }
+}

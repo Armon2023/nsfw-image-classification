@@ -1,0 +1,77 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 创建任务结果.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class CreatPlanResult extends BaseBean {
+    private static final long serialVersionUID = 3111510887752999311L;
+
+    /** 结果ID. */
+    private String id;
+    /** 结果状态. */
+    private Integer status;
+    /** 创建任务所有的机型列表. */
+    private Integer modelNum;
+    /** 所有的机型数量. */
+    private String models;
+    /** 错误信息. */
+    private String message;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+
+    public Integer getModelNum() {
+        return modelNum;
+    }
+
+    public void setModelNum(Integer modelNum) {
+        this.modelNum = modelNum;
+    }
+
+    public String getModels() {
+        return models;
+    }
+
+    public void setModels(String models) {
+        this.models = models;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "CreatPlanResult{" +
+                "id='" + id + '\'' +
+                ", status=" + status +
+                ", modelNum=" + modelNum +
+                ", models='" + models + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
+}

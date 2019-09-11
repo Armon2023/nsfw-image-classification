@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">  
+  
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">  
+<!-- log4j.xml 配置文件 优先于 log4j.properties 配置文件  
+* 1. 一个appender子元素定义一个日志输出目的地
+* 2. 一个logger子元素定义一个日志写出器  
+========================== 自定义输出格式说明================================  
+%p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL  
+%r 输出自应用启动到输出该log信息耗费的毫秒数  
+%c 输出所属的类目，通常就是所在类的全名  
+%t 输出产生该日志事件的线程名  
+%n 输出一个回车换行符，Windows平台为“/r/n”，Unix平台为“/n”  
+%d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyy MMM dd HH:mm:ss,SSS}
+	 输出类似：2002年10月18日 22：10：28，921  
+%m 输出代码中指定的具体日志信息。
+%l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。举例：Testlog4.main(TestLog4.java:10)  
+==========================================================================  
+  
+========================== 输出方式说明================================  
+Log4j提供的appender有以下几种:  
+org.apache.log4j.ConsoleAppender(控制台),  
+org.apache.log4j.FileAppender(文件),  
+org.apache.log4j.DailyRollingFileAppender(每天产生一个日志文件),  
+org.apache.log4j.RollingFileAppender(文件大小到达指定尺寸的时候产生一个新的文件),  
+org.apache.log4j.WriterAppender(将日志信息以流格式发送到任意指定的地方)  
+==========================================================================   -->
+  
+   <!-- 输出到控制台  -->
+<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+	<!-- 输出格式 -->
+	<layout class="org.apache.log4j.PatternLayout">
+		<param name="ConversionPattern" value="[ %-5p] [%d{yyyy-MM-dd HH:mm:ss,SSS} ] method:%m%n" />
+	</layout>
+</appender>
+
+	<!--输出到日志文件 每天一个日志 -->
+	<appender name="LOG_DEBUG" class="org.apache.log4j.DailyRollingFileAppender">
+		<!--Threshold屏蔽级别之下的日志输出 -->
+		<param name="Threshold" value="DEBUG" />
+		<param name="encoding" value="UTF-8" />
+		<!-- 给输出的文件指定位置 -->
+		<param name="File" value="D://kmis/logs/debug.log" />
+		<!-- 每天的新的文件的文件名 -->
+		<param name="DatePattern" value="'debug_'yyyy-MM-dd'.log'" />
+		<!-- 输出格式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[ %-d{yyyy-MM-dd HH:mm:ss} ]  [ %t:%r ] - [ %p ]  %m%n" />
+		</layout>
+	</appender>
+
+	<!--输出到日志文件 每天一个日志 -->
+	<appender name="LOG_INFO" class="org.apache.log4j.DailyRollingFileAppender">
+		<!-- <param name="Threshold" value="INFO" /> -->
+		<param name="encoding" value="UTF-8" />
+		<!-- 给输出的文件指定位置 -->
+		<param name="File" value="D://kmis/logs/info.log" />
+		<!-- 每天的新的文件的文件名 -->
+		<param name="DatePattern" value="'info_'yyyy-MM-dd'.log'" />
+		<!-- 输出格式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[ %-d{yyyy-MM-dd HH:mm:ss} ]  [ %t:%r ] - [ %p ]  %m%n" />
+		</layout>
+		<!-- 限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="INFO" />
+			<param name="LevelMax" value="INFO" />
+		</filter>
+	</appender>
+
+	<!--输出到日志文件 每天一个日志 -->
+	<appender name="LOG_WARN" class="org.apache.log4j.DailyRollingFileAppender">
+		<!-- <param name="Threshold" value="INFO" /> -->
+		<param name="encoding" value="UTF-8" />
+		<!-- 给输出的文件指定位置 -->
+		<param name="File" value="D://kmis/logs/warn.log" />
+		<!-- 每天的新的文件的文件名 -->
+		<param name="DatePattern" value="'warn_'yyyy-MM-dd'.log'" />
+		<!-- 输出格式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[ %-d{yyyy-MM-dd HH:mm:ss} ]  [ %t:%r ] - [ %p ]  %m%n" />
+		</layout>
+		<!-- 限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="WARN" />
+			<param name="LevelMax" value="WARN" />
+		</filter>
+	</appender>
+
+	<!--输出到日志文件 每天一个日志 -->
+	<appender name="LOG_ERROR" class="org.apache.log4j.DailyRollingFileAppender">
+		<!-- <param name="Threshold" value="ERROR" /> -->
+		<param name="encoding" value="UTF-8" />
+		<!-- 给输出的文件指定位置 -->
+		<param name="File" value="D://kmis/logs/error.log" />
+		<!-- 每天的新的文件的文件名 -->
+		<param name="DatePattern" value="'error_'yyyy-MM-dd'.log'" />
+		<!-- 输出格式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[ %-d{yyyy-MM-dd HH:mm:ss} ]  [ %t:%r ] - [ %p ] [ %l ] %m%n" />
+		</layout>
+		<!-- 限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="ERROR" />
+			<param name="LevelMax" value="ERROR" />
+		</filter>
+	</appender>
+
+	<!--输出到日志文件 每天一个日志 -->
+	<appender name="LOG_FATAL" class="org.apache.log4j.DailyRollingFileAppender">
+		<!-- <param name="Threshold" value="ERROR" /> -->
+		<param name="encoding" value="UTF-8" />
+		<!-- 给输出的文件指定位置 -->
+		<param name="File" value="D://kmis/logs/fatal.log" />
+		<!-- 每天的新的文件的文件名 -->
+		<param name="DatePattern" value="'fatal_'yyyy-MM-dd'.log'" />
+		<!-- 输出格式 -->
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[ %-d{yyyy-MM-dd HH:mm:ss} ]  [ %t:%r ] - [ %p ] [ %l ] %m%n" />
+		</layout>
+		<!-- 限制输出级别 -->
+		<filter class="org.apache.log4j.varia.LevelRangeFilter">
+			<param name="LevelMin" value="FATAL" />
+			<param name="LevelMax" value="FATAL" />
+		</filter>
+	</appender>
+	<!-- 设置某些包下的日志输出 <logger name="com.linkinPark" additivity="false"> <level 
+		value="OFF"/> </logger> <logger name="com.linlinPark.service"> <level value="ON"/> 
+		</logger> 日志的总开关设置 包括日志级别和 appender logger的作用： 1.[name属性]:指定你定义Logger对象时候的name 
+		2. additivity : children-logger是否使用 rootLogger的配置, additivity在log4j默认为true。 
+		这解释了为什么有些时候，一个日志信息在屏幕上会有多次输出。 3.还可以指定level(输出级别)、appender-ref(指定哪个append) -->
+	<root>
+		<level value="ERROR" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="LOG_DEBUG" />
+		<appender-ref ref="LOG_INFO" />
+		<appender-ref ref="LOG_WARN" />
+		<appender-ref ref="LOG_ERROR" />
+		<appender-ref ref="LOG_FATAL" />
+	</root>  
+</log4j:configuration>

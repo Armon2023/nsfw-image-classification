@@ -1,0 +1,29 @@
+package net.cnki.bdap.business.base;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+import net.cnki.bdap.service.base.BdapAbsService;
+
+/**
+ * <p>
+ * the kmis service implementation.
+ * </p>
+ * 
+ * 
+ * @author william
+ * @version 2018年6月20日上午9:48:03
+ * @since jdk_1.8.0_144
+ */
+public class BdapServiceImpl<T extends BaseBean> extends BdapAbsService<T> {
+
+	protected Class<T> entityClass;
+
+	public BdapServiceImpl() {
+		super();
+	}
+
+	@Override
+	public void loadAndCache() {
+
+	}
+
+}

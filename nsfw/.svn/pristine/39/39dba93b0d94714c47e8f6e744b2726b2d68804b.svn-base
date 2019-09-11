@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<bean id="bdap.service.SystemMasterService"
+		class="net.cnki.bdap.business.system.serviceimpl.SystemMasterServiceImpl" />
+
+	<bean id="bdap.service.SystemMasterTypeService"
+		class="net.cnki.bdap.business.system.serviceimpl.SystemMasterTypeServiceImpl" />
+
+	<bean id="bdap.service.NsfwFileService"
+		class="net.cnki.bdap.business.nsfw.serviceImpl.NsfwFileServiceImpl">
+		<property name="redLineIndex" value="${nsfw.redline.index}" />
+		<property name="nsfwServerUrl" value="${nsfw.server.url}" />
+		<property name="tfServerUrl" value="${tensorflow.server.url}" />
+		<property name="localImageUrl" value="${nsfw.server.image.url}" />
+		<property name="localImagePath" value="${nsfw.images.dir}" />
+		<property name="localVideoPath" value="${nsfw.videos.dir}" />
+		<property name="localAudioPath" value="${nsfw.audios.dir}" />
+		<property name="localServerPath" value="${nsfw.local.server.path}" />
+		<property name="imageFilter" value="${nsfw.image.filter}" />
+		<property name="videoFilter" value="${nsfw.video.filter}" />
+		<property name="audioFilter" value="${nsfw.audio.filter}" />
+		<property name="opencvCmd" value="${nsfw.opencv.command}" />
+		<property name="mode" value="${nsfw.image.mode}" />
+
+		<property name="apiId" value="${baidu.api.id}" />
+		<property name="apiKey" value="${baidu.api.key}" />
+		<property name="secretKey" value="${baidu.api.secret.key}"></property>
+	</bean>
+
+	<bean id="bdap.service.NsfwFileTaskService"
+		class="net.cnki.bdap.business.nsfw.serviceImpl.NsfwFileTaskServiceImpl" />
+
+	<bean id="bdap.service.ForbiddenBooksService"
+		class="net.cnki.bdap.business.nsfw.serviceImpl.ForbiddenBooksServiceImpl" />
+
+	<bean id="bdap.service.ForbiddenWordsService"
+		class="net.cnki.bdap.business.nsfw.serviceImpl.ForbiddenWordsServiceImpl" />
+
+</beans>

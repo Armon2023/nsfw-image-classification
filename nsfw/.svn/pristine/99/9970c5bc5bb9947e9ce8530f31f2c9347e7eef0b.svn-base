@@ -1,0 +1,44 @@
+function exportExcel(tr, th, td, path) {
+	var trLength = tr.length;
+	var thLength = th.length;
+	var tdLength = td.length;
+	var arr2 = new Array();
+	// 初始化二维数组。
+	for(var i = 0; i <= trLength-1;i++){
+	    arr2[i] = new Array();
+	    for(var j = 0; j < tdLength/(trLength-1); j++){
+	        arr2[i][j] = '';
+	    }
+	}
+	// 生成列表二维数组。
+	for (var x = 0; x <= trLength-1; x++) {
+		if(x == 0){
+			for (var y = 0; y <= thLength-1; y++) {
+		        arr2[x][y] = th[x*(thLength-1)+y].innerText;
+		    }
+		}else{
+			for (var y = 0; y < tdLength/(trLength-1); y++) {
+		        arr2[x][y] = td[(x-1)*(tdLength/(trLength-1))+y].innerText;
+		    }
+		}
+	}
+	if(arr2 == null){
+		alert("没有数据可导出 。");
+	} else {
+		$.ajax({
+			type:'post',
+			url:path,
+			// trL是数组的行数，tdL是数组的列数，arr2是二维数组。
+			data:{
+				 'trLength' : trLength,
+				 'tdLength' : tdLength + thLength,
+				 'arr2' : JSON.stringify(arr2)
+				},
+			dataType:"text",
+			/* var message = "${message}"; */
+			success:function(message){
+			alert("导出成功！");
+			},
+		});
+    }
+}

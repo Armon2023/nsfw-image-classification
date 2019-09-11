@@ -1,0 +1,220 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+%>
+<html>
+<script>
+function prompt(type,classId,Idname,message){
+	var tsMesg;
+	var tsClass;
+	if(type == 'warning'){			//警告warning
+		tsClass = 'nWarning';
+		tsMesg = 'WARNING';
+	}else if(type == 'information'){	//消息information
+		tsClass = 'nInformation';
+		tsMesg = 'INFORMATION';
+	}else if(type == 'success'){		//成功success
+		tsClass = 'nSuccess';
+		tsMesg = 'SUCCESS';
+	}else if(type == 'failure'){		//失败failure
+		tsClass = 'nFailure';
+		tsMesg = 'FAILURE';
+	}
+	
+	var rnd = Math.round(Math.random() * (999999 - 100000)) + 100000;
+    (function () {
+      if ($(".showMessge").length > 0) {
+        $(".showMessge").remove();
+      }
+      if(classId == 'class'){
+      	$('.' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong>'+message+'</p>' + '</div>');
+      }else if(classId == 'id'){
+      	$('#' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong'+message+'</p>' + '</div>');
+      }
+      setTimeout(function () {
+        $("#show_messge_" + rnd).remove()
+      }, 3000)
+    })(rnd);
+}
+</script>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+	
+	<link rel="stylesheet" href="<%=basePath%>/static/css/bootstrap.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/style.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/main.css">
+	<script src="<%=basePath%>/static/js/jquery-2.1.4.min.js"></script>
+	<script src="<%=basePath%>/static/js/html5shiv.min.js"></script>
+    <title>文字识别</title>
+    <style>
+    	 html,body{background:none;min-width:800px;}
+    	.row {margin-top: 60px;margin-left: 150px;margin-right: 150px;}
+    	div.content_middle_bottom{padding:7em 0 0 0;}
+    	.tableList {margin-top: 30px;}
+    	.title{text-align:center;color: #ffffff;}
+    	.grid_2{text-align: center;}
+    	#uploadBtn{width:60px;height:32px;line-height:32px;text-align:center;padding:0;background:#fffff;}
+    	#uploadBtn:hover {background:#31b0d5;color: #ffffff;}
+    	#file_name{width: 400px;height: 30px;border: 1px solid #fff;color:#fff;padding-left:10px;}
+ 		a.input {width:70px;height:32px;line-height:32px;background:#3091d1;text-align:center;display:inline-block;overflow:hidden;position:relative;top:11px;}
+ 		a.input:hover {background:#31b0d5;color: #ffffff;}
+ 		a{text-decoration:none;color:#FFF;}
+ 		#cfile {opacity:0;filter:alpha(opacity=0);font-size:100px;position:absolute;top:0;right:0;width: 70px;height: 30px}
+   		
+		table{
+		    table-layout:fixed;/* 只有定义了表格的布局算法为fixed，下面td的定义才能起作用。 */
+		}
+		td{
+		    width:100%;
+		    word-break:keep-all;/* 不换行 */
+		    white-space:nowrap;/* 不换行 */
+		    overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
+		    text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+		}
+		#subform ul{text-align:left;margin-left:-40px;}
+		#subform ul input{margin:10px;}
+		#subform ul span{color:#fff}
+		#fileName{padding-left:10px;height:20px;}
+		input[type=date]{border:none;height:33px;padding-left:10px;}
+		#subform ul input[type=submit]{margin-left:30px;padding:7px 40px;background:#0ca9f6;}
+		#subform ul input[type=submit]:hover{background:#0691d6;}
+		.panel{min-height:500px;}
+		/* .panel-body{height:446px;overflow-y:scroll;} */
+	</style>
+  </head>
+  <body style="background: url(<%=basePath%>/static/img/45.png);background-size:cover;background-repeat:no-repeat;">
+    <div class="contact">
+		<div class="container">
+			<form action="" enctype="multipart/form-data" id="uploadForm" method="post">
+				<div class="content_middle_bottom">
+		          <h1 class="title">文字识别</h1>
+				</div>
+				<div class="col-sm-12 grid_2">
+			       <form>
+					   <input type="text" class="file_name" id="file_name" readonly="readonly" />
+			          	<a href="javascript:void(0);" class="input">浏览
+			            	<input type="file" id="cfile" class="cfile" name="cfile" >
+			          	</a>
+					   <input id="uploadBtn" type="submit" value="提交">
+				   </form>
+			    </div>
+				<div class="clearfix"> </div>
+			 </form>
+		</div>
+		
+		<div class="row">
+        <!-- Start .row -->
+           <div class="col-sm-12 grid_2" class="tableList">
+           		<form action="<%=basePath%>/search" class="form" id="subform">
+           			<ul style="text-align:center">
+           				<span>文件名：</span>
+           	        	<input id="fileName" name="fileName" type="text" value="${nsfw.fileName}" class="per15" style="margin-right:30px;">
+           				<span>上传时间</span>
+           	        	<input type="date" name="startTime" value="${nsfw.startTime}" class="per15"><span>--</span>
+           	        	<input type="date" name="endTime" value="${nsfw.endTime}" class="per15">
+           	        	<input type="submit" href="#" onclick="document.getElementById('subform').submit();" value="查询">
+           			</ul>
+           		</form> 
+           </div>
+        </div>
+        <div class="row">   
+           <div class="col-lg-12 tableList" style="margin-top:-10px;">
+           <!-- col-lg-12 start here -->
+           	  <div class="panel panel-default plain toggle panelClose panelRefresh">
+            	<!-- Start .panel -->
+                <div class="panel-heading white-bg">
+                	<h4 class="panel-title">文件列表</h4>
+                </div>
+                <div class="panel-body">
+                	<table class="table table-bordered">
+                    	<thead>
+                        	<tr>
+                            	<th class="per30">文件名</th>
+                                <th class="per10">是否敏感</th>
+                                <th class="per20">上传时间</th>
+                                <th class="per10">预览</th>
+                            </tr>
+                        </thead>
+           <!-- 
+           <div class="">
+		          <video id="media" src="/videos/MV.mp4" controls width="200" heigt="100"></video>
+				</div>
+				<div class="">
+		         <audio controls autoplay>
+					  <source src="/audios/16k.wav" type="audio/mpeg">
+					</audio> 
+				</div>
+			 -->
+                        <tbody>
+		                    <c:forEach items="${nsfws}" var="nsfw">
+								<tr>
+									<td title="${nsfw.fileName}">${nsfw.fileName}</td>
+									<td>${nsfw.isNsfwFile eq 0?"否":"是" }</td>
+									<td>${nsfw.uploadTime}</td>
+									<td onclick="openReview('${nsfw.fileRelativePath}')">预览</td>
+								</tr>
+							</c:forEach>
+                        </tbody>
+                     </table>
+                   </div>
+               </div>
+                 <!-- End .panel -->
+           </div>
+      <!-- col-lg-12 end here -->
+      </div>
+	</div>
+  </body>
+</html>
+<script>
+function openReview(path) {
+	var path = encodeURIComponent(path);
+	window.open('<%=basePath%>/openReview?path='+path,'','width=1000,height=600,left=460,top=200')
+}
+$(function() {
+	$("#uploadBtn").bind("click" , saveFile);
+})
+function saveFile(){
+		var path = "<%=basePath%>/uploadFile";
+		var form = new FormData(document.getElementById("uploadForm")); 
+		$.ajax({
+			type:"POST",
+			data: form,
+			url:path,
+			contentType: false,
+			processData : false,
+			async : false,  
+			success : function(data) {
+				if(data != ""){
+					//alert(data);
+					window.location.reload();
+				} 
+			},
+			error : function(data) {
+				//alert(data);
+				window.location.reload();
+			}
+		});
+} 
+
+$(function(){
+    $("#cfile").change(function(){  
+        $("#file_name").val($("#cfile").val());  
+    })
+});
+
+
+document.createElement('hearder');
+document.createElement('article');
+document.createElement('aside');
+document.createElement('section');
+document.createElement('nav');
+document.createElement('figure');
+document.createElement('footer');
+
+</script>

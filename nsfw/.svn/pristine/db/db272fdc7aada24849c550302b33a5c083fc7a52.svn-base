@@ -1,0 +1,217 @@
+package net.cnki.bdap.business.base.serviceImpl;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.business.base.BdapServiceImpl;
+import net.cnki.bdap.business.base.service.SystemFileService;
+import net.cnki.bdap.persistence.netpolice.bean.SystemFile;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2018年11月27日16:32:07
+ * @since jdk_1.8.0_31
+ */
+public class SystemFileServiceImpl extends BdapServiceImpl<SystemFile> implements SystemFileService {
+	
+	//图片存放路径
+	private final String localImagePath = "D:/uploadFile/images/";
+	private final String imagePath = "images/";
+	//视频存放路径
+	private final String localVideoPath = "D:/uploadFile/videos/";
+	private final String videoPath = "videos/";
+	
+	/**
+	 * 
+	 * @param file 上传的图片
+	 * 
+	 * @return url 上传后服务器存放的路径。
+	 */
+	@Override
+	public String uploadImage(MultipartFile file) throws IOException {
+		String fileName=file.getOriginalFilename();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String formatDatePath = dateFormat.format(new Date());
+		InputStream inputStream = file.getInputStream();
+		String savePath = localImagePath + formatDatePath;
+		
+		//如果当前日期的文件夹不存在,则创建一个。
+		File fil = new File(savePath);
+		if (!fil.exists() && !fil.isDirectory()) {
+		    //创建目录
+		    fil.mkdirs();
+		}
+		
+		String url = savePath + "/" + fileName ;
+		this.saveFile(inputStream,url);
+		
+		//拼接图片鉴定地址.
+		String relPath = formatDatePath+ "/" + fileName;
+		String identifyUrl = "http://192.168.25.83:7981/http://192.168.25.59:8080/image/" + imagePath + relPath;
+		String result = this.loadJson(identifyUrl);
+		
+		/*//存放数据。
+		SystemFileService sFileService = BdapServiceFactory.instance().getService(SystemFileService.class);
+		SystemFile sFile = new SystemFile();
+		sFile.setFileName(fileName);
+		sFile.setFilePath(url);
+		sFile.setSexIndex(result);
+		sFileService.saveOrUpdate(sFile);*/
+		
+		return result;
+	}
+	
+	/**
+	 * 
+	 * @param file 上传的视频文件
+	 * 
+	 * @return url 上传后服务器存放的路径。
+	 */
+	@Override
+	public String uploadVideo(MultipartFile file) throws IOException {
+		String fileName=file.getOriginalFilename().split("\\.")[0];
+		String fileIndex =file.getOriginalFilename();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String formatDatePath = dateFormat.format(new Date());
+		InputStream inputStream = file.getInputStream();
+		String url = localVideoPath + formatDatePath + "/" + fileName;
+		
+		//如果当前日期的文件夹不存在,则创建一个。
+		File fil = new File(url);
+		if (!fil.exists() && !fil.isDirectory()) {
+			//创建目录
+			fil.mkdirs();
+		}
+		
+		//视频切割图片存放于D://uploadFile/时间/文件名  下.
+		//视频存放于D://uploadFile/时间/文件名 / 下.
+		this.saveFile(inputStream,url+ "/"+ fileIndex);
+		
+		
+		int i = 0;
+		String imagePath = formatDatePath + "/" + fileName;
+		File imageList = new File(url);		
+		File[] fList = imageList.listFiles();	
+
+		//遍历循环
+		for(File f:fList) {
+			String imageName = f.getName();
+			
+			if (fileIndex != imageName && !fileIndex.equals(imageName)) {
+				String relPath = imagePath + "/" + imageName;
+				String identifyUrl = "http://192.168.25.83:7981/http://192.168.25.59:8080/image/" + videoPath + relPath;
+				String result =this.loadJson(identifyUrl);
+				Double index =Double.valueOf(result) ;
+				
+				if( index > 0.8 ) {
+					i++;
+				}
+			}
+		}
+		
+		
+		/*//存放数据。
+		SystemFileService sFileService = BdapServiceFactory.instance().getService(SystemFileService.class);
+		SystemFile sFile = new SystemFile();
+		sFile.setFileName(fileName);
+		sFile.setFilePath(url);
+		sFileService.saveOrUpdate(sFile);*/
+		
+		return url;
+	}
+	
+	private void saveFile(InputStream inputStream, String url) throws IOException {
+		FileOutputStream fs=new FileOutputStream(url);
+		
+		byte[] buffer =new byte[1024*1024];
+        int bytesum = 0;
+        int byteread = 0;
+        while ((byteread=inputStream.read(buffer))!=-1)
+        {
+            bytesum += byteread;
+            fs.write(buffer,0,byteread);
+            fs.flush();
+        }
+        fs.close();
+        inputStream.close();
+	}
+	
+	/**
+	 * 
+	 * @param type 文件格式。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	@Override
+	public boolean isImage(String type){
+		String[] imagType={"jpg","png","bmp","gif","svg"};
+		List<String> imageTyepLists = Arrays.asList(imagType);
+		if(imageTyepLists.contains(type)){
+		   return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param type 文件格式(实名)。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	@Override
+	public boolean isVideo(String type){
+		String[] imagType={"avi","mp4","rmvb","MP4"};
+		List<String> imageTyepLists = Arrays.asList(imagType);
+		if(imageTyepLists.contains(type)){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * 
+	 * @param url 图片鉴定地址。
+	 * 
+	 * @return String 黄色内容指数。
+	 */
+	@Override
+	public String loadJson (String url) {
+        StringBuilder json = new StringBuilder();
+        try {
+            URL urlObject = new URL(url);
+            // 打开和URL之间的连接。
+            URLConnection uc = urlObject.openConnection();
+            // 定义BufferedReader输入流来读取URL的响应
+            BufferedReader in = new BufferedReader(new InputStreamReader(uc.getInputStream()));
+            String inputLine = null;
+            while ( (inputLine = in.readLine()) != null) {
+                json.append(inputLine);
+            }
+            in.close();
+        } catch (MalformedURLException e) {
+        	e.printStackTrace();
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
+        return json.toString();
+    }
+	
+}

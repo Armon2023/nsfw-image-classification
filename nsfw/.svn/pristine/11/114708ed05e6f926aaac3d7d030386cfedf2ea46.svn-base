@@ -1,0 +1,12 @@
+bdap.prs.db.url=jdbc:mysql://192.168.103.234:3366/prs
+#bdap.prs.db.url=jdbc:mysql://10.3.3.24:3306/prs
+bdap.prs.db.driverclass=com.mysql.jdbc.Driver
+
+bdap.prs.db.sys.username=prsuser
+#bdap.prs.db.sys.username=root
+bdap.prs.db.sys.password=6F80162FEC4A3889
+#bdap.prs.db.sys.password=15231523
+
+bdap.prs.db.sys.initialSize=2
+bdap.prs.db.sys.maxActive=10
+bdap.prs.db.sys.cfg=classpath:/hibernate/prs_hibernate.cfg.xml

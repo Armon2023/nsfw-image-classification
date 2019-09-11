@@ -1,0 +1,8 @@
+kmis.db.url=jdbc:mysql://192.168.25.71:3306/cnki?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+
+kmis.db.sys.username=root
+kmis.db.sys.password=Cnki2017.
+
+kmis.db.initialSize=0
+kmis.db.maxActive=3
+

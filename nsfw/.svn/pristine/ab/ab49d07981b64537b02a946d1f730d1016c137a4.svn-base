@@ -1,0 +1,19 @@
+package net.cnki.bdap.apps.articledetecterweb.view;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+
+public class UserArticle extends BaseBean{
+
+	private static final long serialVersionUID = -6740383222644821903L;
+	private String article;
+
+	public String getArticle() {
+		return article;
+	}
+
+	public void setArticle(String article) {
+		this.article = article;
+	}
+
+}

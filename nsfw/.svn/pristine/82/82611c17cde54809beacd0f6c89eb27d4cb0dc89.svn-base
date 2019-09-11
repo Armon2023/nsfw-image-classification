@@ -1,0 +1,40 @@
+package net.cnki.bdap.business.system.service;
+
+
+import java.util.List;
+
+import net.cnki.bdap.persistence.system.bean.BJCommunity;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 社区信息Service。
+ * 
+ * @author wangxu
+ * @version 2018年11月28日11:27:47
+ * @since jdk_1.8.0_31
+ */
+public interface BJCommunityService extends BdapService<BJCommunity> {
+	/**
+     * 根据当前街道属内的所有社区网格信息。
+     * 
+     * @param  streetId 街道/镇 ID。
+     * @return BJCommunity list 社区结果集合。
+     */
+    public List<BJCommunity> getAllCommunity(Integer streetId);  
+    
+    /**
+     * 获取当前街道所有社区集合。
+     * 
+     * @param  list List<BJCommunity> 社区所有网格信息。
+     * @return List<String> 社区结果集合。
+     */
+    public List<String> getStreetCommunity(List<BJCommunity> list); 
+    
+    /**
+     * 获取当前社区所有网格员信息。
+     * 
+     * @param  community 社区名。
+     * @return List<BJCommunity> 当前社区网格员集合。
+     */
+    public List<BJCommunity> getGridMember(String community);     
+}

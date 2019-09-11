@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.SystemUser;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * PRS用户dao.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:08
+ */
+public class SystemUserDao extends BdapBaseDao<SystemUser> {
+}

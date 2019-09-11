@@ -1,0 +1,15 @@
+package net.cnki.bdap.persistence.nsfw.dao;
+
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFile;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class NsfwFileDao extends BdapBaseDao<NsfwFile>{
+
+}

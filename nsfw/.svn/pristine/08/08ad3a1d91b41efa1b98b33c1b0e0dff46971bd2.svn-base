@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <bean id="nlpDS" class="org.apache.commons.dbcp.BasicDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${bdap.nlp.db.driverclass}"/>
+        <property name="url" value="${bdap.nlp.db.url}"/>
+        <property name="username" value="${bdap.nlp.db.sys.username}"/>
+        <property name="password" value="${bdap.nlp.db.sys.password}"/>
+
+        <property name="maxActive" value="${bdap.nlp.db.sys.maxActive}"/>
+        <property name="initialSize" value="${bdap.nlp.db.sys.initialSize}"/>
+        <property name="maxWait" value="60000"/>
+        <property name="minIdle" value="3"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+        <property name="maxOpenPreparedStatements" value="10"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="180"/>
+        <property name="logAbandoned" value="true"/>
+        <property name="validationQuery" value="select 1 from dual"/>
+    </bean>
+
+    <bean id="nlpSF"
+          class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+          lazy-init="false">
+        <property name="dataSource" ref="nlpDS"/>
+        <property name="configLocation" value="${bdap.nlp.db.hib.cfg}"/>
+        <property name="mappingLocations">
+            <list>
+                <value>classpath:/hibernate/nlp/*.hbm.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="nlpHT" class="org.springframework.orm.hibernate5.HibernateTemplate">
+        <property name="sessionFactory" ref="nlpSF"/>
+        <property name="cacheQueries" value="true"/>
+    </bean>
+
+</beans>

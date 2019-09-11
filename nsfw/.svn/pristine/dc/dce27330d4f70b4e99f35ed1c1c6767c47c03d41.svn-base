@@ -1,0 +1,11 @@
+bdap.nlp.db.url=jdbc:mysql://192.168.25.71:3306/bdap_dic_lib
+bdap.nlp.db.driverclass=com.mysql.jdbc.Driver
+
+bdap.nlp.db.sys.username=grsuser
+bdap.nlp.db.sys.password=grsuser
+
+bdap.nlp.db.sys.initialSize=1
+bdap.nlp.db.sys.maxActive=5
+
+bdap.nlp.db.hib.cfg=classpath:/hibernate/dev_nlp_hibernate.cfg.xml
+

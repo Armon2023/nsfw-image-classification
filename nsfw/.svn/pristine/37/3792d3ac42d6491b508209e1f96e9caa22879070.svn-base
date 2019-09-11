@@ -1,0 +1,42 @@
+
+$.validator.addMethod('notEqualTo',function(value,element,params){
+    if(value === params){
+        return false;
+    }
+    return true;
+},'请选择一个选项!');
+
+$.validator.addMethod('chinese',function(value,element,params){
+    var reg = /^[\u4E00-\u9FA5]*$/;
+    if(reg.test(value)){
+        return true;
+    }
+    return false;
+},'请输入中文!');
+
+$.validator.addMethod("startDate",function(value,element){
+    var startDate = $(element).val();
+    var endDate = $(element).parent().next().next().find('input').val();
+    if (!startDate||!endDate) return true;
+    startDateI = new Date(parseInt(Date.parse(startDate),10));
+    endDateI = new Date(parseInt(Date.parse(endDate),10));
+    if(startDateI>endDateI){
+        return false;
+    }else{
+        return true;
+    }
+},"<font color='#E47068'>结束日期必须大于开始日期</font>");
+
+
+$.validator.addMethod("endDate",function(value,element){
+    var endDate = $(element).val();
+    var startDate = $(element).parent().prev().prev().find('input').val();
+    if (!startDate||!endDate) return true;
+    startDate = new Date(parseInt(Date.parse(startDate),10));
+    endDate = new Date(parseInt(Date.parse(endDate),10));
+    if(startDate>endDate){
+        return false;
+    }else{
+        return true;
+    }
+},"<font color='#E47068'>结束日期必须大于开始日期</font>");

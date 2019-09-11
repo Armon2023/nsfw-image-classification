@@ -1,0 +1,268 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+<html lang="en">
+<%
+    String path = request.getContextPath();
+    String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path;
+%>
+<head>
+    <meta charset="utf-8">
+    <title>
+        功耗详情
+    </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="<%=basePath%>/icomoon/style.css" rel="stylesheet">
+    <link href="<%=basePath%>/css/main.css" rel="stylesheet">
+</head>
+<style>
+    .mini-login {
+        float: right;
+        height: 34px;
+        margin: 2px 0px;
+        border: none;
+        background: none;
+    }
+
+    .dashboard-container {
+        margin-top: 0px;
+    }
+
+    .systemtitle {
+        float: right;
+        color: #fff;
+        margin: 20px 134px 0px 20px;
+    }
+
+    .systemtitle p img {
+        width: 500px;
+    }
+</style>
+<body>
+<div class="systemtitle">
+    <p>
+        <img src="<%=basePath%>/images/topTitle.png"/>
+    </p>
+</div>
+<p style="clear: both;"></p>
+<div class="container-fluid">
+    <div class="dashboard-container">
+        <div class="sub-nav">
+            <ul>
+                <li><a href="<%=basePath%>/index">今日统计</a></li>
+                <li><a href="<%=basePath%>/historyData">历史统计</a></li>
+                <li><a href="<%=basePath%>/taskList" class="heading">任务列表</a></li>
+            </ul>
+        </div>
+        <%--<div class="sub-nav">--%>
+            <%--<ul>--%>
+                <%--<li><a href="javascript:void(0)" class="heading">功耗详情</a></li>--%>
+            <%--</ul>--%>
+        <%--</div>--%>
+        <div class="dashboard-wrapper">
+            <div class="left-sidebar">
+                <div class="row-fluid">
+                    <div class="span12">
+                        <div class="widget">
+                            <div class="widget-header">
+                                <div class="title">
+                                    功耗详情
+                                </div>
+                            </div>
+                            <div class="widget-body">
+                                <div id="dt_example" class="example_alt_pagination">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <p>
+        &copy; cnki 2019
+    </p>
+</footer>
+<script src="<%=basePath%>/js/jquery.min.js" type="text/javascript">
+</script>
+<script src="<%=basePath%>/js/bootstrap.js" type="text/javascript">
+</script>
+<script src="<%=basePath%>/js/jquery.scrollUp.js" type="text/javascript">
+</script>
+<script src="<%=basePath%>/js/jquery.dataTables.js" type="text/javascript">
+</script>
+<script type="text/javascript" src="<%=basePath%>/js/echarts.js"></script>
+
+<script type="text/javascript">
+    //ScrollUp
+    $(function () {
+        $.scrollUp({
+            scrollName: 'scrollUp', // Element ID
+            topDistance: '300', // Distance from top before showing element (px)
+            topSpeed: 300, // Speed back to top (ms)
+            animation: 'fade', // Fade, slide, none
+            animationInSpeed: 400, // Animation in speed (ms)
+            animationOutSpeed: 400, // Animation out speed (ms)
+            scrollText: 'Scroll to top', // Text for element
+            activeOverlay: false // Set CSS color to display scrollUp active point, e.g '#00FFFF'
+        });
+    });
+
+    //Tooltip
+    $('a').tooltip('hide');
+
+    //Data Tables
+    $(document).ready(function () {
+        $('#data-table').dataTable({
+            "sPaginationType": "full_numbers"
+        });
+    });
+
+    jQuery('.delete-row').click(function () {
+        var conf = confirm('Continue delete?');
+        if (conf) jQuery(this).parents('tr').fadeOut(function () {
+            jQuery(this).remove();
+        });
+        return false;
+    });
+
+    // 获取时间.
+    function gettime(item) {
+        if (item.indexOf("ms") !== -1) {
+            var items1 = item.split("ms");
+            return parseFloat(items1[0]) / 1000;
+        } else if (item.indexOf("m") !== -1 && item.indexOf("s") !== -1) {
+            var items2 = item.split("m");
+            var min = parseFloat(items2[0]);
+            var second = parseFloat(items2[1].split("s")[0]);
+            return parseFloat(min * 60 + second);
+        } else if (item.indexOf("s") !== -1) {
+            var items3 = item.split("s");
+            return parseFloat(items3[0]);
+        }
+    }
+
+    var json_list = ${powerInfos};
+
+    console.log(parseInt(json_list[0].Drop.split("->")[1].split("=")[0].replace(/\s+/g, "")));
+    console.log(json_list[1]);
+
+    $("#dt_example").empty();
+    for (var i = 0; i < json_list.length; i++) {
+        var ids = "charts" + i;
+        var chart = "<div class='widget'><div class='body'><div id='" + ids + "' style='width: 100%;height:750px;'></div></div></div>";
+
+        var CPURunning = gettime(json_list[i].CPURunning);
+        var Duration = gettime(json_list[i].Duration);
+        var ScreenOn = gettime(json_list[i].ScreenOn);
+        var WifiOn = gettime(json_list[i].WifiOn);
+        var WifiRadio = gettime(json_list[i].WifiRadio);
+        var WifiRunning = gettime(json_list[i].WifiRunning);
+        var AudioOn = gettime(json_list[i].AudioOn);
+        var BLEScan = gettime(json_list[i].BLEScan);
+        var CameraOn = gettime(json_list[i].CameraOn);
+        var ChargingOn = gettime(json_list[i].ChargingOn);
+        var FlashlightOn = gettime(json_list[i].FlashlightOn);
+        var GpsOn = gettime(json_list[i].GpsOn);
+        var PhoneCall = gettime(json_list[i].PhoneCall);
+        var PhoneScan = gettime(json_list[i].PhoneScan);
+        var PluggedIn = gettime(json_list[i].PluggedIn);
+        var RadioOn = gettime(json_list[i].RadioOn);
+        var SensorOn = gettime(json_list[i].SensorOn);
+        var VideoOn = gettime(json_list[i].VideoOn);
+        var WifiFullLock = gettime(json_list[i].WifiFullLock);
+        var WifiMulticastOn = gettime(json_list[i].WifiMulticastOn);
+        var WifiScan = gettime(json_list[i].WifiScan);
+
+        $("#dt_example").append(chart);
+        var charts1 = echarts.init(document.getElementById(ids));
+        option = {
+            title: {
+                text: "      " + json_list[i].Summary.replace(/\+0800 \+08/g, "")
+            },
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'shadow'
+                }
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                name: 'time (s)',
+                type: 'value',
+                boundaryGap: [0, 0.01]
+            },
+            yAxis: {
+                name: '项目',
+                type: 'category',
+                data: ['CPURunning', 'WifiRunning', 'ScreenOn', 'VideoOn', 'WifiRadio', 'Duration', 'AudioOn', 'BLEScan', 'CameraOn', 'ChargingOn',
+                    'FlashlightOn', 'GpsOn', 'PhoneCall', 'PhoneScan', 'PluggedIn', 'RadioOn', 'SensorOn', 'WifiOn', 'WifiFullLock', 'WifiMulticastOn', 'WifiScan']
+            },
+            series: [
+                {
+                    name: 'time (s)',
+                    type: 'bar',
+                    data: [CPURunning, WifiRunning, ScreenOn, VideoOn, WifiRadio, Duration, AudioOn, BLEScan, CameraOn, ChargingOn, FlashlightOn,
+                        GpsOn, PhoneCall, PhoneScan, PluggedIn, RadioOn, SensorOn, WifiOn, WifiFullLock, WifiMulticastOn, WifiScan]
+                }
+            ]
+        };
+        charts1.setOption(option);
+
+    }
+
+    // 电量。
+    var chartsDrop = "<div class='widget'><div class='body'><div id='chartsDrop' style='width: 70%;height:550px;'></div></div></div>";
+    $("#dt_example").append(chartsDrop);
+
+    var shijianduan = [];
+    var dianliang = [];
+    for (var k = 0; k < json_list.length; k++) {
+        shijianduan[k] = k + 1;
+        dianliang[k] = parseInt(json_list[k].Drop.split("->")[1].split("=")[0].replace(/\s+/g, ""));
+    }
+
+    var chartDrop = echarts.init(document.getElementById("chartsDrop"));
+    option = {
+        title: {
+            text: '电量消耗'
+        },
+        xAxis: {
+            name: '时间段',
+            type: 'category',
+            data: shijianduan
+        },
+        yAxis: {
+            name: '电量 %',
+            type: 'value'
+        },
+        series: [{
+            data: dianliang,
+            barWidth: 30,
+            type: 'bar'
+        }],
+        tooltip: {
+            trigger: 'axis',
+            // 坐标轴指示器，坐标轴触发有效。
+            axisPointer: {
+                // 默认为直线，可选为：'line' | 'shadow' | 'none'。
+                type: 'shadow'
+            }
+        }
+    };
+    chartDrop.setOption(option);
+
+</script>
+</body>
+</html>

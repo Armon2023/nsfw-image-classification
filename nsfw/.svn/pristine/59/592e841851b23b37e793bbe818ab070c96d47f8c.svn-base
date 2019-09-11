@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd ">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.persistence.system.bean.SystemMasterType" table="SYS_MNT_MASTER_TYPE" >
+		<id name="id" type="java.lang.Integer" column="MASTER_TYPE_ID">
+			<generator class="identity"/>
+		</id>
+		<set name="masters" cascade="delete" inverse="true" fetch="select" lazy="false">
+			<key column="MASTER_TYPE_ID" not-null="true"></key>
+			<one-to-many class="net.cnki.bdap.persistence.system.bean.SystemMasterType"/>
+		</set>
+		<property name="typeCode" type="java.lang.Integer">
+			<column name="TYPE_CODE" not-null="true">
+				<comment>类型编号</comment>
+			</column>
+		</property>
+		<property name="typeName" type="java.lang.String">
+			<column name="TYPE_NAME" not-null="true" length="32">
+				<comment>类型名称</comment>
+			</column>
+		</property>
+		
+		<property name="createdBy" type="java.lang.String" >
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String" >
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp" >
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer" >
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

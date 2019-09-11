@@ -1,0 +1,103 @@
+var CANCEL = -1;
+var NOT_STARTED = 0;
+var INITIALIZED = 1;
+var INPROGRESS = 2;
+var DELAYED = 30;
+var HANG = 40;
+var REJECETED = 50;
+var SUBMITTED = 6;
+var COMPLETED = 9;
+
+$(function () {
+    initWorkflow();
+})
+
+function initWorkflow() {
+    var isBlocked = $("#isBlocked").val();
+    var taskStatus = $("#ttStatus").val();
+    if (taskStatus == NOT_STARTED || taskStatus == INITIALIZED) {
+        $("#startTTBtn").bind("click", startTT);
+        $("#startTTBtn").removeClass("disabledB");
+
+        $("#submitTTBtn").unbind("click");
+        $("#submitTTBtn").addClass("disabledB");
+
+        $("#rejectTTBtn").unbind("click");
+        $("#rejectTTBtn").addClass("disabledB");
+
+        $("#topLayer").bind("click", noEditablePrompt);
+    } else if (taskStatus == SUBMITTED) {
+        $("#startTTBtn").addClass("disabledB");
+        $("#startTTBtn").unbind("click");
+
+        $("#submitTTBtn").addClass("disabledB");
+        $("#submitTTBtn").unbind("click");
+
+        $("#assignTTBtn").addClass("disabledB");
+        $("#assignTTBtn").unbind("click");
+
+        $("#rejectTTBtn").unbind("click");
+        $("#rejectTTBtn").addClass("disabledB");
+
+        $("#topLayer").bind("click", noEditablePrompt);
+    } else if (taskStatus == INPROGRESS && isBlocked == "false" || taskStatus == DELAYED || taskStatus == HANG) {
+        $("#startTTBtn").addClass("disabledB");
+        $("#startTTBtn").unbind("click");
+
+        $("#rejectTTBtn").bind("click", rejectTT);
+        $("#rejectTTBtn").removeClass("disabledB");
+
+        $("#submitTTBtn").bind("click", submitTT);
+        $("#submitTTBtn").removeClass("disabledB");
+
+        $(".bottomLayer").removeClass("bottomLayer");
+        $("#topLayer").unbind("click");
+    } else if (taskStatus == REJECETED) {
+        $("#startTTBtn").addClass("disabledB");
+        $("#startTTBtn").unbind("click");
+
+        $("#rejectTTBtn").addClass("disabledB");
+        $("#rejectTTBtn").unbind("click");
+
+        $("#submitTTBtn").bind("click", submitTT);
+        $("#submitTTBtn").removeClass("disabledB");
+
+        $(".bottomLayer").removeClass("bottomLayer");
+        $("#topLayer").unbind("click");
+
+    } else if (taskStatus == INPROGRESS && isBlocked == "true") {
+
+        $("#startTTBtn").addClass("disabledB");
+        $("#startTTBtn").unbind("click");
+
+        $("#submitTTBtn").addClass("disabledB");
+        $("#submitTTBtn").unbind("click");
+
+        $("#assignTTBtn").addClass("disabledB");
+        $("#assignTTBtn").unbind("click");
+
+        $("#rejectTTBtn").unbind("click");
+        $("#rejectTTBtn").addClass("disabledB");
+
+        $("#topLayer").bind("click", noEditablePrompt);
+    } else if (taskStatus == COMPLETED) {
+        $("#startTTBtn").addClass("disabledB");
+        $("#startTTBtn").unbind("click");
+
+        $("#submitTTBtn").unbind("click");
+        $("#submitTTBtn").addClass("disabledB");
+
+        $("#rejectTTBtn").unbind("click");
+        $("#rejectTTBtn").addClass("disabledB");
+
+        $("#assignTTBtn").addClass("disabledB");
+        $("#assignTTBtn").unbind("click");
+
+        $("#topLayer").bind("click", noEditablePrompt);
+    }
+}
+
+
+function noEditablePrompt() {
+    prompt("warning", "id", "msgArea", "目前任务不可编辑!")
+}

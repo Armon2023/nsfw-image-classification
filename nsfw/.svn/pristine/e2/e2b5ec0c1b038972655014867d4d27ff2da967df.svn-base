@@ -1,0 +1,48 @@
+package net.cnki.bdap.web.controller;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * The user login Contrller.
+ * </p>
+ * 
+ * @author william
+ * @version 2018年5月18日上午10:26:41
+ * @since jdk_1.8.0_144
+ *
+ */
+@Controller
+public class AppController {
+
+	@Autowired(required = false)
+	protected HttpServletRequest request;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/index")
+	@ResponseBody
+	public ModelAndView index() {
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("index");
+		
+	
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+
+	
+
+}

@@ -1,0 +1,8 @@
+kmis.db.url=jdbc:mysql://10.10.110.9:3306/bdap_nsfw?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+
+kmis.db.sys.username=nsfwuser
+kmis.db.sys.password=NSFWuser
+
+kmis.db.initialSize=0
+kmis.db.maxActive=3
+

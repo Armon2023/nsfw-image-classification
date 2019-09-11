@@ -1,0 +1,95 @@
+package net.cnki.bdap.business.nsfw.service;
+
+
+import java.io.IOException;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFile;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ */
+public interface NsfwFileService extends BdapService<NsfwFile> {
+
+
+	/**
+	 * 上传文件。
+	 * @param file jpg,png,bmp,gif,svg,jpeg,bmp\mp4\wav,pcm,amr .
+	 */
+	void uploadFile(NsfwFile file) throws Exception;
+	/**
+	 * 
+	 * @param file(图片) 上传的文件。
+	 * 
+	 * @return url 上传后服务器存放的路径。
+	 */
+	public String uploadImage(MultipartFile file) throws Exception;
+	
+	/**
+	 * 
+	 * @param file 上传的文件。
+	 * 
+	 * @return url(视频) 上传后服务器存放的路径。
+	 */
+	public String uploadVideo(MultipartFile file) throws Exception;
+	
+	/**
+	 * 
+	 * @param file 上传的文件。
+	 * 
+	 * @return url(音频) 上传后服务器存放的路径。
+	 */
+	public String uploadAudio(MultipartFile file) throws Exception;
+	/**
+	 * 
+	 * @param type 文件格式。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	public boolean isImage(String type); 
+	
+	/**
+	 * 
+	 * @param type 文件格式(视频)。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	public boolean isVideo(String type); 
+	
+	/**
+	 * 
+	 * @param type 文件格式(音频)。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	public boolean isAudio(String type); 
+	/**
+	 * 
+	 * @param url 图片鉴定地址。
+	 * 
+	 * @return String 黄色内容指数。
+	 */
+	public String loadJson (String url);
+	
+	/**
+	 * 
+	 * 加载上传文件列表.
+	 * 
+	 */
+	public List<NsfwFile> loadNsfwTable(); 
+	
+	/**
+	 * 根据检索条件检索全部符合的项目。
+	 * 
+	 * @param nsfw
+	 *            检索条件信息。
+	 * @return  List<NsfwFile>.        
+	 */
+	public List<NsfwFile> searchFileList(NsfwFile nsfw);
+}

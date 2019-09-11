@@ -1,0 +1,38 @@
+package net.cnki.bdap.business.nsfw.serviceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import net.cnki.bdap.business.nsfw.service.NsfwFileTaskService;
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFileTask;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2018年11月27日16:32:07
+ * @since jdk_1.8.0_31
+ */
+public class NsfwFileTaskServiceImpl extends BdapServiceImpl<NsfwFileTask> implements NsfwFileTaskService {
+
+	/**
+	 * 
+	 * 定时任务删除 2min清一次表.
+	 * 
+	 */
+	@Override
+	public void clearTable() {
+		NsfwFileTaskService sFileService = BdapServiceFactory.instance().getService(NsfwFileTaskService.class);
+		int count = sFileService.count();
+		if (count > 0) {
+			StringBuilder builder = new StringBuilder(32);
+			builder.append("delete from NsfwFileTask");
+			String sql = builder.toString();
+			List<Object> para = new ArrayList<Object>();
+
+			sFileService.execute(sql, para);
+		}
+	}
+
+}

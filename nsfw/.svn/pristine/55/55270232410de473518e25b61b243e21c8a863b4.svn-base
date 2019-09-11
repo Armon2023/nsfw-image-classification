@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+
+	<bean id="bdap.dao.BdapNLP" class="net.cnki.bdap.nlp.persistence.dao.BdapNLPDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPResult" class="net.cnki.bdap.nlp.persistence.dao.NLPResultDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPResultIssue" class="net.cnki.bdap.nlp.persistence.dao.NLPResultIssueDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+
+	<bean id="bdap.dao.NLPAllFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPAllFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPCrimeFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPCrimeFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPGameFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPGameFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPGovMisspell" class="net.cnki.bdap.nlp.persistence.dao.NLPGovMisspellDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPLeaderMisspell" class="net.cnki.bdap.nlp.persistence.dao.NLPLeaderMisspellDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPMisspellWord" class="net.cnki.bdap.nlp.persistence.dao.NLPMisspellWordDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPNaturalScienceFBWD"
+		class="net.cnki.bdap.nlp.persistence.dao.NLPNaturalScienceFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPOtherFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPOtherFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPPinyinFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPPinyinFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPPoliticsFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPPoliticsFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPPornographicFBWD"
+		class="net.cnki.bdap.nlp.persistence.dao.NLPPornographicFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPReactionaryFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPReactionaryFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPSocialScienceFBWD"
+		class="net.cnki.bdap.nlp.persistence.dao.NLPSocialScienceFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPSuperstitionFBWD"
+		class="net.cnki.bdap.nlp.persistence.dao.NLPSuperstitionFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPTaiwanMisspell" class="net.cnki.bdap.nlp.persistence.dao.NLPTaiwanMisspellDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPTraditionalChineseFBWD"
+		class="net.cnki.bdap.nlp.persistence.dao.NLPTraditionalChineseFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPUncommonFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPUncommonFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPWEBPageFBWD" class="net.cnki.bdap.nlp.persistence.dao.NLPWEBPageFBWDDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPWordCn" class="net.cnki.bdap.nlp.persistence.dao.NLPWordCnDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+	<bean id="bdap.dao.NLPWordEn" class="net.cnki.bdap.nlp.persistence.dao.NLPWordEnDao">
+		<property name="sessionFactory" ref="nlpSF" />
+		<property name="hibernateTemplate" ref="nlpHT" />
+	</bean>
+
+</beans>

@@ -1,0 +1,256 @@
+<template>
+  <div class="hello">
+    <el-row>
+      <el-col :span="24">
+        <div class="grid-content bg-purple-dark" style="color: #fff;">敏感信息鉴定</div>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col :span="24" style="margin-top: 30px;">
+        <div class="grid-content bg-purple-dark">
+          <el-upload
+					  class="upload-demo"
+					  name="cfile"
+            ref="upload"
+            multiple
+            :limit="1"
+            :on-exceed="handleExceed"
+            :before-upload="beforeAvatarUpload"
+					  action="/nsfw/uploadFile"
+					  :on-preview="handlePreview"
+					  :on-remove="handleRemove"
+					  :on-success="uploadSuccess"
+					  :file-list="fileList"
+					  :auto-upload="false">
+					  <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
+					  <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传</el-button>
+					</el-upload>
+        </div>
+      </el-col>
+    </el-row>
+
+    <el-col :span="24" class="toolbar" style="padding-bottom: 0px;margin-top: 30px;">
+      <el-form :inline="true">
+      	<el-form-item label="文件名:"> 
+		        <div class="grid-content bg-purple">
+		          <el-input size="medium" v-model="qFileName" placeholder="文件名"></el-input>
+		        </div>
+       	</el-form-item>
+      	<el-form-item label="上传时间:">
+	        <div class="grid-content bg-purple">
+	          <el-date-picker
+	            v-model="startTime"
+	            align="right"
+	            type="date"
+	            size="medium"
+	            format="yyyy-MM-dd"
+	            value-format="yyyy-MM-dd"
+	            placeholder="开始上传日期">
+	          </el-date-picker>
+	        </div>
+       	</el-form-item>
+      	<el-form-item>
+          <el-date-picker
+            v-model="endTime"
+            align="right"
+            type="date"
+            size="medium"
+            format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd"
+            placeholder="结束上传日期">
+          </el-date-picker>
+       	</el-form-item>
+      	<el-form-item>
+	        <div class="grid-content bg-purple">
+	          <el-button  size="medium" type="primary" v-on:click="getTableData()">查询</el-button>
+	        </div>
+       </el-form-item>
+    	</el-form>
+    </el-col>
+    <el-table
+      :data="tableData"
+      :header-cell-style="getRowClass"
+      border
+      style="width: 90%;margin-left: 100px;margin-top: 25px;">
+      <el-table-column
+        prop="fileName"
+        label="文件名"
+        width="240">
+      </el-table-column>
+      <el-table-column
+        prop="isNsfwFile"
+        label="是否敏感"
+        width="120">
+        <template slot-scope="scope">
+          <span v-if="scope.row.isNsfwFile===1" style="color: red">是</span>
+          <span v-else-if="scope.row.isNsfwFile===0">否</span>
+        </template>
+      </el-table-column>
+      <el-table-column
+        prop="sexIndex"
+        label="敏感系数"
+        width="240">
+      </el-table-column>
+      <el-table-column
+        label="文本">
+        <template slot-scope="scope">
+          <el-popover trigger="hover" placement="top">
+            <p>{{ scope.row.content }}</p>
+            <div slot="reference" class="name-wrapper">
+              <el-tag size="medium">{{ scope.row.content }}</el-tag>
+            </div>
+          </el-popover>
+        </template>
+      </el-table-column>
+      <el-table-column
+        label="上传日期"
+        width="180">
+        <template slot-scope="scope">
+          <i class="el-icon-time"></i>
+          <span style="margin-left: 10px">{{ scope.row.uploadTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="120">
+        <template slot-scope="scope">
+          <el-popover
+            placement="right"
+            width="500"
+            height="400"
+            trigger="click">
+            <div class="popover-content" v-html="scope.row.reviewHtml"></div>
+            <el-button  type="warning" size="small" slot="reference">预览</el-button>
+          </el-popover>
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+  export default {
+    data() {
+      return {
+        cfile: '',
+        startTime: '',
+        endTime: '',
+        qFileName: '',
+        fileList: [],
+        tableData: []
+      };
+    },
+    mounted: function () {
+      this.getTableData()
+    },
+    methods: {
+    	getRowClass({ row, column, rowIndex, columnIndex }) {
+	      if (rowIndex === 0) {
+	        return 'background-color: lightblue;color: #fff;font-weight: 500;'
+	      }
+	    },
+    	submitUpload() {
+        this.$refs.upload.submit();
+      },
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      },
+      handleExceed(files, fileList) {
+        this.$message.warning(`当前限制选择 1 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
+      },
+      uploadSuccess(response, file, fileList) {
+        this.$refs.upload.clearFiles();
+        this.getTableData()
+      },
+      getTableData() {
+        let param = new URLSearchParams();
+        param.append("fileName", this.qFileName);
+        param.append("startTime", this.startTime);
+        param.append("endTime", this.endTime);
+        this.$http.post('/nsfw/search', param)
+          .then(res => {
+            this.tableData = res.data;
+          })
+      },
+      beforeAvatarUpload(file) {
+        // const isSType = file.type === 'jpg/png/bmp/gif/svg/jpeg/bmp/mp4/wav/pcm/amr';
+        const isLt200M = file.size / 1024 / 1024 / 1024 / 1024 < 2;
+        // if (!isSType) {
+        //   this.$message.error('上传文件只能是 jpg/png/bmp/gif/svg/jpeg/bmp/mp4/wav/pcm/amr 格式!');
+        //   this.$refs.upload.clearFiles();
+        // }
+        if (!isLt200M) {
+          this.$message.error('上传文件大小不能超过 200MB!');
+          this.$refs.upload.clearFiles();
+        }
+        // return isSType && isLt200M;
+        return  isLt200M;
+      }
+    }
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style>
+  :last-child {
+    margin-bottom: 0;
+  }
+
+  .grid-content {
+    border-radius: 4px;
+    min-height: 36px;
+  }
+
+  .row-bg {
+    padding: 10px 0;
+    background-color: #f9fafc;
+  }
+
+  h1, h2 {
+    font-weight: normal;
+  }
+
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 10px;
+  }
+
+  a {
+    color: #42b983;
+  }
+  
+  .upload-demo{
+  	width: 500px;
+    margin: 0 auto;
+  }
+  .upload-demo ul.el-upload-list{
+  	width: 300px;
+  	height: 32px;
+    margin-top: 15px;
+    float: left;
+    position: relative;
+    border: 1px solid #ccc;
+    text-align: center;
+    border-radius: 6px;
+    background: #fff;
+  }
+  li.el-upload-list__item:first-child{
+  	margin: 0;
+  	padding: 3px;
+  	position: absolute;
+  	top: 0;
+  	left: 0;
+  }
+  .el-upload-list__item .el-icon-close{
+  	top: 10px;
+  }
+  .el-form-item__label{
+  	color: #fff;
+  }
+</style>

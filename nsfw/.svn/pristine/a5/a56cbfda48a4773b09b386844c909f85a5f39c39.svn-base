@@ -1,0 +1,80 @@
+package net.cnki.bdap.persistence.system.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * <p>
+ * 北京大区信息。
+ * </p>
+ * 
+ * @author wangxu
+ * @version 2018年11月27日15:39:10
+ * @since jdk_1.8.0_31
+ *
+ */
+public class BJCounty extends BaseBean{
+
+	private static final long serialVersionUID = 1L;
+
+	/** 大区id.*/
+	private Integer id;
+	/** 大区logo.*/
+	private String countyLogo;
+	/** 区县名称.*/
+	private String countyName;
+	/** 网格总数.*/
+	private String gridNum;
+	/** 网格员总数.*/
+	private String gridPeopleNum;
+	/** 区县排序.*/
+	private Integer countyOrder;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getCountyLogo() {
+		return countyLogo;
+	}
+
+	public void setCountyLogo(String countyLogo) {
+		this.countyLogo = countyLogo;
+	}
+
+	public String getCountyName() {
+		return countyName;
+	}
+
+	public void setCountyName(String countyName) {
+		this.countyName = countyName;
+	}
+
+	public String getGridNum() {
+		return gridNum;
+	}
+
+	public void setGridNum(String gridNum) {
+		this.gridNum = gridNum;
+	}
+
+	public String getGridPeopleNum() {
+		return gridPeopleNum;
+	}
+
+	public void setGridPeopleNum(String gridPeopleNum) {
+		this.gridPeopleNum = gridPeopleNum;
+	}
+
+	public Integer getCountyOrder() {
+		return countyOrder;
+	}
+
+	public void setCountyOrder(Integer countyOrder) {
+		this.countyOrder = countyOrder;
+	}
+
+}

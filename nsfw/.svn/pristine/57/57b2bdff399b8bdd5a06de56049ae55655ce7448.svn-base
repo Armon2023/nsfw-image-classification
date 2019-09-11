@@ -1,0 +1,16 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import net.cnki.bdap.apps.prs.business.service.ResultMessageService;
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+
+/**
+ * 通用返回消息serviceImpl.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:27
+ */
+public class ResultMessageServiceImpl extends BdapServiceImpl<ResultMessage> implements ResultMessageService {
+
+}

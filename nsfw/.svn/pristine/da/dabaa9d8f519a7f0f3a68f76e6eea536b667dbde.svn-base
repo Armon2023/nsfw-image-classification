@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+	<bean id="sysDS" class="com.alibaba.druid.pool.DruidDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="${kmis.db.url}" />
+		<property name="username" value="${kmis.db.sys.username}" />
+		<property name="password" value="${kmis.db.sys.password}" />
+
+		<property name="filters" value="stat" />
+		<property name="maxActive" value="${kmis.db.maxActive}" />
+		<property name="initialSize" value="${kmis.db.initialSize}" />
+		<property name="maxWait" value="60000" />
+		<property name="minIdle" value="2" />
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+		<property name="maxOpenPreparedStatements" value="10" />
+		<property name="removeAbandoned" value="true" />
+		<property name="removeAbandonedTimeout" value="1800" />
+		<property name="logAbandoned" value="true" />
+	</bean>
+	
+	<bean id="sysSF"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean"
+		lazy-init="false">
+		<property name="dataSource" ref="sysDS" />
+		<property name="configLocation" value="classpath:/spring/hibernate/system_hibernate.cfg.xml"></property>
+		<property name="mappingLocations" value="classpath:/spring/hibernate/mapping/*.hbm.xml"></property>
+	</bean>
+
+	<bean id="sysHT" class="org.springframework.orm.hibernate5.HibernateTemplate">
+		<property name="sessionFactory" ref="sysSF" />
+		<property name="cacheQueries" value="true" />
+	</bean>
+
+</beans>

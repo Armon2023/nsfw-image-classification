@@ -1,0 +1,62 @@
+package net.cnki.bdap.business.system.service;
+
+import java.util.List;
+
+import net.cnki.bdap.persistence.system.bean.SystemMaster;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 字典内容管理Service。
+ * 
+ * @version 2018.6.13
+ * @since jdk_1.8.0_161
+ * @author yangjialin
+ */
+public interface SystemMasterService extends BdapService<SystemMaster> {
+        
+        /**
+         * 根据类型编号获取master数据。
+         * 
+         * @param  type 类型编号。
+         * @return systemMaster lsit master结果集合。
+         */
+        public List<SystemMaster> getSysteMasterByType(int type);
+        
+        /**
+         * get the option value by the key.
+         * 
+         * @param key the key of option
+         * @return the value of option
+         */
+        public String getValueByKey(String key);
+        
+        /**
+         * 检查登录项是否在数据库中存在。
+         * 
+         * @param master
+         *                SystemMaster 系统字典内容。
+         * @return String 返回true则存在，否则不存在。
+         */
+        public boolean checkExist(SystemMaster master);
+        
+        /**
+         * 更新master序号。 添加时如果序号已存在，该序号及其后面的序号顺延一位。
+         * 
+         * @param master SystemMaster 系统字典内容。
+         */
+        public void updateOrderForInsertAndUpdate(SystemMaster master);
+        
+        /**
+         * 更新master序号。  删除时，删除序号以后的序号向前提一位。
+         * 
+         * @param master SystemMaster 系统字典内容。
+         */
+        public void updateOrderForDelete(SystemMaster master);
+        
+        /**
+    	 * 获取masterType下最大order。
+    	 * @return
+    	 */
+    	public Integer getMasterTypeMaxOrder(SystemMaster master);
+        
+}

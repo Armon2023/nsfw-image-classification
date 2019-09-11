@@ -1,0 +1,37 @@
+#article{width: 100%;height: 490px;box-shadow: 0 0 50px #ccc;border: 1px solid #ccc;padding: 15px;}
+#submitBtn{width: 106px;height: 30px;line-height: 17px;border-radius: 15px;background:url(../images/BTN.png);background-size: cover;outline: none;border: none;color: #fff;margin: 5px;cursor: pointer;}
+#normalDetectBtn{width: 106px;height: 30px;line-height: 17px;border-radius: 15px;background:url(../images/normolbtn.png);background-size: cover;outline: none;border: none;color: #fff;margin: 5px;cursor: pointer;}
+table{border:1px solid #ccc;width:100%;display:inline-block;}
+table thead{width: 100%;display: block;background: #6e9fb7;color: #fff;}
+table tbody{display: block;background: rgba(255,255,255,0.3);height:470px;overflow:auto;}
+table tr {line-height: 25px;padding: 12px 0;display: block;width: 100%;border-bottom: 1px solid #efdcc0;}
+table th:nth-child(1),table td:nth-child(1){width:15%;display:inline-block;}
+table th:nth-child(2),table td:nth-child(2){width:10%;display:inline-block;}
+table th:nth-child(3),table td:nth-child(3){width:56%;display:inline-block;}
+table td:nth-child(3)::-webkit-scrollbar{width:5px;}
+table td:nth-child(3)::-webkit-scrollbar-track{background-color:#eee;}
+table td:nth-child(3)::-webkit-scrollbar-thumb{background-color:#ccc;}
+table td:nth-child(3)::-webkit-scrollbar-thumb:hover{background-color:#999}
+table td:nth-child(3)::-webkit-scrollbar-thumb:active{background-color:#666}
+table td:nth-child(3){}
+th,td{padding:0 10px;min-width: 5%;}
+.main,.optionList{margin:14px 15px;}
+.main p{width: 100%;height: 38px;line-height: 38px;font-size: 16px;margin: 5px;}
+.main p span{width: 30px;height: 19px;display:inline-block;float: left;}
+div.checker {width: 15px;height: 15px;position: relative;float: left;}
+.checker input{cursor: pointer;}
+table input {border: 1px solid #DDD;padding: 5px 5px;}
+div.checker input {width: 15px;height: 15px;opacity: 0;filter: alpha(opacity:0);display: inline-block;background: none;}
+div.checker span {background: transparent url(../images/checkbox.png) no-repeat 0 0px;vertical-align: middle;height: 15px;width: 15px;display: -moz-inline-box;display: inline-block;text-align: center;}
+.kindList #uniform-undefined ,.kindList p{float:left;}
+.kindList p{width:150px;margin:7px;}
+.kindList #uniform-undefined{width:20px;}
+.kindList p span{font-weight:600;color:#4b96ce}
+.main p span.red{width: auto;height: auto;float: none;}
+.base p{background: url(../images/listTitle2.png) no-repeat;background-size: contain;height: 50px;line-height: 42px;margin-top:14px;}
+.base p .checker{margin: 12px 0 0 16px;}
+.spell p{background: url(../images/listTitle2.png) no-repeat;background-size: contain;height: 46px;line-height: 42px;margin-top: -6px;}
+.spell p .checker{margin: 12px 0 0 16px;}
+.warn{float: left;margin-top: -10px;}
+.warn p{height:auto;margin:0px;font-size: 14px;line-height: 18px;width:200px;color:#000;padding-left: 20px}
+.warn strong{color:red}

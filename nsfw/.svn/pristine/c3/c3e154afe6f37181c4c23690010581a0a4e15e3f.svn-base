@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.TaskList;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * 任务列表dao.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:04
+ */
+public class TaskListDao extends BdapBaseDao<TaskList> {
+}

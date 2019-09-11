@@ -1,0 +1,64 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import net.cnki.bdap.apps.prs.business.service.SystemUserService;
+import net.cnki.bdap.apps.prs.persistence.bean.SystemUser;
+import net.cnki.bdap.common.util.MD5;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
+
+/**
+ * PRS用户serviceImpl.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:26
+ */
+public class SystemUserServiceImpl extends BdapServiceImpl<SystemUser> implements SystemUserService {
+
+    /**
+     * 检查邮箱。
+     *
+     * @param email 邮箱.
+     *
+     * @return java.lang.Boolean
+     */
+    @Override
+    public Boolean checkUser(String email) {
+        SystemUserService suService = BdapServiceFactory.instance().getService(SystemUserService.class);
+        // 查询user。
+        DetachedCriteria criteriaUser = DetachedCriteria.forClass(SystemUser.class);
+        criteriaUser.add(Restrictions.eq(SystemUser.EMAIL, email));
+        List<SystemUser> systemUserList = suService.findByCriteria(criteriaUser);
+        if (null == systemUserList || systemUserList.size() == 0) {
+            return false;
+        }
+        return true;
+    }
+
+
+    /**
+     * 用户登录用检索。
+     *
+     * @param user 用户对象。
+     *
+     * @return SystemUser 检索结果用户对象。
+     */
+    @Override
+    public SystemUser auth(SystemUser user) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(SystemUser.class);
+        criteria.add(Restrictions.eq(SystemUser.EMAIL, user.getEmail()));
+        criteria.add(Restrictions.eq(SystemUser.PASSWORD, MD5.crypt(user.getPassword())));
+        List<SystemUser> users = this.findByCriteria(criteria);
+        // only one user in DB.
+        int singleUser = 1;
+        if (users.size() == singleUser) {
+            return users.get(0);
+        } else {
+            return null;
+        }
+    }
+}

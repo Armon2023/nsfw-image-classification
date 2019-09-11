@@ -1,0 +1,62 @@
+package net.cnki.bdap.business.system.serviceimpl;
+
+import net.cnki.bdap.business.system.service.SystemMasterTypeService;
+import net.cnki.bdap.persistence.system.bean.SystemMasterType;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+
+/**
+ * 系统字典类型管理Service实现类。
+ * 
+ * @author yangjialin
+ * @version 2018.6.13
+ * @since jdk_1.8.0_161
+ */
+public class SystemMasterTypeServiceImpl extends BdapServiceImpl<SystemMasterType> implements SystemMasterTypeService {
+
+	public SystemMasterTypeServiceImpl() {
+	}
+
+	/**
+	 * 获取字典类型数据，制成表格存入缓存。
+	 * 
+	 * @param type
+	 *            字典类型entity,token。
+	 */
+	@Override
+	public void loadSystemMasterTypeData(SystemMasterType type, String token) {
+
+	}
+
+	/**
+	 * 获取字典数据，制成表格存入缓存。
+	 * 
+	 * @param type
+	 *            字典类型entity,token。
+	 */
+	@Override
+	public void loadDictionaryInfo(SystemMasterType type, String token) {
+	}
+
+	/**
+	 * 检查登录项是否在数据库中存在。
+	 * 
+	 * @param type
+	 *            SystemMasterType 系统字典类型。
+	 * @return boolan 返回值true则存在。
+	 */
+	@Override
+	public boolean checkExist(SystemMasterType type) {
+		return false;
+	}
+
+	/**
+	 * 根据typecode检索出对应的SystemMasterType对象。
+	 * 
+	 * @param type
+	 *            typeCode。
+	 * @return 结果SystemMasterType。
+	 */
+	public SystemMasterType getSystemMasterTypeByType(int type) {
+		return null;
+	}
+}

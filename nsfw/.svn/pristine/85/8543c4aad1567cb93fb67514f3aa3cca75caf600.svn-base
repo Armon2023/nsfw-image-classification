@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.APPData;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * app资料service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:12
+ */
+public interface APPDataService extends BdapService<APPData> {
+}

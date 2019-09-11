@@ -1,0 +1,131 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * app资料.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class APPData extends BaseBean {
+    private static final long serialVersionUID = 3156650011632290311L;
+
+    /** id. */
+    private String id;
+    /** 项目ID. */
+    private Integer itemId;
+    /** 内容ID. */
+    private String contentId;
+    /** reg ord. */
+    private Integer regOrd;
+    /** APP名. */
+    private String APPName;
+    /** 包名. */
+    private String packageName;
+    /** 其他信息. */
+    private String binaryInfo;
+    /** 分辨率. */
+    private String resolution;
+    /** binarySeq. */
+    private String binarySeq;
+    /** 下载路径. */
+    private String downloadUrl;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getContentId() {
+        return contentId;
+    }
+
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
+
+    public Integer getRegOrd() {
+        return regOrd;
+    }
+
+    public void setRegOrd(Integer regOrd) {
+        this.regOrd = regOrd;
+    }
+
+    public String getAPPName() {
+        return APPName;
+    }
+
+    public void setAPPName(String APPName) {
+        this.APPName = APPName;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
+    }
+
+    public String getBinaryInfo() {
+        return binaryInfo;
+    }
+
+    public void setBinaryInfo(String binaryInfo) {
+        this.binaryInfo = binaryInfo;
+    }
+
+    public String getResolution() {
+        return resolution;
+    }
+
+    public void setResolution(String resolution) {
+        this.resolution = resolution;
+    }
+
+    public String getBinarySeq() {
+        return binarySeq;
+    }
+
+    public void setBinarySeq(String binarySeq) {
+        this.binarySeq = binarySeq;
+    }
+
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
+
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl;
+    }
+
+    @Override
+    public String toString() {
+        return "APPData{" +
+                "id='" + id + '\'' +
+                ", itemId=" + itemId +
+                ", contentId='" + contentId + '\'' +
+                ", regOrd=" + regOrd +
+                ", APPName='" + APPName + '\'' +
+                ", packageName='" + packageName + '\'' +
+                ", binaryInfo='" + binaryInfo + '\'' +
+                ", resolution='" + resolution + '\'' +
+                ", binarySeq='" + binarySeq + '\'' +
+                ", downloadUrl='" + downloadUrl + '\'' +
+                '}';
+    }
+}

@@ -1,0 +1,53 @@
+package net.cnki.bdap.persistence.system.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * <p>
+ * 北京街道信息。
+ * </p>
+ * 
+ * @author wangxu
+ * @version 2018年11月27日15:39:10
+ * @since jdk_1.8.0_31
+ *
+ */
+public class BJStreet extends BaseBean{
+
+	private static final long serialVersionUID = 1L;
+
+	/** 街道id.*/
+	private Integer id;
+	/** 所属区.*/
+	private String county;
+	/** 街道或乡镇.*/
+	private String streetortown;
+	/** 网格员人数.*/
+	private String gridNum;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getCounty() {
+		return county;
+	}
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	public String getStreetortown() {
+		return streetortown;
+	}
+	public void setStreetortown(String streetortown) {
+		this.streetortown = streetortown;
+	}
+	public String getGridNum() {
+		return gridNum;
+	}
+	public void setGridNum(String gridNum) {
+		this.gridNum = gridNum;
+	}
+
+}

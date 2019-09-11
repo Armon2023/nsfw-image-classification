@@ -1,0 +1,137 @@
+function myTrim(x) {
+    x = x.replace(/&nbsp;/g,'');
+    return x.replace(/^\s+|\s+$/gm,'');
+}
+
+/** 复选框全选联动. */
+$(function(){
+    $(".libs").click(function(){
+        var checkedState = $(".libs").parent("span").attr("class");
+        if(checkedState == "checked"){
+            $(".lib").parent("span").attr("class","checked");
+            $(".lib").attr("checked","checked");
+        }else{
+            $(".lib").parent("span").attr("class","");
+            $(".lib").removeAttr("checked");
+        }
+    });
+    $(".lib").click(function(){
+        var num = 0;
+        $(".lib").each(function(){
+            var libState = $(this).parent("span").attr("class");
+            var libSchecked = $(this).attr("checked");
+            if(libState != "checked" ||  libSchecked != "checked"){
+                num ++;
+            }
+        });
+        if(num == 0){
+            $(".libs").parent("span").attr("class","checked");
+        }else{
+            $(".libs").parent("span").attr("class","");
+        }
+    });
+    $(".spelllib").click(function(){
+        var num = 0;
+        $(".spelllib").each(function(){
+            var libState = $(this).parent("span").attr("class");
+            var libSchecked = $(this).attr("checked");
+            if(libState != "checked" ||  libSchecked != "checked"){
+                num ++;
+            }
+        });
+        if(num == 0){
+            $(".spelllibs").parent("span").attr("class","checked");
+        }else{
+            $(".spelllibs").parent("span").attr("class","");
+        }
+    });
+    $(".spelllibs").click(function(){
+        var checkedState = $(".spelllibs").parent("span").attr("class");
+        if(checkedState == "checked"){
+            $(".spelllib").parent("span").attr("class","checked");
+            $(".spelllib").attr("checked","checked");
+        }else{
+            $(".spelllib").parent("span").attr("class","");
+            $(".spelllib").removeAttr("checked");
+        }
+    })
+});
+
+
+
+/** 解析返回的数据. */
+function analysisData(data) {
+    $("#message tbody").empty();
+    var costTime = data.cost;
+    var characterCount = data.count;
+    var gsonData = data.result;
+    $("#checkresult").empty();
+    var checkresultStr = "<span></span>共"+characterCount+"字,&nbsp;&nbsp;&nbsp;耗时：&nbsp;"+costTime+"毫秒 &nbsp;&nbsp;&nbsp;&nbsp;<span class='red'>未检出敏感文字，错别字。</spanclass>";
+    if (gsonData == "" || gsonData == null){
+        $("#checkresult").append(checkresultStr) ;
+    } else {
+        var result =  JSON.parse(gsonData);
+        if(result!=null){
+            checkresultStr = "<span></span>共" +characterCount+ "字, &nbsp;&nbsp;&nbsp;耗时：&nbsp;"+costTime+"毫秒";
+        }
+        $("#checkresult").append(checkresultStr) ;
+
+        if(null==result || "" == result){
+            $("#message")[0].innerHTML="pass the check.";
+        }else{
+            dataList = result;
+            for(var i in result){
+                var positionList = [];
+                var list = '';
+                for(var j in result[i].positions){
+                    if(j == 0){
+                        list += "<span>("+result[i].positions[j].startPosition+","+result[i].positions[j].endPosition+")</span>"
+                    }else{
+                        list += "&ensp;,&ensp;<span>("+result[i].positions[j].startPosition+","+result[i].positions[j].endPosition+")</span>"
+                    }
+                }
+                var tableList = "<tr><td>"+result[i].keyWord+"</td><td>"+result[i].positions.length+"</td><td>"+list+"</td></tr>";
+                $("#message tbody").append(tableList);
+            }
+        }
+    }
+}
+
+/** 数据页面展示. */
+function sortNumber(a,b){
+    return a - b
+}
+function markData(data) {
+    var gsonData = JSON.parse(data.result);
+    var strData = $("#article").val();
+    strData = myTrim(strData);
+    var redWord = [];
+    var startPosition = [];
+    var endPosition = [];
+    var num = 0;
+    for(var i in gsonData){
+        for(var j in gsonData[i].positions){
+            startPosition.push(gsonData[i].positions[j].startPosition);
+            endPosition.push(gsonData[i].positions[j].endPosition);
+        }
+    }
+    startPosition.sort(sortNumber);
+    endPosition.sort(sortNumber);
+    for(var t in startPosition){
+        if(Number(startPosition[t+1]) < Number(endPosition[t]) || Number(startPosition[t+1]) == Number(endPosition[t])){
+            startPosition.splice(t+1,1);
+            endPosition.splice(t,1);
+        }
+    }
+    for(var t in startPosition){
+        var str = strData.slice(Number(startPosition[t]),Number(endPosition[t]));
+        var reg = new RegExp("(" + str + ")", "g");
+        var newstr = str.replace(reg, "<font color=red>$1</font>");
+        redWord.push(newstr)
+    }
+    for(var t=startPosition.length-1;t>=0;t--){
+        strData = strData.substr(0, Number(startPosition[t])) + redWord[t] + strData.substring(Number(endPosition[t]), strData.length);
+    }
+    strData= strData.replace(/\n/g, "<br>");
+    $(".contMark").html(strData)
+}

@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="net.cnki.bdap.apps.prs.persistence.bean.TaskList" table="PRS_TASK_LIST">
+        <id name="uuid" type="java.lang.String">
+            <column name="UUID" length="36" sql-type="char(36)" not-null="true">
+                <comment>ID</comment>
+            </column>
+        </id>
+        <property name="itemId" type="java.lang.Integer">
+            <column name="ITEM_ID" length="11">
+                <comment>项目ID</comment>
+            </column>
+        </property>
+        <property name="packageType" type="java.lang.String">
+            <column name="PACKAGE_TYPE" length="255" not-null="false">
+                <comment>测试包类型</comment>
+            </column>
+        </property>
+        <property name="businessID" type="java.lang.String">
+            <column name="BUSINESS_ID" length="255">
+                <comment>测试业务ID</comment>
+            </column>
+        </property>
+        <property name="sourceID" type="java.lang.String">
+            <column name="SOURCE_ID" length="255" not-null="false">
+                <comment>任务源ID</comment>
+            </column>
+        </property>
+        <property name="taskStatus" type="java.lang.Integer">
+            <column name="TASK_STATUS" length="1">
+                <comment>任务状态</comment>
+            </column>
+        </property>
+        <property name="runType" type="java.lang.Integer">
+            <column name="RUN_TYPE" length="1" not-null="false">
+                <comment>运行类型</comment>
+            </column>
+        </property>
+        <property name="runTime" type="java.lang.Integer">
+            <column name="RUN_TIME" length="3">
+                <comment>运行时间</comment>
+            </column>
+        </property>
+        <property name="runNum" type="java.lang.Integer">
+            <column name="RUN_NUM" length="4" not-null="false">
+                <comment>运行步数</comment>
+            </column>
+        </property>
+        <property name="isShared" type="java.lang.Integer">
+            <column name="IS_SHARED" length="1">
+                <comment>APK账户列表是否共用</comment>
+            </column>
+        </property>
+        <property name="apkurl" type="java.lang.String">
+            <column name="APK_URL" length="255" not-null="true">
+                <comment>apk地址</comment>
+            </column>
+        </property>
+        <property name="accounts" type="text">
+            <column name="ACCOUNTS" length="65535">
+                <comment>账户子节点</comment>
+            </column>
+        </property>
+        <property name="deviceType" type="java.lang.String">
+            <column name="DEVICE_TYPE" length="255" not-null="false">
+                <comment>设备型号</comment>
+            </column>
+        </property>
+        <property name="creatTime" type="java.lang.String">
+            <column name="CREAT_TIME" not-null="true">
+                <comment>创建时间</comment>
+            </column>
+        </property>
+
+        <property name="createdBy" type="java.lang.String">
+            <column name="CREATED_BY" length="16" not-null="true">
+                <comment>插入人</comment>
+            </column>
+        </property>
+        <property name="createdTime" type="java.lang.String">
+            <column name="CREATED_TIME" not-null="true">
+                <comment>插入时间</comment>
+            </column>
+        </property>
+        <property name="updatedBy" type="java.lang.String">
+            <column name="UPDATED_BY" length="16" not-null="true">
+                <comment>更新人</comment>
+            </column>
+        </property>
+        <property name="updatedTime" type="java.sql.Timestamp">
+            <column name="UPDATED_TIME" not-null="true">
+                <comment>更新时间</comment>
+            </column>
+        </property>
+        <property name="deleted" type="java.lang.Integer">
+            <column name="DELETED" not-null="true">
+                <comment>已删除</comment>
+            </column>
+        </property>
+    </class>
+</hibernate-mapping>

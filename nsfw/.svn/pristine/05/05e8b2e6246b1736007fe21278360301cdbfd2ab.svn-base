@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.TaskList;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 任务列表service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:14
+ */
+public interface TaskListService extends BdapService<TaskList> {
+}

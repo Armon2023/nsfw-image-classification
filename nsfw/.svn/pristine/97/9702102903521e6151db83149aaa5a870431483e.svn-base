@@ -1,0 +1,16 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import net.cnki.bdap.apps.prs.business.service.DetectionModelResultService;
+import net.cnki.bdap.apps.prs.persistence.bean.DetectionModelResult;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+
+/**
+ * 创建任务前检测结果serviceImpl.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:25
+ */
+public class DetectionModelResultServiceImpl extends BdapServiceImpl<DetectionModelResult> implements DetectionModelResultService {
+
+}

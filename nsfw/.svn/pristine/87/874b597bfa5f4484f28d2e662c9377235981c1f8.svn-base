@@ -1,0 +1,76 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 创建任务前检测结果.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class DetectionModelResult extends BaseBean {
+    private static final long serialVersionUID = 1176510887752999311L;
+
+    /** 结果ID. */
+    private String id;
+    /** 结果状态. */
+    private Integer status;
+    /** 设备状态. */
+    private Integer deviceStatus;
+    /** 在线设备数量. */
+    private Integer deviceNum;
+    /** 错误信息. */
+    private String message;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getDeviceStatus() {
+        return deviceStatus;
+    }
+
+    public void setDeviceStatus(Integer deviceStatus) {
+        this.deviceStatus = deviceStatus;
+    }
+
+    public Integer getDeviceNum() {
+        return deviceNum;
+    }
+
+    public void setDeviceNum(Integer deviceNum) {
+        this.deviceNum = deviceNum;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return "DetectionModelResult{" +
+                "id='" + id + '\'' +
+                ", status=" + status +
+                ", deviceStatus=" + deviceStatus +
+                ", deviceNum=" + deviceNum +
+                ", message='" + message + '\'' +
+                '}';
+    }
+}

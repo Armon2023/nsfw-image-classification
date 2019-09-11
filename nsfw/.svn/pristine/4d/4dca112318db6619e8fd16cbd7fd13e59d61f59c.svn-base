@@ -1,0 +1,92 @@
+package net.cnki.bdap.web.controller;
+
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.cnki.bdap.business.base.service.SystemFileService;
+import net.cnki.bdap.persistence.netpolice.bean.SystemFile;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * The user login Contrller.
+ * </p>
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ *
+ */
+@Controller
+@RequestMapping("/up")
+public class NetPoliceController {
+
+	@Autowired(required = false)
+	protected HttpServletRequest request;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/upload")
+	@ResponseBody
+	public ModelAndView index() {
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("upload");
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+	
+	
+	@ResponseBody
+	@RequestMapping(value = "/uploadFile")
+	public String uploadFile(@ModelAttribute("file") SystemFile file) throws IOException {
+		SystemFileService fileService = BdapServiceFactory.instance().getService(SystemFileService.class);
+		String message = "SUCCESS,上传成功";
+		if(!ObjectUtils.isEmpty(file.getCfile().getOriginalFilename())) {
+			
+			String fullName = file.getCfile().getOriginalFilename();
+			//获取文件后缀。
+			String type = fullName.substring(fullName.lastIndexOf(".")+1);
+			if (fileService.isImage(type)) {
+				String index = fileService.uploadImage(file.getCfile());
+				System.out.println("色情指数:"+index);
+				if (Double.valueOf(index)>0.8) {
+					message = "WARNING,图片尺度太大!!!";
+				}
+			}else if(fileService.isVideo(type)){
+				fileService.uploadVideo(file.getCfile());
+				/*int result = fileService.uploadVideo(file.getCfile());
+				if(result >= 1) {
+					message = "WARNING,视频尺度太大!!!";
+					System.out.println(result+":"+message);
+				}*/
+			}else {
+				message = "INFORMATION,请上传图片或视频";
+			}
+			
+		}else {
+			message =  "FAILURE,文件为空";
+		}
+		return message;
+	}
+	
+	
+
+
+}

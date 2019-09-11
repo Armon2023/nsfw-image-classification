@@ -1,0 +1,126 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+%>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+	
+	<link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+	<link rel="bookmark" href="<%=basePath%>/favicon.ico" />
+	<link rel="stylesheet" href="<%=basePath%>/static/lib/weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/jquery-weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/sys.css">
+	<script src="<%=basePath%>/static/lib/jquery-2.1.4.js"></script>
+	<script src="<%=basePath%>/static/js/jquery-weui.js"></script>
+<style>
+.bodystyle {
+	background-color: #eeeeee;
+	width: 100%;
+	height: 100%; 
+}
+
+.demos-header {
+	background: url(<%=basePath%>/static/images/bluetop.png) no-repeat;      
+	background-size: 100% 100%;
+}
+ 
+.streetBody {
+	margin: 5%;
+	width: 90%;
+	background-color: #ffffff;
+	overflow: hidden
+}
+ 
+ 
+.streetBody div {
+	width: 50%;
+	font-size: 15px;
+	line-height: 4;
+}
+ 
+li {
+	list-style-type: none;
+	padding-left: 15%;
+	cursor:pointer; 
+	box-shadow:0 0 2px #bcc4ca;
+	/* border: 1px solid #eeeeee; */
+}
+
+a {
+	color: #524f4e; 
+	text-decoration: none;
+	font-weight: bold;
+}
+    
+li a img {
+	width: 19px;
+	vertical-align: middle;
+	margin-right: 3px;
+}  
+</style>
+</head>
+<body ontouchstart class="bodystyle">
+	<header class='demos-header'>
+		<h1 class="demos-title">${countyName}区</h1>
+	</header>
+	<div  style="float:right;margin:5px 5%;">
+		<a href="<%=basePath%>/index"  class="weui-btn weui-btn_mini weui-btn_default">返回首页</a>
+	</div>
+	<div class="streetBody">
+		<div style="float:left;">
+			<ul>
+				<c:choose>
+					<c:when test="${not empty streets}">
+						<c:forEach items="${streets}" var="street" varStatus="vs">
+								<c:choose>
+									<c:when test="${vs.index % 2 !=1}">
+										<li>
+											<a href="<%=basePath%>/community?streetId=${street.id}">
+												<img src="<%=basePath%>/static/images/${countyLogo}.png" alt="" >
+												${street.streetortown}
+											</a>
+										</li>
+									</c:when>
+								</c:choose>
+						</c:forEach>
+					</c:when>
+				</c:choose>
+			</ul>
+		</div>
+		<div style="float:right;">
+			<ul>
+				<c:choose>
+					<c:when test="${not empty streets}">
+						<c:forEach items="${streets}" var="street" varStatus="vs">
+								<c:choose>
+									<c:when test="${vs.index % 2 ==1}">
+										<li>
+											<a href="<%=basePath%>/community?streetId=${street.id}">
+												<img src="<%=basePath%>/static/images/${countyLogo}.png" alt="" > 
+												${street.streetortown}
+											</a>
+										</li>
+									</c:when>
+								</c:choose>
+						</c:forEach>
+					</c:when>
+				</c:choose>
+			</ul>
+		</div>
+		
+	</div>
+
+	<div
+		style="height: 10px; width: 100%; float: left; position: fixed; bottom: 0;">
+		<img src="<%=basePath%>/static/images/bottom.png" alt=""
+			style="width: 100%; height: 100%">
+	</div>
+</body>
+</html>

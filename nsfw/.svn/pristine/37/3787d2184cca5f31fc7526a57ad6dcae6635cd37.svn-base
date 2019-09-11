@@ -1,0 +1,40 @@
+package net.cnki.bdap.business.nsfw.serviceImpl;
+
+
+import java.util.List;
+
+import net.cnki.bdap.business.nsfw.service.ForbiddenBooksService;
+import net.cnki.bdap.persistence.nsfw.bean.ForbiddenBooks;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月29日
+ * @since jdk_1.8.0_31
+ */
+public class ForbiddenBooksServiceImpl extends BdapServiceImpl<ForbiddenBooks> implements ForbiddenBooksService {
+	
+	/**
+	 * 
+	 * @param content 判断输入的文字是否有敏感词汇。
+	 * 
+	 */
+	@Override
+	public boolean isNsfw(String content) {
+		int i = 0;
+		List<ForbiddenBooks> lists = this.findAll();
+		for(ForbiddenBooks book : lists) {
+			if(content.contains(book.getBookName())) {
+				i++;
+			}
+		}
+		
+		//判断敏感词汇出现次数,当大于1时  即判断为敏感内容。
+		if(i>=1) {
+			return true;
+		}
+		
+		return false;
+	}
+}

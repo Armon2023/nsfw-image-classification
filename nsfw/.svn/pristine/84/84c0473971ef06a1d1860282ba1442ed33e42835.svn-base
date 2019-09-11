@@ -1,0 +1,21 @@
+package net.cnki.bdap.persistence.system.dao;
+
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+import net.cnki.bdap.persistence.system.bean.BJCommunity;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * the persistence handler of BJCounty.
+ * </p>
+ * 
+ * 
+ * @author wangxu
+ * @version 2018年11月28日11:24:42
+ * @since jdk_1.8.0_31
+ *
+ */
+public class BJCommunityDao extends BdapBaseDao<BJCommunity> {
+	
+}

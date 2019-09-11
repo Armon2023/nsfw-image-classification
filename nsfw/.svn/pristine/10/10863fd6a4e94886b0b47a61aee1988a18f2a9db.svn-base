@@ -1,0 +1,18 @@
+package net.cnki.bdap.baidu;
+
+import net.cnki.bdap.playground.speech.BdapSpeechProcessor;
+
+public class BaiduApiTest {
+
+	private String processSpeech(String path) {
+		String apiId = "15479052";
+		String apiKey = "R49ubeGbIY2omGNTFaL9gdTD";
+		String secretKey = "HBNLpwo7z61s4TMgyG9PkHvA6g3a8gVw";
+
+		BdapSpeechProcessor sp = new BdapSpeechProcessor();
+		// 返回音频的文字内容。
+		String message = sp.process(path);
+		return message;
+	}
+
+}

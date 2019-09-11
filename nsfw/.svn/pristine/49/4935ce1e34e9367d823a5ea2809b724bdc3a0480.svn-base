@@ -1,0 +1,229 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<%@ include file="head.jsp"%>
+<style>
+    #article{width: 100%;height: 490px;box-shadow: 0 0 50px #ccc;border: 1px solid #ccc;padding: 15px;}
+    #submitBtn{width: 106px;height: 30px;line-height: 17px;border-radius: 15px;background:url(images/BTN.png);background-size: cover;outline: none;border: none;color: #fff;margin: 5px;cursor: pointer;}
+	table{border:1px solid #ccc;width:100%;display:inline-block;}
+	table thead{width: 100%;display: block;background: #6e9fb7;color: #fff;}
+	table tbody{display: block;background: rgba(255,255,255,0.3);height:470px;overflow:auto;}
+	table tr {line-height: 25px;padding: 12px 0;display: block;width: 100%;border-bottom: 1px solid #efdcc0;}
+	table td:nth-child(1){width:38%;display:inline-block;}
+	table td:nth-child(2){margin-right: 7%;display:inline-block;}
+	table td:nth-child(3){width:32%;display:inline-block;}
+	td{padding:0 10px;min-width: 5%;}
+	.main,.optionList{margin:14px 15px;}
+	.main p{width: 100%;height: 38px;line-height: 38px;font-size: 16px;margin: 5px;}
+	.main p span{width: 30px;height: 19px;display:inline-block;float: left;}
+	div.checker {width: 15px;height: 15px;position: relative;float: left;}
+	.checker input{cursor: pointer;}
+	table input {border: 1px solid #DDD;padding: 5px 5px;}
+	div.checker input {width: 15px;height: 15px;opacity: 0;filter: alpha(opacity:0);display: inline-block;background: none;}
+	div.checker span {background: transparent url(images/checkbox.png) no-repeat 0 0px;vertical-align: middle;height: 15px;width: 15px;display: -moz-inline-box;display: inline-block;text-align: center;}
+	.kindList #uniform-undefined ,.kindList p{float:left;}
+	.kindList p{width:150px;margin:7px;}
+	.kindList #uniform-undefined{width:20px;}
+	.kindList p span{font-weight:600;color:#4b96ce}
+	.main p span.red{width: auto;height: auto;float: none;}
+	.base p{background: url(images/listTitle2.png) no-repeat;background-size: contain;height: 50px;line-height: 42px;margin-top:14px;}
+	.base p .checker{margin: 12px 0 0 16px;}
+	.spell p{background: url(images/listTitle2.png) no-repeat;background-size: contain;height: 46px;line-height: 42px;margin-top: -6px;}
+	.spell p .checker{margin: 12px 0 0 16px;}
+	.warn{float: left;margin-top: -10px;}
+	.warn p{height:auto;line-height:auto;margin:0px;font-size: 14px;line-height: 18px;width:400px;}
+</style>
+
+<body style="background:url(images/bg.jpg);background-size:cover;margin:0;overflow:hidden;">
+<form action="<%=basePath%>/articledetect/detect" method="post" id="myForm">
+<h2 style="width:100%;text-align:center;color: #fff;/* border-bottom: 1px dashed #ccc; */margin:0;padding:25px 0;background:url(images/titleBG.jpg)">敏感文字检查V1.1_0412 </h2>	
+<div class="optionList">
+	<div class="kindList base">
+		<p><input type="checkbox" name="" class="libs" value="0"/><span>基础检测全选</span></p>
+	</div>	
+	<div class="kindList" style="overflow: hidden;border-bottom: 1px dotted #ccc;margin-bottom: 10px;width:1200px">
+		<p><input type="checkbox" name="libs" class="lib" value="2"/><span>游戏检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="6"/><span>自然科学检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="7"/><span>政治检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="8"/><span>涉黄检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="10"/><span>社会科学检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="12"/><span>生僻字检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="15"/><span>繁体字检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="16"/><span>犯罪检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="18"/><span>拼音检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="19"/><span>反动检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="20"/><span>宗教检查</span></p>
+		<p><input type="checkbox" name="libs" class="lib" value="21"/><span>色情网站检查</span></p>
+	</div>
+	<div class="kindList spell" style="">
+		<p><input type="checkbox" name="" class="spelllibs" value="0"/><span>拼写检测全选</span></p>
+	</div>
+	<div class="kindList" style="overflow: hidden;margin-bottom: 10px;width:1200px">
+		<p><input type="checkbox" name="libs" class="spelllib" value="3"/><span>政府拼写错误字检查</span></p>
+		<p><input type="checkbox" name="libs" class="spelllib" value="4"/><span>领导人拼写错误字检查</span></p>
+		<p><input type="checkbox" name="libs" class="spelllib" value="11"/><span>台湾拼写错误字检查</span></p>
+		<p><input type="checkbox" name="libs" class="spelllib" value="5"/><span>拼写错误词检查</span></p>
+	</div>
+</div>
+<div class="main">
+	<div  style="float:left;width:62%;">
+		<p style="text-align:left;font-size:14px;background: url(images/book.png) no-repeat 0 8px;float:left;width:200px">
+			<span></span>文章
+			<input type="button" value="检测" id="submitBtn" onclick="detectArticle()"/>
+		</p>
+		<div class="warn"></div>
+		<div><textarea rows="20" cols="150" id="article" name="article" placeholder= "请输入..."></textarea></div>
+	</div>
+	<div id="message" style="float:right;width:35%;">
+		<p id="checkresult" style="text-align:left;font-size:14px;background: url(images/data.png) no-repeat 0 8px;"><span></span>检查结果&nbsp;&nbsp;&nbsp;耗时：&nbsp;毫秒</p>
+		<table>
+			<thead>
+				<tr><td>关键字</td><td>总次数</td><td>出现位置（起始，终止）</td></tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+</form>
+</body>
+<script type="text/javascript">
+	$(function(){
+
+		$(".libs").click(function(){
+			var checkedState = $(".libs").parent("span").attr("class");
+			if(checkedState == "checked"){
+				$(".lib").parent("span").attr("class","checked");
+				$(".lib").attr("checked","checked");
+			}else{
+				$(".lib").parent("span").attr("class","");
+				$(".lib").attr("checked","");
+			}
+		});
+        $(".lib").click(function(){
+            var num = 0;
+            $(".lib").each(function(){
+                var libState = $(this).parent("span").attr("class");
+                var libSchecked = $(this).attr("checked");
+                if(libState != "checked" ||  libSchecked != "checked"){
+                    num ++;
+                }
+			})
+            if(num == 0){
+                $(".libs").parent("span").attr("class","checked");
+            }else{
+                $(".libs").parent("span").attr("class","");
+            }
+        });
+        $(".spelllib").click(function(){
+            var num = 0;
+            $(".spelllib").each(function(){
+                var libState = $(this).parent("span").attr("class");
+                var libSchecked = $(this).attr("checked");
+                if(libState != "checked" ||  libSchecked != "checked"){
+                    num ++;
+                }
+            })
+            if(num == 0){
+                $(".spelllibs").parent("span").attr("class","checked");
+            }else{
+                $(".spelllibs").parent("span").attr("class","");
+            }
+        });
+		$(".spelllibs").click(function(){
+			var checkedState = $(".spelllibs").parent("span").attr("class");
+			if(checkedState == "checked"){
+				$(".spelllib").parent("span").attr("class","checked");
+				$(".spelllib").attr("checked","checked");
+			}else{
+				$(".spelllib").parent("span").attr("class","");
+				$(".spelllib").attr("checked","");
+			}
+		})
+	});
+
+    function myTrim(x) {
+        x = x.replace(/&nbsp;/g,'');
+        return x.replace(/^\s+|\s+$/gm,'');
+    }
+
+    function detectArticle(){
+
+        $('#submitBtn').attr("onclick","");
+        $('#submitBtn').val("检测中");
+
+        $("#message tbody").empty();
+        var urlstr =  "http://192.168.105.222:6064/adserver/articledetect/detect";
+        //var urlstr =  "<%=basePath%>/articledetect/detect";
+        var libs = $("input[name='libs']:checked");
+        var article = myTrim($("#article").val());
+        if (libs.length <= 0){
+            $('#submitBtn').css({"background":"url(images/BTN.png)","background-size":"cover"});
+            $('#submitBtn').attr("onclick","detectArticle()");
+            $('#submitBtn').val("检测");
+            prompt("warning","class","warn","请至少选择一项");
+            return false;
+        }
+        if (article === ""){
+            $('#submitBtn').css({"background":"url(images/BTN.png)","background-size":"cover"});
+            $('#submitBtn').attr("onclick","detectArticle()");
+            $('#submitBtn').val("检测");
+            prompt("warning","class","warn","请输入文章");
+            return false;
+        }
+        var options = {
+            url: urlstr,
+            type: 'post',
+            async: false,
+            data:$("#myForm").serialize(),
+            success: function (data){
+                $('#submitBtn').attr("onclick","detectArticle()");
+                $('#submitBtn').val("检测");
+
+                var costTime = data.cost;
+                var gsonDate = data.result;
+                $("#checkresult").empty();
+                var checkresultStr = "<span></span>检查结果&nbsp;&nbsp;&nbsp;耗时：&nbsp;"+costTime+"毫秒 &nbsp;&nbsp;&nbsp;&nbsp;<span class='red'>未检出敏感文字</spanclass>";
+                if (gsonDate == "" || gsonDate == null){
+                    $("#checkresult").append(checkresultStr) ;
+                } else {
+                    var result =  JSON.parse(gsonDate);
+                    if(result!=null){
+                        checkresultStr = "<span></span>检查结果&nbsp;&nbsp;&nbsp;耗时：&nbsp;"+costTime+"毫秒";
+                    }
+                    $("#checkresult").append(checkresultStr) ;
+
+                    if(null==result || "" == result){
+                        $("#message")[0].innerHTML="pass the check.";
+                    }else{
+                        dataList = result;
+                        for(var i in result){
+                            var positionList = [];
+                            var list = '';
+                            for(var j in result[i].positions){
+                                if(j == 0){
+                                    list += "<span>("+result[i].positions[j].startPosition+","+result[i].positions[j].endPosition+")</span>"
+                                }else{
+                                    list += "&ensp;,&ensp;<span>("+result[i].positions[j].startPosition+","+result[i].positions[j].endPosition+")</span>"
+                                }
+                            }
+                            var tableList = "<tr><td>"+result[i].keyWord+"</td><td>"+result[i].positions.length+"</td><td>"+list+"</td></tr>";
+                            $("#message tbody").append(tableList);
+                        }
+                    }
+                }
+
+            }
+        };
+        $.ajax(options);
+    }
+
+    function detectArticle2(){
+        var myForm = $("#myForm");
+        myForm.submit();
+    }
+</script>
+</html>

@@ -1,0 +1,165 @@
+package net.cnki.bdap.persistence.system.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * <p>
+ * 北京街道社区信息。
+ * </p>
+ * 
+ * @author wangxu
+ * @version 2018年11月28日11:14:09
+ * @since jdk_1.8.0_31
+ *
+ */
+public class BJCommunity extends BaseBean{
+
+	private static final long serialVersionUID = 1L;
+
+	/** 网格员id.*/
+	private Integer id;
+	/** 所属区.*/
+	private String county;
+	/** 街道或乡镇id.*/
+	private Integer streetId;
+	/** 所属街道或乡镇.*/
+	private String street;
+	/** 所属社区或村.*/
+	private String community;
+	/** 网格员姓名.*/
+	private String name;
+	/** 网格员性别.*/
+	private String sex;
+	/** 网格员政治面貌.*/
+	private String politicalstatus;
+	/** 网格员年龄.*/
+	private Integer age;
+	/** 网格员民族.*/
+	private String nation;
+	/** 网格员学历.*/
+	private String education;
+	/** 专、兼职.*/
+	private String fullorparttime;
+	/** 负责的网格编号.*/
+	private String gridId;
+	/** 网格员职务.*/
+	private String duty;
+	/** 联系方式.*/
+	private String tel;
+	/** 所属区id.*/
+	private Integer countyId;
+	/** 所属社区id.*/
+	private Integer communityId;
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getCounty() {
+		return county;
+	}
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	public Integer getStreetId() {
+		return streetId;
+	}
+	public void setStreetId(Integer streetId) {
+		this.streetId = streetId;
+	}
+	public String getStreet() {
+		return street;
+	}
+	public void setStreet(String street) {
+		this.street = street;
+	}
+	public String getCommunity() {
+		return community;
+	}
+	public void setCommunity(String community) {
+		this.community = community;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+	public String getPoliticalstatus() {
+		return politicalstatus;
+	}
+	public void setPoliticalstatus(String politicalstatus) {
+		this.politicalstatus = politicalstatus;
+	}
+	public Integer getAge() {
+		return age;
+	}
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+	public String getNation() {
+		return nation;
+	}
+	public void setNation(String nation) {
+		this.nation = nation;
+	}
+	public String getEducation() {
+		return education;
+	}
+	public void setEducation(String education) {
+		this.education = education;
+	}
+	public String getFullorparttime() {
+		return fullorparttime;
+	}
+	public void setFullorparttime(String fullorparttime) {
+		this.fullorparttime = fullorparttime;
+	}
+	public String getGridId() {
+		return gridId;
+	}
+	public void setGridId(String gridId) {
+		this.gridId = gridId;
+	}
+	public String getDuty() {
+		return duty;
+	}
+	public void setDuty(String duty) {
+		this.duty = duty;
+	}
+	public String getTel() {
+		return tel;
+	}
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+	public Integer getCountyId() {
+		return countyId;
+	}
+	public void setCountyId(Integer countyId) {
+		this.countyId = countyId;
+	}
+	public Integer getCommunityId() {
+		return communityId;
+	}
+	public void setCommunityId(Integer communityId) {
+		this.communityId = communityId;
+	}
+	
+	@Override
+	public String toString() {
+		return "BJCommunity [id=" + id + ", county=" + county + ", streetId=" + streetId + ", street=" + street
+				+ ", community=" + community + ", name=" + name + ", sex=" + sex + ", politicalstatus="
+				+ politicalstatus + ", age=" + age + ", nation=" + nation + ", education=" + education
+				+ ", fullorparttime=" + fullorparttime + ", gridId=" + gridId + ", duty=" + duty + ", tel=" + tel
+				+ ", countyId=" + countyId + ", communityId=" + communityId + "]";
+	}
+	
+}

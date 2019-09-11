@@ -1,0 +1,21 @@
+package net.cnki.bdap.persistence.system.dao;
+
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+import net.cnki.bdap.persistence.system.bean.BJStreet;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * the persistence handler of BJStreet.
+ * </p>
+ * 
+ * 
+ * @author wangxu
+ * @version 2018年11月27日15:40:42
+ * @since jdk_1.8.0_31
+ *
+ */
+public class BJStreetDao extends BdapBaseDao<BJStreet> {
+	
+}

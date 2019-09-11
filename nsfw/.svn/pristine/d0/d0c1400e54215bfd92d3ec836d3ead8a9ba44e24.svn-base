@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+	<!-- spring框架提供的用于发送邮件的工具类 -->
+	<bean id="mailSender" name="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<!-- 邮件服务器 -->
+		<!--使用smtp：简单邮件传输协议 -->
+		<property name="host" value="smtp.cnki.net"></property>
+		<!-- 发件人邮件地址 -->
+		<property name="username" value="cx11451@cnki.net"></property>
+		<!-- 发件人邮箱授权码 -->
+		<property name="password" value="Cx955543"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.host">smtp.cnki.net</prop>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<!-- 同时通过验证 -->
+				<prop key="mail.smtp.auth">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="localConfig"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:${kmis.local.prop}</value>
+			</list>
+		</property>
+		<property name="fileEncoding" value="UTF-8"></property>
+	</bean>
+
+	<!-- <bean class="cn.org.ccs.kmis.core.KmisAppContextHelper" /> -->
+
+</beans>

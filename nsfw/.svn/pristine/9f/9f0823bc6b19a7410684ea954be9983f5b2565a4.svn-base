@@ -1,0 +1,48 @@
+package net.cnki.bdap.persistence.nsfw.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月29日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class ForbiddenWords extends BaseBean {
+
+	private static final long serialVersionUID = 939051203685368927L;
+	/** id. */
+	private Integer id;
+	/** 敏感词汇. */
+	private String fobWord;
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getFobWord() {
+		return fobWord;
+	}
+	public void setFobWord(String fobWord) {
+		this.fobWord = fobWord;
+	}
+	
+	public ForbiddenWords() {
+		super();
+	}
+	
+	public ForbiddenWords(Integer id, String fobWord) {
+		super();
+		this.id = id;
+		this.fobWord = fobWord;
+	}
+	
+	@Override
+	public String toString() {
+		return "ForbiddenWords [id=" + id + ", fobWord=" + fobWord + "]";
+	}
+	
+}

@@ -1,0 +1,165 @@
+package net.cnki.bdap.apps.prs.controller;
+
+import net.cnki.bdap.apps.prs.business.service.SystemUserService;
+import net.cnki.bdap.apps.prs.common.PRSCommonConstant;
+import net.cnki.bdap.apps.prs.persistence.bean.SystemUser;
+import net.cnki.bdap.cache.base.BdapCache;
+import net.cnki.bdap.cache.factory.BdapCacheFactory;
+import net.cnki.bdap.frame.persistence.system.bean.BdapSystem;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+import net.cnki.bdap.web.base.BaseController;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Enumeration;
+
+/**
+ * The PRS(performace reprot system) login page.
+ *
+ * @author william
+ * @version 2019.5.27 10:06
+ * @since jdk1.8.0_144
+ */
+@Controller
+@RequestMapping("/prsLogin")
+public class PrsLoginController extends BaseController<BdapSystem> {
+
+    private final Logger logger = LoggerFactory.getLogger(PrsLoginController.class);
+
+    private final String SUBJECT_ID = "prs.login";
+    /** prs路径。 */
+    private String PRS = "prs";
+    /** 登录页面. */
+    private String LOGIN_PAGE = "prs/toLogin";
+
+    @Override
+    public String getSubjectId() {
+        return SUBJECT_ID;
+    }
+
+    @Override
+    public ModelAndView initOpen() {
+        return null;
+    }
+
+    /**
+     * 跳转戴登录页面。
+     *
+     * @return ModelAndView 返回视图名，login.jsp.
+     */
+    @RequestMapping(value = "/toLogin")
+    public ModelAndView toLogin() {
+        ModelAndView view = new ModelAndView();
+        String forwardPage = PRS + "/login";
+        view.setViewName(forwardPage);
+        return view;
+    }
+
+    /**
+     * 登录方法。
+     *
+     * @param user user。
+     *
+     * @return ModelAndView 返回视图名，taskList.jsp.
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(@ModelAttribute("user") SystemUser user) {
+        return this.loginMethod(user);
+    }
+
+    /**
+     * verify the user info. check the user password. if login success open the
+     * desktop page or return to the login page and show failmessage.
+     *
+     * @param user, the user info
+     *
+     * @return if login success open the desktop page or return to the login page
+     * and show failmessage.
+     */
+    private ModelAndView loginMethod(@ModelAttribute("user") SystemUser user) {
+        SystemUserService systemUserService = BdapServiceFactory.instance().getService(SystemUserService.class);
+        ModelAndView view = new ModelAndView(LOGIN_PAGE);
+
+        if (!systemUserService.checkUser(user.getEmail())) {
+            String forwardPage = PRS + "/login";
+            view.setViewName(forwardPage);
+            view.addObject(MESSAGE, "邮箱不存在...");
+        } else if (StringUtils.isNotEmpty(user.getEmail()) && StringUtils.isNotEmpty(user.getPassword())) {
+            SystemUser systemUser = systemUserService.auth(user);
+            boolean passAuth = null != systemUser;
+            if (passAuth) {
+                this.saveUserInfo(systemUser);
+                view.addObject("user", systemUser);
+                String forwardPage = PRS + "/taskList";
+                view.setViewName(forwardPage);
+                return view;
+            } else {
+                String forwardPage = PRS + "/login";
+                view.setViewName(forwardPage);
+                view.addObject(MESSAGE, "邮箱或者密码错误, 请重新输入...");
+            }
+        }
+        return view;
+    }
+
+    /**
+     * the user pass the auth, then save the user info to cache.
+     *
+     * @param user the login user.
+     */
+    private void saveUserInfo(SystemUser user) {
+        logger.info(user.getUsername() + " saveUserInfo.");
+
+        // record the current login staff code and name.
+        BdapCache<String> sysCache = BdapCacheFactory.instance().getCacheHandler();
+        String userIdKey = PRSCommonConstant.PRS_CACHE_USERNAME + "." + user.getUserId();
+        String userNameKey = userIdKey + "." + user.getUsername();
+        // clear all old staff info in memory.
+        sysCache.clear("*" + userIdKey + "*");
+        sysCache.put(userNameKey, user.getUsername(), this.getToken());
+
+        BdapCache<SystemUser> userCache = BdapCacheFactory.instance().getCacheHandler();
+        userCache.put(PRSCommonConstant.KMIS_CACHE_CURRENT_USER, user, this.getToken());
+
+    }
+
+    /**
+     * user logout method.
+     *
+     * @return forward to the login page.
+     */
+    @ResponseBody
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public ModelAndView logout() {
+
+        cleanCache();
+        closeSession();
+        return new ModelAndView("redirect:/index");
+    }
+
+    /**
+     * remove the user data in cache.
+     */
+    private void cleanCache() {
+        BdapCache<?> cache = BdapCacheFactory.instance().getCacheHandler();
+        cache.expireLong(PRSCommonConstant.KMIS_CACHE_CURRENT_USER, this.getToken());
+    }
+
+    /**
+     * inactive the user session.
+     */
+    private void closeSession() {
+        Enumeration<?> em = request.getSession().getAttributeNames();
+        while (em.hasMoreElements()) {
+            request.getSession().removeAttribute(String.valueOf(em.nextElement()));
+        }
+        request.getSession().invalidate();
+    }
+}

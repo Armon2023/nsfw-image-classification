@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.apps.prs.persistence.bean.APKError" table="PRS_APK_ERROR">
+		<id name="uuid" type="java.lang.String">
+			<column name="UUID" length="36" sql-type="char(36)" not-null="true">
+				<comment>ID</comment>
+			</column>
+		</id>
+		<property name="errorType" type="java.lang.Integer">
+			<column name="ERROR_TYPE" length="1">
+				<comment>错误类型</comment>
+			</column>
+		</property>
+
+		<property name="createdBy" type="java.lang.String">
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String">
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp">
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer">
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

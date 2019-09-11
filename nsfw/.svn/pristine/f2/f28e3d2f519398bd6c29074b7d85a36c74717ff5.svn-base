@@ -1,0 +1,223 @@
+$(document).ready(function() {
+	var flag = false;
+	$(".start-menu").click(function() {
+		flag = !flag;
+		$(".menu").toggle(300,function(){
+			if(flag == true){
+				 $(".logout").css('display','block')
+		     }
+		});
+		if(flag == false){
+			 $(".logout").css('display','none')
+	    }
+	});
+	//$('.secondMenu a, .content, .open-app, .nav-apps, .app-icon').click(function() {
+	//	$(".menu").hide(300);
+	//});
+
+
+    $( ".content" ).sortable({
+    	 items: ".app-icon"
+    });
+    $( ".col-desktop" ).disableSelection();
+
+   // $("body.lightGeryBack").click(function(){
+   // 	$('.window').css('z-index','1000');
+   // 	$('#'+id).css('z-index','3000');
+   // })
+    
+    
+    //$.removeCookie('wallpaper');
+   //  wallpaperCookie = $.cookie("wallpaper");
+   /* if($.removeCookie('wallpaper')){
+    	$('body').css('backgroundImage', 'url("assets/img/wallpapers/'+wallpaperCookie+'")');
+    	$.cookie("wallpaper", wallpaperCookie);
+    }*/
+
+   //alert($.cookie("css"));
+   
+   	/*if($.cookie("css")) {
+		$("#theme").attr("href",$.cookie("css"));
+	}  */
+    
+});
+
+function tocApp(id){
+	
+
+	$('.app-'+id).toggleClass('selected');
+	
+	$('.window').css('z-index','1000');
+	
+	var zindex= $('#'+id).css('z-index');
+
+	$('#'+id).css('z-index',++zindex);
+
+	$("#"+id).toggle(300);
+	
+}
+
+var MIN_APP_WINDOW_WIDTH = 1280;
+var MIN_APP_WINDOW_HEIGHT = 780;
+function openPage(id, title, page, icon, width, height, resizable){
+	window.open(page)
+}
+function openApp(id, title, page, icon, width, height, resizable){
+	$('.app-'+id).toggleClass('selected');
+	$('.window').css('z-index','1000');
+	var zindex= $('#'+id).css('z-index');
+	$('#'+id).css('z-index',++zindex);
+	$("#"+id).toggle(300);
+	var test = $('.nav-apps div').is('.app-'+ id);
+	if(test == true){
+		//$('#'+id).effect( "bounce", {times:3}, 300 );//特效:反弹: times:元素反弹的次数;distance:最大的反弹距离，以像素为单位。
+	}
+	else{
+		var titleApp = '<div class="open-app app-'+ id +' selected" onclick="tocApp(\''+ id +'\')" style="position:relative;"><i class="fa '+ icon +'"></i><span class="title"> '+ title +' </span><a href="#" class="closer" onclick="closeWindows(\''+ id +'\')"><i class="fa fa-window-close-o" style="color:#fff;position:absolute;top:10px;right:5px"></i></a></div>';
+		$('.nav-apps').append(titleApp);
+		// set the default window size.
+		if(null==width || null == height || width<MIN_APP_WINDOW_WIDTH || height<MIN_APP_WINDOW_HEIGHT){
+			width = MIN_APP_WINDOW_WIDTH;
+			height = MIN_APP_WINDOW_HEIGHT;
+		}
+		createWindows(id, title, page, icon, width, height, resizable);
+	}  
+	//maxWindows(id);
+	//$('#'+id).css("height", $('#'+id).height()-44);
+	if(num>9){
+		$('.nav-apps .nav-more').attr("id","");
+	}else{
+		$('.nav-apps .nav-more').attr("id","none");
+	}
+	
+}
+function errorTransion(id){
+	//parent.location.reload();
+	parent.location = './../../auth/logout'
+}
+
+//首页按钮页面打开
+var distence=60;
+var benginDistence=60;
+var num = 0;
+function createWindows(id, title, page, icon, width, height, resizable){
+	var window = '<div class="window ui-widget-content" id="'+ id +'" onclick="firstWindows(\''+ id +'\')">'+
+	    			'<div class="header">'+
+	    				'<div class="move">'+
+	    				'</div>'+
+	    				'<div class="action">'+
+		    				'<a href="#" class="minus" onclick="minWindows(\''+ id +'\')"><i class="fa fa-window-minimize"></a></i>'+
+		    				'<a href="#" class="max" id="changeIcon'+id+'" onclick="maxWindows(\''+ id +'\')"><i  class="fa fa-window-maximize"  ></a></i>'+
+		    				'<a href="#" class="closer" onclick="closeWindows(\''+ id +'\')"><i class="fa fa-window-close-o"></a></i>'+
+	    				'</div>'+
+	    			'</div>'+
+	    			'<div class="window-content-'+ id +'" style="width:100%;height:'+(height+58)+'px">'+
+	    			'<iframe src="" frameborder="0" marginheight="0" marginwidth="0"  id="mainFrame'+ id +'" name="mainFrame'+ id +'" width="100%" height="100%"></iframe></div>'+
+	    		'</div>';
+    $('.content').append(window);
+    
+    $('#'+id).css("width", width);
+	$('#'+id).css("height", (height+60));
+    $("#mainFrame"+ id ).attr("src",page);
+   // $(".window-content-"+id).load(page);
+    //alert(resizable);
+    
+    //maxWindows(id);
+    
+    if(resizable == true){
+    	$( ".window" ).resizable();
+    }
+    //$( "#"+id ).position({
+     //          my: "center center", //当前元素要选择对齐的位置，默认是'center'
+     //          at: "center center", //目标元素要对齐的位置，默认是'center;
+     //          of: ".content"       //目标元素，默认null
+    //        });
+    if(num>0){  
+    	distence = distence+20;
+        var left = distence;
+        var top = distence;
+        var divOffset = { left: left, top: top };
+        $( "#"+id ).css(divOffset).show();
+    }else{
+    	distence=60;
+    	var divOffset = { left: benginDistence, top: benginDistence };
+    	$( "#"+id ).css(divOffset).show();
+    }
+    num++;
+}
+function closeWindows(id){
+		$('#'+id).hide(300, function(){$(this).detach();});
+		$('.app-'+id).hide(300, function(){$(this).detach();});
+		distence = distence-20;
+		num--;
+		if(num>9){
+			//
+		}else{
+			$('.nav-apps .nav-more').attr("id","none");
+		}
+}
+function minWindows(id){
+		$('.app-'+id).removeClass('selected');
+		$( "#"+id ).position({
+               my: "center top",
+               at: "center top",
+               of: ".content"
+            });
+            
+            $('#'+id).hide(300);
+}
+function maxWindows(id){
+		$('#'+id).css("top", "");
+		$('#'+id).css("left", "");
+		$('#'+id).css("width", "");
+		$('#'+id).css("height", "");
+		$('#'+id).toggleClass('max');
+		if($('#'+id).hasClass('max')){
+			$("#changeIcon"+id).html( "<i class='fa fa-window-restore'></i>");
+			$('.window-content-'+ id ).css("height",$('#'+id).height()- 43);
+			//$('.window-content-'+ id ).css("height",$('#'+id).height());
+			//$('.window .header .move').css("background",'none');
+		}else{
+			$('.window-content-'+ id ).css("height",MIN_APP_WINDOW_HEIGHT + 68);
+			$("#changeIcon"+id).html( "<i class='fa fa-window-maximize'></i>");
+			//$('.window .header .move').css("background",'url("../demo/assets/img/move2.png") no-repeat center');
+			//$('.window .header .move').css("background-size",'40% 50%');
+		}
+		$( "#"+id ).position({
+               my: "center top",
+               at: "center top",
+               of: ".content"
+            });
+		
+}
+function moveWindows(){
+	 $( ".window" ).draggable({ containment: ".content" });
+}
+function firstWindows(id){
+	    $('.window').css('z-index','1000');
+		$('#'+id).css('z-index','3000');
+}
+function submitForm(formId, action){
+		
+		
+		var data = [];
+		
+		
+		
+		$("#"+formId+" :input").each(function(){
+			var id = $(this).attr('id');
+		 	data.push({name:$(this).attr('name'), value: $('#'+id).val()});
+		});
+		//alert(data[0][name]);
+		//alert(action);
+		
+		$.ajax({
+		    type: "POST",
+		    url: 'pages/'+action,
+		    dataType: "html",
+		    data: data,
+		    success: function(data){
+		       $('#content-'+formId).html(data);
+		    }
+		});
+}

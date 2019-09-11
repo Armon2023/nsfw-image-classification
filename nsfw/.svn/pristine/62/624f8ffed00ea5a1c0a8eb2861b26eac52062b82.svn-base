@@ -1,0 +1,22 @@
+package net.cnki.bdap.business.nsfw.service;
+
+
+
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFileTask;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月24日
+ * @since jdk_1.8.0_31
+ */
+public interface NsfwFileTaskService extends BdapService<NsfwFileTask> {
+
+	/**
+	 * 
+	 * 定时任务删除  2min清一次表.
+	 * 
+	 */
+	public void clearTable();
+}

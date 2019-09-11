@@ -1,0 +1,137 @@
+package net.cnki.bdap.apps.adweb;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.FixMethodOrder;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.google.gson.Gson;
+
+import net.cnki.bdap.common.util.UUIDHelper;
+import net.cnki.bdap.nlp.bean.WordDetectResult;
+import net.cnki.bdap.nlp.service.BdapNLPService;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@ContextConfiguration({"file:src/test/resources/spring/applicationContext_ads_dev.xml"})
+public class Test001 {
+
+	private final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+	@Test
+	public void test001() {
+		for (int i = 0; i < 20; i++) {
+			String uuid = UUIDHelper.get32UUID();
+			System.out.println(uuid);
+		}
+	}
+
+	@Test
+	public void test_detect() throws IOException {
+		ClassPathXmlApplicationContext cx = new ClassPathXmlApplicationContext();
+		Resource resource = new ClassPathResource("testcase/test10w.txt");
+		String article = readFile(resource.getURI().getPath());
+		cx.close();
+
+		long startTime = System.currentTimeMillis();
+		List<WordDetectResult> detectResult = new ArrayList<>();
+		// language normal check.
+		String[] codes = { "3", "5", "4", "8", "12", "15", "16", "18", "20" };
+		detectResult = getDetectResult(article, codes);
+
+		long endTime = System.currentTimeMillis();
+		String cost = String.valueOf(endTime - startTime);
+		int characterCount = this.getCharacterCount(article);
+
+		Map<String, String> result = this.getData(cost, characterCount, detectResult);
+		System.out.println(cost + ":" + result.size());
+
+	}
+
+	/**
+	 * 判断查询的表,获取数据.
+	 *
+	 * @param article
+	 *            用户输入的文字.
+	 * @param codes
+	 *            用户勾选的字库.
+	 * @return 'List<WordDetectResult>'
+	 */
+	private List<WordDetectResult> getDetectResult(String article, String[] codes) {
+		BdapNLPService nlpService = BdapServiceFactory.instance().getService(BdapNLPService.class);
+		List<WordDetectResult> detectResult = nlpService.getDetectResult(article, codes);
+
+		return detectResult;
+	}
+
+	/**
+	 * 将数据转成json放入map集合.
+	 *
+	 * @param cost
+	 *            检查耗时.
+	 * @param detectResult
+	 *            查出的数据.
+	 * @return ‘Map<String, String>’ json串.
+	 */
+	private Map<String, String> getData(String cost, int characterCount, List<WordDetectResult> detectResult) {
+		String ctime = df.format(new Date());
+		Map<String, String> map = new HashMap<>();
+		String message = "";
+		if (detectResult != null && detectResult.size() > 0) {
+			message = String.format("%6d characters, found %3s issues, cost time: %5s ms, current time: %s \n",
+					characterCount, detectResult.size(), cost, ctime);
+			Gson gson = new Gson();
+			map.put("result", gson.toJson(detectResult));
+
+		} else {
+			message = String.format("%6d characters, found %3s issues, cost time: %5s ms, current time: %s \n",
+					characterCount, "no", cost, ctime);
+			map.put("result", "");
+		}
+
+		System.out.printf(message);
+
+		map.put("cost", cost);
+		map.put("count", characterCount + "");
+		return map;
+	}
+
+	public String readFile(String pathname) {
+		StringBuilder text = new StringBuilder();
+		try (FileReader reader = new FileReader(pathname); BufferedReader br = new BufferedReader(reader)) {
+			String line;
+			while ((line = br.readLine()) != null) {
+				text.append(line);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return text.toString();
+	}
+
+	private int getCharacterCount(String article) {
+		int count = 0;
+		if (null != article) {
+			count = article.length();
+		}
+		return count;
+	}
+
+}

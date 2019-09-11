@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd ">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.persistence.nsfw.bean.NsfwFileTask" table="NSFW_UPLOAD_FILES_TASK">
+		<id name="id" type="java.lang.Integer" column="ID">
+			<generator class="identity"/>
+		</id>
+		<property name="fileName" type="java.lang.String">
+			<column name="FILE_NAME">
+				<comment>文件名</comment>
+			</column>
+		</property>
+		<property name="filePath" type="java.lang.String">
+			<column name="FILE_PATH" length="64">
+				<comment>文件存放地址</comment>
+			</column>
+		</property>
+		<property name="sexIndex" type="java.lang.String">
+			<column name="SEX_INDEX" length="32">
+				<comment>色情指数</comment>
+			</column>
+		</property>
+		<property name="isNsfwFile" type="java.lang.Integer">
+			<column name="IS_NSFW_FILE" length="1">
+				<comment>1:true; 0:false</comment>
+			</column>
+		</property>
+		<property name="uploadTime" type="java.lang.String">
+			<column name="UPLOAD_TIME" length="32">
+				<comment>上传时间</comment>
+			</column>
+		</property>
+		<property name="audioContent" type="java.lang.String">
+			<column name="AUDIO_CONTENT" length="1000">
+				<comment>音频转化文本</comment>
+			</column>
+		</property>
+		
+		<property name="createdBy" type="java.lang.String" >
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String" >
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp" >
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer" >
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

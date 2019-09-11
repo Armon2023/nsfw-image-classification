@@ -1,0 +1,155 @@
+//键盘快捷键
+	$(document).keydown(function(event){
+		if (event.ctrlKey && event.altKey && event.keyCode == 68){ //日历的快捷键 ctrl+alt+d
+			var link = $(".dateBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.shiftKey && event.keyCode == 65){ //选中的快捷键 ctrl+shift+A
+			var link = $(".selectBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 13){ //激活的快捷键 alt+Enter
+			var link = $(".activate").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 46){ //删除的快捷键 alt+delete
+			var link = $(".deleteBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 72){ //订单的快捷键 alt+h
+			var link = $(".orderBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 76){ //导入的快捷键 alt+L
+			var link = $(".enterBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.keyCode == 82){ //刷新的快捷键 ctrl+r
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.shiftKey && event.keyCode == 85){ //上传的快捷键 ctrl+shift+u
+			var link = $(".uploadBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.keyCode == 70){ //搜索的快捷键 ctrl+F
+			var link = $(".searchBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.shiftKey && event.keyCode == 83){ //收藏的快捷键 ctrl+shift+S
+			var link = $(".collectBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 83){ //保存的快捷键 alt+s
+			var link = $(".keepBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.shiftKey && event.keyCode == 87){ //一键提醒的快捷键 shift+w
+			var link = $(".wartBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.shiftKey && event.keyCode == 70){ //关注的快捷键 shift+f
+			var link = $(".attentBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 85){ //用户的快捷键 alt+u
+			var link = $(".userBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.shiftKey && event.keyCode == 70){ //统计的快捷键 Ctrl+Shift+F
+			var link = $(".countBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 82){ //回复的快捷键 alt+r
+			var link = $(".replyBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 79){ //导出的快捷键 alt+o
+			var link = $(".exportBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.shiftKey && event.keyCode == 80){ //配置的快捷键 shift+p
+			var link = $(".configBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.shiftKey && event.keyCode == 84){ //设置的快捷键 shift+t
+			var link = $(".setBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 77){ //修改的快捷键 alt+M
+			var link = $(".editBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 66){ //解锁的快捷键 alt+B
+			var link = $(".unlocked").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 78){ //添加的快捷键 alt+N
+			var link = $(".addBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.keyCode == 88){ //交互的快捷键 alt+x
+			var link = $(".mutualBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.altKey && event.ctrlKey && event.keyCode == 87){ //关闭的快捷键alt+ctrl+W
+			var link = $(".closeBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		if (event.ctrlKey && event.altKey && event.keyCode == 82){ //数据库的快捷键 alt+ctrl+R 
+			var link = $(".dataBtn").children("a").attr("href");
+			if(link){
+				window.location.href = link;
+			}
+	 	}
+		//if (event.shiftKey && event.keyCode == 88){ //页面关闭的快捷键 shift+x
+		//	console.log("34567890")
+	 	//}
+	})

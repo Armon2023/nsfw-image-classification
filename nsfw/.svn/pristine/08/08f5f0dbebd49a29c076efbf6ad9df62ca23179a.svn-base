@@ -1,0 +1,16 @@
+package net.cnki.bdap.business.system.service;
+
+
+import net.cnki.bdap.persistence.system.bean.BJCounty;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 区县信息Service。
+ * 
+ * @author wangxu
+ * @version 2018年11月27日16:32:07
+ * @since jdk_1.8.0_31
+ */
+public interface BJCountyService extends BdapService<BJCounty> {
+        
+}

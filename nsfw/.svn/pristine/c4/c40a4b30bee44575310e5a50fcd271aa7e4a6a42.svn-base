@@ -1,0 +1,126 @@
+package net.cnki.bdap.persistence.system.bean;
+
+import java.util.Set;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 系统字典类型。
+ * 
+ * @author yangjialin
+ * @version 2018.6.13
+ * @since jdk_1.8.0_161
+ */
+public class SystemMasterType extends BaseBean implements Comparable<SystemMasterType> {
+
+	private static final long serialVersionUID = -181958144750343355L;
+
+	/** 排序用字段名。 */
+	public static final String ORDER_BY_TYPECODE = "typeCode";
+	/** record id。 */
+	private Integer id;
+	/** the typeCode of the type。 */
+	private Integer typeCode;
+	/** the name of the type。 */
+	private String typeName;
+
+	private Set<SystemMaster> masters;
+
+	/**
+	 * 无参数 Constructor。
+	 */
+	public SystemMasterType() {
+	}
+
+	/**
+	 * 有参数Constructor。
+	 * 
+	 * @param typeCode
+	 *            类型编号
+	 * @param typeName
+	 *            类型名
+	 */
+	public SystemMasterType(Integer id, Integer typeCode, String typeName) {
+		this.id = id;
+		this.typeCode = typeCode;
+		this.typeName = typeName;
+	}
+
+	/**
+	 * 获取id。
+	 * 
+	 * @return id 主键。
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * 设定id。
+	 * 
+	 * @param id
+	 *            主键。
+	 * @return 当前SystemMasterType对象。
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * 获取类型编号。
+	 * 
+	 * @return 类型编号。
+	 */
+	public Integer getTypeCode() {
+		return typeCode;
+	}
+
+	/**
+	 * 设定类型编号。
+	 * 
+	 * @param typeCode
+	 *            类型编号
+	 * @return 当前SystemMasterType对象。
+	 */
+	public SystemMasterType setTypeCode(Integer typeCode) {
+		this.typeCode = typeCode;
+		return this;
+	}
+
+	/**
+	 * 获取类型名。
+	 * 
+	 * @return 类型名。
+	 */
+	public String getTypeName() {
+		return typeName;
+	}
+
+	/**
+	 * 设定类型名。
+	 * 
+	 * @param typeName
+	 *            类型名。
+	 * @return 当前SystemMasterType对象。
+	 */
+	public SystemMasterType setTypeName(String typeName) {
+		this.typeName = typeName;
+		return this;
+	}
+
+	/**
+	 * SystemMasterType对象比较。
+	 */
+	@Override
+	public int compareTo(SystemMasterType o) {
+		return this.getTypeName().compareTo(o.getTypeName());
+	}
+
+	public Set<SystemMaster> getMasters() {
+		return masters;
+	}
+
+	public void setMasters(Set<SystemMaster> masters) {
+		this.masters = masters;
+	}
+}

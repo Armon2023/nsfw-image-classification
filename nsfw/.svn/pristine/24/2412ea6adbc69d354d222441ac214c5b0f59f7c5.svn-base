@@ -1,0 +1,74 @@
+package net.cnki.bdap.persistence.nsfw.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月29日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class ForbiddenBooks extends BaseBean {
+
+	private static final long serialVersionUID = 939051203685368927L;
+	/** id. */
+	private Integer id;
+	/** 书名. */
+	private String bookName;
+	/** 出版社. */
+	private String bookPublishment;
+	/** 作者. */
+	private String bookAuthor;
+	
+	public ForbiddenBooks() {
+		super();
+	}
+
+	public ForbiddenBooks(Integer id, String bookName, String bookPublishment, String bookAuthor) {
+		super();
+		this.id = id;
+		this.bookName = bookName;
+		this.bookPublishment = bookPublishment;
+		this.bookAuthor = bookAuthor;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getBookName() {
+		return bookName;
+	}
+
+	public void setBookName(String bookName) {
+		this.bookName = bookName;
+	}
+
+	public String getBookPublishment() {
+		return bookPublishment;
+	}
+
+	public void setBookPublishment(String bookPublishment) {
+		this.bookPublishment = bookPublishment;
+	}
+
+	public String getBookAuthor() {
+		return bookAuthor;
+	}
+
+	public void setBookAuthor(String bookAuthor) {
+		this.bookAuthor = bookAuthor;
+	}
+
+	@Override
+	public String toString() {
+		return "ForbiddenBooks [id=" + id + ", bookName=" + bookName + ", bookPublishment=" + bookPublishment
+				+ ", bookAuthor=" + bookAuthor + "]";
+	}
+	
+}

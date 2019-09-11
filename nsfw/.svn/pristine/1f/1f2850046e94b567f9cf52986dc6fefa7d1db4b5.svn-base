@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop 
+						http://www.springframework.org/schema/aop/spring-aop.xsd
+						http://www.springframework.org/schema/context 
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd
+						http://www.springframework.org/schema/task
+						http://www.springframework.org/schema/task/spring-task-3.2.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!--
+		每20分钟执行一次          cron="0 0/20 * * * ?" 
+		每天0点定时统计任务   cron="0 0 0 * * ?"
+	 -->
+	<task:annotation-driven />
+    
+	<!-- knowledgeCenter.同步redis hotWord 到数据库  -->
+	<bean id="nsfwTask" class="net.cnki.bdap.business.nsfw.serviceImpl.NsfwFileTaskServiceImpl" />  
+	
+	<task:scheduled-tasks>
+	 
+		<task:scheduled ref="nsfwTask" method="clearTable" cron="0 0/2 * * * ?" />
+	 
+		<!-- <task:scheduled ref="removeFileTask" method="deleteFile" cron="0 0 0 * * ?" /> -->
+	</task:scheduled-tasks>
+</beans>

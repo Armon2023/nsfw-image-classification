@@ -1,0 +1,39 @@
+package net.cnki.bdap.business.system.serviceimpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+
+import net.cnki.bdap.business.base.BdapServiceImpl;
+import net.cnki.bdap.business.system.service.BJStreetService;
+import net.cnki.bdap.persistence.system.bean.BJStreet;
+
+/**
+ * 区县信息Service实现类。
+ * 
+ * @author wangxu
+ * @version 2018年11月27日17:41:52
+ * @since jdk_1.8.0_31
+ */
+public class BJStreetServiceImpl extends BdapServiceImpl<BJStreet> implements BJStreetService {
+
+	/**
+     * 根据当前区属内的所有街道。
+     * 
+     * @param  district 区名称。
+     * @return BJStreet list BJStreet结果集合。
+     */
+	@Override
+	public List<BJStreet> getAllStreet(String district) {
+		List<BJStreet> allList  = new ArrayList<>();
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(BJStreet.class);
+		criteria.add(Restrictions.eq("county", district));
+		allList = this.findByCriteria(criteria);
+		
+		return allList;
+	}
+
+}

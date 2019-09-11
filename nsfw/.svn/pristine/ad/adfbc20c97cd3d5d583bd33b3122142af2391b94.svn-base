@@ -1,0 +1,32 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.SystemUser;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * PRS用户service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:15
+ */
+public interface SystemUserService extends BdapService<SystemUser> {
+
+    /**
+     * 检查邮箱。
+     *
+     * @param email 邮箱.
+     *
+     * @return java.lang.Boolean
+     */
+    public Boolean checkUser(String email);
+
+    /**
+     * 用户登录用检索。
+     *
+     * @param user 用户对象。
+     *
+     * @return prsUser 检索结果用户对象。
+     */
+    public SystemUser auth(SystemUser user);
+}

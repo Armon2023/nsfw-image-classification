@@ -1,0 +1,147 @@
+package net.cnki.bdap.web.controller;
+
+
+import java.io.UnsupportedEncodingException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import com.google.gson.Gson;
+import net.cnki.bdap.business.nsfw.serviceImpl.NsfwFileServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.cnki.bdap.business.nsfw.service.NsfwFileService;
+import net.cnki.bdap.persistence.nsfw.bean.NsfwFile;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * The user login Contrller.
+ * </p>
+ *
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ */
+@Controller
+public class NsfwController {
+
+    @Autowired(required = false)
+    protected HttpServletRequest request;
+
+    final Integer RELATIVE_NUMBER = 14;
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+     */
+    @RequestMapping(value = "/index")
+    @ResponseBody
+    public ModelAndView index() {
+
+        ModelAndView view = new ModelAndView();
+        NsfwFileService nsfwService = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        List<NsfwFile> nsfwFile = nsfwService.loadNsfwTable();
+        view.setViewName("upload");
+
+        for (NsfwFile file : nsfwFile) {
+            String fileRelativePath = file.getFilePath().substring(RELATIVE_NUMBER).replace("\\", "/");
+            file.setFileRelativePath(fileRelativePath);
+        }
+        view.addObject("nsfws", nsfwFile);
+        return view;
+    }
+
+    /**
+     * 根据检索条件检索全部符合的项目。
+     *
+     * @param nsfw 检索条件信息。
+     */
+    @ResponseBody
+    @RequestMapping(value = "/search", method = RequestMethod.POST, produces = {"text/json;charset=UTF-8"} )
+    public String searchProddev(@ModelAttribute("nsfw") NsfwFile nsfw) throws UnsupportedEncodingException {
+        NsfwFileService nsfwService = BdapServiceFactory.instance().getService(NsfwFileService.class);
+        List<NsfwFile> nsfwFile = nsfwService.searchFileList(nsfw);
+        for (NsfwFile file : nsfwFile) {
+            String fileRelativePath = file.getFilePath().substring(RELATIVE_NUMBER).replace("\\", "/");
+            file.setFileRelativePath(fileRelativePath);
+            String path = java.net.URLDecoder.decode(fileRelativePath, "UTF-8");
+            // 获取文件后缀。
+            String showContent;
+            String type = path.substring(path.lastIndexOf(".") + 1);
+            path = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + "/" + path;
+            if ("mp4".equals(type)) {
+                showContent = "<video id=\"media\" src=\"" + path + "\" controls style=\"width:200px\" heigt=\"100\"></video>";
+            } else if ("wav".equals(type)) {
+                showContent = "<audio controls><source src='" + path + "' type=\"audio/mpeg\"></audio> ";
+            } else {
+            	showContent = "<img style=\"width:100%\" src='" + path + "' ></img>";
+            }
+            file.setReviewHtml(showContent);
+        }
+        return new Gson().toJson(nsfwFile);
+    }
+
+    /**
+     * 上传文件。
+     *
+     * @param file NsfwFile。
+     */
+    @ResponseBody
+    @RequestMapping(value = "/uploadFile")
+    public void uploadFile(@ModelAttribute("file") NsfwFile file) throws Exception {
+        BdapServiceFactory.instance().getService(NsfwFileService.class).uploadFile(file);
+    }
+
+
+    /**
+     * 获取上传文件状态。
+     */
+    @ResponseBody
+    @RequestMapping(value = "/getUploadState")
+    public String getUploadState() {
+        String result = NsfwFileServiceImpl.uploadState;
+        if (result != null && !"".equals(result)) NsfwFileServiceImpl.uploadState = "";
+        return result;
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+     */
+    @ResponseBody
+    @RequestMapping(value = "/openReview")
+    public ModelAndView openReview() throws Exception {
+        String path = request.getParameter("path");
+        ModelAndView view = new ModelAndView();
+        view.setViewName("review");
+        view.addObject("path", path);
+        path = java.net.URLDecoder.decode(path, "UTF-8");
+
+        // 获取文件后缀。
+        String showContent = "<video id=\"media\" src=\"/videos/MV.mp4\" controls width=\"200\" heigt=\"100\"></video>";
+        String type = path.substring(path.lastIndexOf(".") + 1);
+        path = "/" + path;
+        if ("mp4".equals(type)) {
+            showContent = "<video id=\"media\" src=\"" + path + "\" controls style=\"width:200px\" heigt=\"100\"></video>";
+        } else if ("wav".equals(type)) {
+            showContent = "<audio controls autoplay><source src='" + path + "' type=\"audio/mpeg\"></audio> ";
+        } else {
+            showContent = "<img src='" + path + "' ></img>";
+            ;
+        }
+
+        view.addObject("showContent", showContent);
+
+        return view;
+    }
+}

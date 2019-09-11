@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd ">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.persistence.system.bean.BJCommunity" table="geott_cnki_gridteamdistribute_clear">
+		<id name="id" type="java.lang.Integer" column="ID">
+			<generator class="identity"/>
+		</id>
+		<property name="county" type="java.lang.String">
+			<column name="county" length="50">
+				<comment>所属区</comment>
+			</column>
+		</property>
+		<property name="streetId" type="java.lang.Integer">
+			<column name="streetId" length="11">
+				<comment>所属街道ID</comment>
+			</column>
+		</property>
+		<property name="street" type="java.lang.String">
+			<column name="street" length="50">
+				<comment>所属街道或乡镇</comment>
+			</column>
+		</property>
+		<property name="community" type="java.lang.String">
+			<column name="community" length="50">
+				<comment>所属社区或村</comment>
+			</column>
+		</property>
+		<property name="name" type="java.lang.String">
+			<column name="name" length="50">
+				<comment>姓名</comment>
+			</column>
+		</property>
+		<property name="sex" type="java.lang.String">
+			<column name="sex" length="10">
+				<comment>性别</comment>
+			</column>
+		</property>
+		<property name="politicalstatus" type="java.lang.String">
+			<column name="politicalstatus" length="30">
+				<comment>政治面貌</comment>
+			</column>
+		</property>
+		<property name="age" type="java.lang.Integer">
+			<column name="age" length="11">
+				<comment>年龄</comment>
+			</column>
+		</property>
+		<property name="nation" type="java.lang.String">
+			<column name="nation" length="30">
+				<comment>民族</comment>
+			</column>
+		</property>
+		<property name="education" type="java.lang.String">
+			<column name="education" length="30">
+				<comment>学历</comment>
+			</column>
+		</property>
+		<property name="fullorparttime" type="java.lang.String">
+			<column name="fullorparttime" length="30">
+				<comment>专、兼职</comment>
+			</column>
+		</property>
+		<property name="gridId" type="java.lang.String">
+			<column name="gridId" length="1000">
+				<comment>负责的网格编号</comment>
+			</column>
+		</property>
+		<property name="duty" type="java.lang.String">
+			<column name="duty" length="100">
+				<comment>职务</comment>
+			</column>
+		</property>
+		<property name="tel" type="java.lang.String">
+			<column name="tel" length="50">
+				<comment>联系方式</comment>
+			</column>
+		</property>
+		<property name="countyId" type="java.lang.Integer">
+			<column name="countyId" length="11">
+				<comment>所属区id</comment>
+			</column>
+		</property>
+		<property name="communityId" type="java.lang.Integer">
+			<column name="communityId" length="11">
+				<comment>所属社区id</comment>
+			</column>
+		</property>
+		
+		<property name="createdBy" type="java.lang.String" >
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String" >
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp" >
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer" >
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+		
+	</class>
+</hibernate-mapping>

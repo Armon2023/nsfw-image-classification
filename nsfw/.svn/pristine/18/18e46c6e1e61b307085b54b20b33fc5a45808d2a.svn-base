@@ -1,0 +1,178 @@
+
+//兼容谷歌  
+if(!window.showModalDialog){  
+    window.showModalDialog=function(url,name,option){  
+        if(window.hasOpenWindow){  
+            window.newWindow.focus();  
+        }  
+        var re = new RegExp(";", "g");    
+        var option  = option.replace(re, '","'); 
+        var re2 = new RegExp(":", "g");  
+        option = '{"'+option.replace(re2, '":"')+'"}';  
+        option = JSON.parse(option);  
+        var openOption = 'width='+parseInt(option.dialogWidth)+',height='+parseInt(option.dialogHeight)+',left='+(window.screen.width-parseInt(option.dialogWidth))/2+',top='+(window.screen.height-30-parseInt(option.dialogHeight))/2;  
+        window.hasOpenWindow = true;  
+        window.newWindow = window.open(url,name,openOption);  
+    }  
+}     
+
+function openFMD(url){
+	openMD(url, 1000, 550);
+}
+
+function openMD(url, width, height){
+    var $dialog = $('<div id="dialog"></div>')
+           .html('<iframe style="border: 0px; " src="' + url + '" width= "100%" height= "100%" marginheight= "0" marginwidth= "0" hspeace= "0" vspace= "0" frameborder= "0" scrolling="no" ></iframe>')
+           .dialog({
+               autoOpen: false,
+               modal: false,
+               title: null,
+           });
+    $dialog.dialog("option", "width", width);
+    $dialog.dialog("option", "height", height);
+    $dialog.dialog('open');
+}
+
+/*关闭弹出框*/
+function closeDialog() {
+    var parent =$('#dialog', window.parent.document).parent();
+    var parentBro =parent.next();
+        parentBro.remove() 
+        parent.remove();  
+}
+
+//提示框
+function prompt(type,classId,Idname,message){
+	var tsMesg;
+	var tsClass;
+	if(type == 'warning'){			//警告warning
+		tsClass = 'nWarning';
+		tsMesg = 'WARNING';
+	}else if(type == 'information'){	//消息information
+		tsClass = 'nInformation';
+		tsMesg = 'INFORMATION';
+	}else if(type == 'success'){		//成功success
+		tsClass = 'nSuccess';
+		tsMesg = 'SUCCESS';
+	}else if(type == 'failure'){		//失败failure
+		tsClass = 'nFailure';
+		tsMesg = 'FAILURE';
+	}
+	
+	var rnd = Math.round(Math.random() * (999999 - 100000)) + 100000;
+    (function () {
+      if ($(".showMessge").length > 0) {
+        $(".showMessge").remove();
+      }
+      if(classId == 'class'){
+      	$('.' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong>'+message+'</p>' + '</div>');
+      }else if(classId == 'id'){
+      	$('#' + Idname).prepend('<div id="show_messge_' + rnd + '" class="nNote '+tsClass+' hideit showMessge" onclick="hideit()">' +'<p><strong>'+tsMesg+': </strong>'+message+'</p>' + '</div>');
+      }
+      setTimeout(function () {
+        $("#show_messge_" + rnd).remove()
+      }, 3000)
+    })(rnd);
+}
+
+//选择的提示框
+function nSelect(message){
+	var warnHTML = "<div class='nNote nFailure hideit'>";
+		warnHTML = warnHTML + "<p><strong>FAILURE: </strong>"+message+"</p>";
+		warnHTML = warnHTML + "<input type='button' value='确定' ><input type='button' value='取消'></p>";
+		warnHTML = warnHTML + "</div>";
+	if(classId == 'class'){
+		$('.' + Idname).prepend(warnHTML);
+	}else if(classId == 'id'){
+		$('#' + Idname).prepend(warnHTML);
+	}
+}
+
+
+
+//提示框的隐藏
+function hideit(){
+	$(".hideit").click(function() {
+		$(this).fadeTo(200, 0.00, function(){ //fade
+			$(this).slideUp(300, function() { //slide up
+				$(this).remove(); //then remove from the DOM
+			});
+		});
+	});	
+}
+
+//===== 判断选择弹窗 =====//
+
+function popupMessage(classId,Idname,message){
+	var alertMessage;
+	alertMessage = "<div class='nNote nInformation hideit selectNode showMessge'>"
+	alertMessage += "<p class ='popupMes'><strong>INFORMATION:<strong>"+message+"</p>"
+	alertMessage += "<a href='#' class='popupBtn' onclick='cancelMessage()'><input type='button' value='取 消' style='background:#cbc8cb;'></a>"
+	alertMessage += "<a href='#' class='popupBtn ensureBtn'><input type='button' value='确 定' style='background:#ffe21e;'></a>"
+	alertMessage += "</div>"
+	var rnd = Math.round(Math.random() * (999999 - 100000)) + 100000;
+    (function () {
+      if ($(".showMessge").length > 0) {
+        $(".showMessge").remove();
+      }
+      if(classId == 'class'){
+    	  $('.' + Idname).prepend(alertMessage);
+      }else if(classId == 'id'){
+    	  $('#' + Idname).prepend(alertMessage);
+      }
+    })(rnd);
+}
+ function cancelMessage(){
+	 $(".selectNode").remove()
+ }
+
+
+//列表的添加
+function addRow(id){
+	var trHTML = "<tr class=''>";
+	trHTML = trHTML + "<td><input type='checkbox' name='checkRow' /></td>";
+	trHTML = trHTML + "<td><input style='width:90%' type='text' name='nodeStep' value=''/></td>";
+	trHTML = trHTML + "<td><input type='hidden' name='nodeId' value=''/><input style='width:90%' type='text' name='nodeCode' value=''/></td>";
+	trHTML = trHTML + "<td><input style='width:90%' type='text' name='ndName' value=''/></td>";
+	trHTML = trHTML + "<td><input style='width:90%' type='text' name='nodePage' value=''/></td>";
+	trHTML = trHTML + "</tr>";
+	$(id).append(trHTML);
+}
+
+//列表的删除
+function deleteNodes(id){
+	var length = 0;
+	$("#initTable").find("input[type='checkbox']").each(function() {
+		if($(this).is(':checked')){
+			length ++;
+			var trHtml = $(this).parent().parent();
+			$(trHtml).remove()
+		}else{
+			//
+		}
+	});
+	if(!(length>0)){
+		alert("没有选中项可以删除！")
+	}
+}
+
+String.prototype.endWith=function(s){
+	if(s==null||s==""||this.length==0||s.length>this.length)
+		return false;
+	if(this.substring(this.length-s.length)==s)
+		return true;
+	else
+		return false;
+	return true;
+}
+
+
+String.prototype.startWith=function(s){
+	if(s==null||s==""||this.length==0||s.length>this.length)
+		return false;
+	if(this.substr(0,s.length)==s)
+		return true;
+	else
+		return false;
+	return true;
+}

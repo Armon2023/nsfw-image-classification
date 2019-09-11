@@ -1,0 +1,86 @@
+package net.cnki.bdap.persistence.netpolice.bean;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class SystemFile extends BaseBean{
+	
+	private static final long serialVersionUID = 939051203685368927L;
+	/**id.*/
+	private Integer id;
+	/**上传的文件.*/
+	private MultipartFile cfile;
+	/**文件名.*/
+	private String fileName;
+	/**图片存放地址.*/
+	private String filePath;
+	/**色情指数.*/
+	private String sexIndex;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public MultipartFile getCfile() {
+		return cfile;
+	}
+
+	public void setCfile(MultipartFile cfile) {
+		this.cfile = cfile;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getSexIndex() {
+		return sexIndex;
+	}
+
+	public void setSexIndex(String sexIndex) {
+		this.sexIndex = sexIndex;
+	}
+
+	public SystemFile() {
+		super();
+	}
+
+	public SystemFile(Integer id, String fileName, String filePath, String sexIndex) {
+		super();
+		this.id = id;
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.sexIndex = sexIndex;
+	}
+
+	@Override
+	public String toString() {
+		return "SystemFile [id=" + id + ", fileName=" + fileName + ", filePath=" + filePath + ", sexIndex=" + sexIndex
+				+ "]";
+	}
+
+}

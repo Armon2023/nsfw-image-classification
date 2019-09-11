@@ -1,0 +1,12 @@
+bdap.prs.redis.host=10.3.3.24
+#bdap.prs.redis.host=127.0.0.1
+bdap.prs.redis.port=6401
+#bdap.prs.redis.port=6379
+
+bdap.prs.redis.password=
+bdap.prs.redis.maxIdle=300
+bdap.prs.redis.maxActive=600
+bdap.prs.redis.maxWait=-1
+bdap.prs.redis.testOnBorrow=true
+bdap.prs.redis.longTimeout=120
+bdap.prs.redis.shortTimeout=60

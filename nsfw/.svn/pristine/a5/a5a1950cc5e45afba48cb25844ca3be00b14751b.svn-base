@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.BdapSystem;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * BdapSystem Dao.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-11 14:40
+ */
+public class BdapSystemDao extends BdapBaseDao<BdapSystem> {
+}

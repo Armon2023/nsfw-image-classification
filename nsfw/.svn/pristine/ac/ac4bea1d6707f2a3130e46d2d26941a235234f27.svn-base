@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.default_schema">prs</property>
+        <property name="default_schema">prs</property>
+
+        <property name="hibernate.cache.use_second_level_cache">true</property>
+        <property name="hibernate.cache.region.factory_class">
+            org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+        </property>
+        <property name="hibernate.cache.use_query_cache">true</property>
+
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.BdapNLP"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPWordCn"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPSocialScienceFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPSuperstitionFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPTaiwanMisspell"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPTraditionalChineseFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPUncommonFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPWEBPageFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPWordEn"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPAllFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPCrimeFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPGameFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPGovMisspell"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPLeaderMisspell"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPMisspellWord"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPNaturalScienceFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPOtherFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPPinyinFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPPoliticsFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPPornographicFBWD"/>-->
+        <!--<class-cache usage="read-write" class="net.cnki.bdap.nlp.persistence.bean.NLPReactionaryFBWD"/>-->
+
+    </session-factory>
+</hibernate-configuration>

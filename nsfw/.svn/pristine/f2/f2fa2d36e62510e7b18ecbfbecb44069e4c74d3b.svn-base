@@ -1,0 +1,21 @@
+package net.cnki.bdap.apps.prs;
+
+import net.cnki.bdap.apps.prs.util.MultiThreadDownload;
+import org.junit.Test;
+
+/**
+ * 测试断点续传 .
+ *
+ * @author chenxiang
+ * @version 2019-05-3108:14
+ * @since jdk_1.8.0_144
+ */
+public class MultiThreadDownloadTest {
+
+    @Test
+    public void downloadPart() {
+        new MultiThreadDownload("http://localhost:8080/Downloads/BaiduNetdisk_mac_2.2.2.dmg", 1).downloadPart();
+//        new MultiThreadDownload("http://localhost:8080/Downloads/eZip_V1.7.3.dmg",3).downloadPart();
+//        new MultiThreadDownload("http://localhost:8080/Desktop/xuxuxuxu.pdf",3).downloadPart();
+    }
+}

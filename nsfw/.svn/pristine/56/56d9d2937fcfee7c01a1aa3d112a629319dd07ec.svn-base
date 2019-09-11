@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.CreatPlanResult;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * 创建任务结果dao.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:03
+ */
+public class CreatPlanResultDao extends BdapBaseDao<CreatPlanResult> {
+}

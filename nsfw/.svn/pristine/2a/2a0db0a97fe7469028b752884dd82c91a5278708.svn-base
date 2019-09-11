@@ -1,0 +1,15 @@
+
+$.validator.addMethod('notEqualTo',function(value,element,params){
+    if(value === params){
+        return false;
+    }
+    return true;
+},'请选择一个选项!');
+
+$.validator.addMethod('chinese',function(value,element,params){
+    var reg = /^[\u4E00-\u9FA5]*$/;
+    if(reg.test(value)){
+        return true;
+    }
+    return false;
+},'请输入中文!');

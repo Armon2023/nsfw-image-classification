@@ -1,0 +1,146 @@
+package net.cnki.bdap.web.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.cnki.bdap.business.system.service.BJCommunityService;
+import net.cnki.bdap.business.system.service.BJCountyService;
+import net.cnki.bdap.business.system.service.BJStreetService;
+import net.cnki.bdap.persistence.system.bean.BJCommunity;
+import net.cnki.bdap.persistence.system.bean.BJCounty;
+import net.cnki.bdap.persistence.system.bean.BJStreet;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * The user login Contrller.
+ * </p>
+ * 
+ * @author william
+ * @version 2018年5月18日上午10:26:41
+ * @since jdk_1.8.0_144
+ *
+ */
+@Controller
+public class BeijingStreetAppController {
+
+	@Autowired(required = false)
+	protected HttpServletRequest request;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/index")
+	@ResponseBody
+	public ModelAndView index() {
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("index");
+		
+		BJCountyService service = BdapServiceFactory.instance().getService(BJCountyService.class);
+		List<BJCounty> list = service.findAll();
+		view.addObject("list", list);
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/community")
+	@ResponseBody
+	public ModelAndView communityList(@ModelAttribute("streetId")Integer streetId) {
+		
+		ModelAndView view = new ModelAndView();
+		view.setViewName("community");
+
+		BJCommunityService cService = BdapServiceFactory.instance().getService(BJCommunityService.class);
+		List<BJCommunity> allCommunityInfo = cService.getAllCommunity(streetId);
+		
+		
+		List<BJCommunity> membersInfo = new ArrayList<>();
+		//遍历所有社区信息,获取社区名，如果社区名为无，则在街道下显示所有网格员。
+    	if (!ObjectUtils.isEmpty(allCommunityInfo)) {
+    		for(BJCommunity community : allCommunityInfo) {
+    			if (community.getCommunity().equals("无")) {
+    				membersInfo.add(community);
+				}
+    		}
+		}
+		
+		List<String> communitys = cService.getStreetCommunity(allCommunityInfo);
+		
+		BJStreetService sService = BdapServiceFactory.instance().getService(BJStreetService.class);
+		String streetName = sService.findById(streetId).getStreetortown();
+		
+		view.addObject("membersInfo", membersInfo);
+		view.addObject("streetName", streetName);
+		view.addObject("communitys", communitys);
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/gridMember")
+	@ResponseBody
+	public ModelAndView peopleInfo(@ModelAttribute("community")String community) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("gridMember");
+
+		BJCommunityService cService = BdapServiceFactory.instance().getService(BJCommunityService.class);
+		List<BJCommunity> membersInfo = cService.getGridMember(community);
+		view.addObject("membersInfo", membersInfo);
+		view.addObject("community", community);
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see cn.org.ccs.kmis.web.base.BaseController#initOpen()
+	 */
+	@RequestMapping(value = "/street")
+	@ResponseBody
+	public ModelAndView street(@ModelAttribute("countyName")String countyName,@ModelAttribute("countyLogo")String countyLogo) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("street");
+
+		BJStreetService sService = BdapServiceFactory.instance().getService(BJStreetService.class);
+		List<BJStreet> streets = sService.getAllStreet(countyName);
+		
+		/*Integer size = streets.size();
+		view.addObject("size", size);*/
+		view.addObject("streets", streets);
+		view.addObject("countyName", countyName);
+		
+		if (countyLogo!=null) {
+			countyLogo = countyLogo.toUpperCase();
+		}
+		view.addObject("countyLogo", countyLogo);
+		
+		System.out.println(request.getSession().getId());
+		return view;
+	}
+
+}

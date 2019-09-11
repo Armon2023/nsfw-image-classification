@@ -1,0 +1,221 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+import java.sql.Timestamp;
+
+/**
+ * 任务列表.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 09:53
+ */
+public class TaskList extends BaseBean {
+    private static final long serialVersionUID = 3151110011632999311L;
+
+    /** id. */
+    private String uuid;
+    /** 项目ID. */
+    private Integer itemId;
+    /** 测试包类型. */
+    private String packageType;
+    /** 测试业务ID. */
+    private String businessID;
+    /** 任务源ID. */
+    private String sourceID;
+    /** 任务状态. */
+    private Integer taskStatus;
+    /** 运行类型. */
+    private Integer runType;
+    /** 运行时间. */
+    private Integer runTime;
+    /** 运行步数. */
+    private Integer runNum;
+    /** apk账户列表是否公用. */
+    private Integer isShared;
+    /** apk地址. */
+    private String apkurl;
+    /** 账户子节点. */
+    private String accounts;
+    /** 设备型号. */
+    private String deviceType;
+    /** 创建时间. */
+    private Timestamp creatTime;
+    /** 用户名. */
+    private String username;
+    /** 用户密码. */
+    private String password;
+    /** 开始时间. */
+    private String startTime;
+    /** 结束时间. */
+    private String endTime;
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Integer getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(Integer itemId) {
+        this.itemId = itemId;
+    }
+
+    public String getPackageType() {
+        return packageType;
+    }
+
+    public void setPackageType(String packageType) {
+        this.packageType = packageType;
+    }
+
+    public String getBusinessID() {
+        return businessID;
+    }
+
+    public void setBusinessID(String businessID) {
+        this.businessID = businessID;
+    }
+
+    public String getSourceID() {
+        return sourceID;
+    }
+
+    public void setSourceID(String sourceID) {
+        this.sourceID = sourceID;
+    }
+
+    public Integer getTaskStatus() {
+        return taskStatus;
+    }
+
+    public void setTaskStatus(Integer taskStatus) {
+        this.taskStatus = taskStatus;
+    }
+
+    public Integer getRunType() {
+        return runType;
+    }
+
+    public void setRunType(Integer runType) {
+        this.runType = runType;
+    }
+
+    public Integer getRunTime() {
+        return runTime;
+    }
+
+    public void setRunTime(Integer runTime) {
+        this.runTime = runTime;
+    }
+
+    public Integer getRunNum() {
+        return runNum;
+    }
+
+    public void setRunNum(Integer runNum) {
+        this.runNum = runNum;
+    }
+
+    public Integer getIsShared() {
+        return isShared;
+    }
+
+    public void setIsShared(Integer isShared) {
+        this.isShared = isShared;
+    }
+
+    public String getApkurl() {
+        return apkurl;
+    }
+
+    public void setApkurl(String apkurl) {
+        this.apkurl = apkurl;
+    }
+
+    public String getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(String accounts) {
+        this.accounts = accounts;
+    }
+
+    public String getDeviceType() {
+        return deviceType;
+    }
+
+    public void setDeviceType(String deviceType) {
+        this.deviceType = deviceType;
+    }
+
+    public Timestamp getCreatTime() {
+        return creatTime;
+    }
+
+    public void setCreatTime(Timestamp creatTime) {
+        this.creatTime = creatTime;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskList{" +
+                "uuid='" + uuid + '\'' +
+                ", itemId=" + itemId +
+                ", packageType='" + packageType + '\'' +
+                ", businessID='" + businessID + '\'' +
+                ", sourceID='" + sourceID + '\'' +
+                ", taskStatus=" + taskStatus +
+                ", runType=" + runType +
+                ", runTime=" + runTime +
+                ", runNum=" + runNum +
+                ", isShared=" + isShared +
+                ", apkurl='" + apkurl + '\'' +
+                ", accounts='" + accounts + '\'' +
+                ", deviceType='" + deviceType + '\'' +
+                ", creatTime=" + creatTime +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", startTime='" + startTime + '\'' +
+                ", endTime='" + endTime + '\'' +
+                '}';
+    }
+}

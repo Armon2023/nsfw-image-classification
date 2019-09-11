@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd
+						http://www.springframework.org/schema/tx 
+						http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+
+	<context:annotation-config />
+	<context:component-scan base-package="net.cnki.bdap.apps.articledetecterweb" />
+	<tx:annotation-driven />
+
+	<bean class="net.cnki.bdap.core.BdapAppContextHelper" />
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:/env/dev/dev_db.properties</value>
+				<value>classpath*:/env/dev/dev_cache.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="true" />
+		<property name="fileEncoding" value="UTF-8"></property>
+	</bean>
+
+	<!-- Spring线程池 -->
+	<bean id="taskExecutor"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<!-- 核心线程数 -->
+		<property name="corePoolSize" value="5" />
+		<!-- 线程池维护线程的最大数量 -->
+		<property name="maxPoolSize" value="10" />
+		<!-- 允许的空闲时间, 默认60秒 -->
+		<property name="keepAliveSeconds" value="60" />
+		<!-- 任务队列 -->
+		<property name="queueCapacity" value="500" />
+		<!-- 线程超过空闲时间限制，均会退出直到线程数量为0 -->
+		<property name="allowCoreThreadTimeOut" value="false" />
+		<!-- 对拒绝task的处理策略 -->
+		<property name="rejectedExecutionHandler">
+			<bean class="java.util.concurrent.ThreadPoolExecutor.DiscardOldestPolicy" />
+		</property>
+	</bean>
+
+	<import resource="classpath*:/spring/bdap/bdap_nlp_datasource.xml" />
+	<import resource="classpath*:/spring/bdap/bdap_nlp_aop.xml" />
+	<import resource="classpath*:/spring/bdap/bdap_nlp_dao.xml" />
+	<import resource="classpath*:/spring/bdap/bdap_nlp_service.xml" />
+	<import resource="classpath*:/spring/bdap/bdap_nlp_cache.xml" />
+
+</beans>

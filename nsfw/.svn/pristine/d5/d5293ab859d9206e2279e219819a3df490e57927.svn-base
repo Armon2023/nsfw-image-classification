@@ -1,0 +1,21 @@
+package net.cnki.bdap.persistence.system.dao;
+
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+import net.cnki.bdap.persistence.system.bean.SystemMasterType;
+
+
+/**
+ * <h1>Description</h1>
+ * <p>
+ * the persistence handler of SysteMaster.
+ * </p>
+ * 
+ * 
+ * @author yangjialin
+ * @version 2018.6.13
+ * @since jdk_1.8.0_161
+ *
+ */
+public class SystemMasterTypeDao extends BdapBaseDao<SystemMasterType> {
+	
+}

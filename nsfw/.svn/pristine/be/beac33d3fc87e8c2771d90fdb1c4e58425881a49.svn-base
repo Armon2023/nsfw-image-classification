@@ -1,0 +1,94 @@
+package net.cnki.bdap.sys;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
+import org.junit.Test;
+
+import net.cnki.bdap.business.system.service.BJCommunityService;
+import net.cnki.bdap.business.system.service.BJCountyService;
+import net.cnki.bdap.business.system.service.BJStreetService;
+import net.cnki.bdap.persistence.system.bean.BJCommunity;
+import net.cnki.bdap.persistence.system.bean.BJCounty;
+import net.cnki.bdap.persistence.system.bean.BJStreet;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * <p>
+ * the system service implementation helper.
+ * </p>
+ * 
+ * 
+ * @author wangxu
+ * @version 2018年11月27日18:02:36
+ * @since jdk_1.8.0_31
+ */
+public class BJTest {
+
+	public BJTest() {
+
+	}
+
+	@Test
+	public void getAllCounty() {
+		BJCountyService cService = BdapServiceFactory.instance().getService(BJCountyService.class);
+		List<BJCounty> countyList = new ArrayList<BJCounty>();
+		countyList = cService.findAll();
+		for(int i=0;i<countyList.size();i++) {
+			System.out.println(countyList.get(i).getCountyName()+ "-----------");
+		}
+	}
+
+	@Test
+	public void getAllStreet() {
+		String district = "海淀";
+		
+		BJStreetService sService = BdapServiceFactory.instance().getService(BJStreetService.class);
+		List<BJStreet> allList  = new ArrayList<>();
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(BJStreet.class);
+		criteria.add(Restrictions.eq("county", district));
+		allList = sService.findByCriteria(criteria);
+		
+		for(int i=0;i<allList.size();i++) {
+			System.out.println(allList.get(i).getCounty()+ "-----------" + allList.get(i).getStreetortown());
+		}
+		
+	}
+	
+	@Test
+	public void getAllCommunity() {
+		Integer streetId = 78;
+		
+		BJCommunityService sService = BdapServiceFactory.instance().getService(BJCommunityService.class);
+		List<BJCommunity> allList  = new ArrayList<>();
+		
+		DetachedCriteria criteria = DetachedCriteria.forClass(BJCommunity.class);
+		criteria.add(Restrictions.eq("streetId", streetId));
+		allList = sService.findByCriteria(criteria);
+		
+		for(int i=0;i<allList.size();i++) {
+			System.out.println(allList.get(i).getCounty()+ "  " + allList.get(i).getStreet() + "  " + allList.get(i).getCommunity());
+		}
+		
+	}
+	
+	@Test
+	public void getAllMember() {
+		String community = "马甸社区";
+		BJCommunityService sService = BdapServiceFactory.instance().getService(BJCommunityService.class);
+		List<BJCommunity> allMember = new ArrayList<>();
+    	
+    	DetachedCriteria criteria = DetachedCriteria.forClass(BJCommunity.class);
+    	criteria.add(Restrictions.eq("community", community));
+    	allMember = sService.findByCriteria(criteria);
+		
+		for(int i=0;i<allMember.size();i++) {
+			System.out.println(allMember.get(i));
+		}
+		
+	}
+	
+}

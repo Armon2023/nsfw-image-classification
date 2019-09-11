@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * 通用返回消息.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:08
+ */
+public class ResultMessageDao extends BdapBaseDao<ResultMessage> {
+}

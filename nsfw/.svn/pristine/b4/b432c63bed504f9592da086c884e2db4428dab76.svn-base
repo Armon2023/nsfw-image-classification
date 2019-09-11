@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
+
+    <!-- prs dao handler -->
+    <bean id="bdap.dao.APKError" class="net.cnki.bdap.apps.prs.persistence.dao.APKErrorDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.APPData" class="net.cnki.bdap.apps.prs.persistence.dao.APPDataDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.CreatPlan" class="net.cnki.bdap.apps.prs.persistence.dao.TaskListDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.CreatPlanResult" class="net.cnki.bdap.apps.prs.persistence.dao.CreatPlanResultDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.DetectionModelResult" class="net.cnki.bdap.apps.prs.persistence.dao.DetectionModelResultDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.SystemUser" class="net.cnki.bdap.apps.prs.persistence.dao.SystemUserDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.PerformanceResult" class="net.cnki.bdap.apps.prs.persistence.dao.PerformanceResultDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.ResultMessage" class="net.cnki.bdap.apps.prs.persistence.dao.ResultMessageDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+    <bean id="bdap.dao.BdapSystem" class="net.cnki.bdap.apps.prs.persistence.dao.BdapSystemDao">
+        <property name="sessionFactory" ref="prsSF"/>
+        <property name="hibernateTemplate" ref="prsHT"/>
+    </bean>
+
+</beans>

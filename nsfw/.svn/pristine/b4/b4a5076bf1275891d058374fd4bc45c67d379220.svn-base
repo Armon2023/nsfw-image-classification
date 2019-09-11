@@ -1,0 +1,11 @@
+bdap.nlp.redis.host=192.168.25.83
+
+bdap.nlp.redis.port=6387
+bdap.nlp.redis.password=
+
+bdap.nlp.redis.maxIdle=300
+bdap.nlp.redis.maxActive=600
+bdap.nlp.redis.maxWait=-1
+bdap.nlp.redis.testOnBorrow=true
+bdap.nlp.redis.longTimeout=120
+bdap.nlp.redis.shortTimeout=60

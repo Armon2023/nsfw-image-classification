@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="net.cnki.bdap.apps.prs.persistence.bean.SystemUser" table="PRS_USER">
+		<id name="userId" type="java.lang.Integer" column="USER_ID">
+			<generator class="native" />
+		</id>
+		<property name="username" type="java.lang.String">
+			<column name="USER_NAME" length="64" not-null="true">
+				<comment>用户名</comment>
+			</column>
+		</property>
+		<property name="loginAccount" type="java.lang.String">
+			<column name="LOGIN_ACCOUNT" length="64" not-null="false">
+				<comment>登录名</comment>
+			</column>
+		</property>
+		<property name="password" type="java.lang.String">
+			<column name="PASSWORD" length="64" not-null="false">
+				<comment>密码</comment>
+			</column>
+		</property>
+		<property name="email" type="java.lang.String">
+			<column name="EMAIL" length="64">
+				<comment>邮箱</comment>
+			</column>
+		</property>
+
+		<property name="staffId" type="java.lang.String">
+			<column name="STAFF_ID" not-null="false" length="16">
+				<comment>员工ID</comment>
+			</column>
+		</property>
+		<property name="staffCode" type="java.lang.String">
+			<column name="STAFF_CODE" not-null="false" length="16">
+				<comment>员工编号</comment>
+			</column>
+		</property>
+		<property name="usernameEn" type="java.lang.String">
+			<column name="USER_NAME_EN" not-null="false" length="32">
+				<comment>英文用户姓名</comment>
+			</column>
+		</property>
+		<property name="phone" type="java.lang.String">
+			<column name="PHONE" not-null="false" length="50">
+				<comment>电话</comment>
+			</column>
+		</property>
+		<property name="userType" type="java.lang.String">
+			<column name="USER_TYPE" not-null="false" length="64">
+				<comment>用户类型</comment>
+			</column>
+		</property>
+
+		<property name="createdBy" type="java.lang.String">
+			<column name="CREATED_BY" length="16" not-null="true">
+				<comment>插入人</comment>
+			</column>
+		</property>
+		<property name="createdTime" type="java.sql.Timestamp">
+			<column name="CREATED_TIME" not-null="true">
+				<comment>插入时间</comment>
+			</column>
+		</property>
+		<property name="updatedBy" type="java.lang.String">
+			<column name="UPDATED_BY" length="16" not-null="true">
+				<comment>更新人</comment>
+			</column>
+		</property>
+		<property name="updatedTime" type="java.sql.Timestamp">
+			<column name="UPDATED_TIME" not-null="true">
+				<comment>更新时间</comment>
+			</column>
+		</property>
+		<property name="deleted" type="java.lang.Integer">
+			<column name="DELETED" not-null="true">
+				<comment>已删除</comment>
+			</column>
+		</property>
+	</class>
+</hibernate-mapping>

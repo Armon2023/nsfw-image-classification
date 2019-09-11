@@ -1,0 +1,71 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%//@author william %>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+	String cpp = String.valueOf(request.getAttribute("count.per.page"));
+%>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+<link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+<link rel="bookmark" href="<%=basePath%>/favicon.ico" />
+ 
+<script type="text/javascript">var kmisPerPage = <%=cpp%>;</script>
+<script type="text/javascript" src="<%=basePath%>/js/jquery.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/print/jquery.print.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/spinner/ui.spinner.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/spinner/jquery.mousewheel.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/jquery-ui.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/charts/excanvas.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/charts/jquery.sparkline.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/uniform.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.cleditor.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.validationEngine-en.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.validationEngine.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.tagsinput.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/autogrowtextarea.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.maskedinput.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.dualListBox.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.bootstrap-duallistbox.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/jquery.inputlimiter.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/forms/chosen.jquery.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/wizard/jquery.form.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/wizard/jquery.validate.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/wizard/jquery.form.wizard.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/uploader/plupload.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/uploader/plupload.html5.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/uploader/plupload.html4.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/uploader/jquery.plupload.queue.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/tables/datatable.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/tables/tablesort.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/tables/resizable.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.tipsy.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.collapsible.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.prettyPhoto.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.progress.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.timeentry.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.colorpicker.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.jgrowl.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.breadcrumbs.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/ui/jquery.sourcerer.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/plugins/calendar.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/plugins/elfinder.min.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/custom.js"></script>
+	<script type="text/javascript" src="<%=basePath%>/js/initTaskticket.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/demo/assets/js/desktop.js"></script>
+
+<script type="text/javascript" src="<%=basePath%>/js/sys/hotkey.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/sys/kmiscommon.js"></script>
+<script type="text/javascript" src="<%=basePath%>/js/sys/kmisValidate.js"></script>

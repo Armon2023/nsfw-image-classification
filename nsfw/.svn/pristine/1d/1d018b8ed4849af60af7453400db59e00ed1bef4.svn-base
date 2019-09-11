@@ -1,0 +1,14 @@
+package net.cnki.bdap.apps.prs.persistence.dao;
+
+import net.cnki.bdap.apps.prs.persistence.bean.DetectionModelResult;
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+
+/**
+ * 创建任务前检测结果.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:07
+ */
+public class DetectionModelResultDao extends BdapBaseDao<DetectionModelResult> {
+}

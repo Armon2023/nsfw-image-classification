@@ -1,0 +1,161 @@
+package net.cnki.bdap.persistence.nsfw.bean;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class NsfwFile extends BaseBean {
+
+	private static final long serialVersionUID = 939051203685368927L;
+	/** id. */
+	private Integer id;
+	/** 上传的文件. */
+	private MultipartFile cfile;
+	/** 文件名. */
+	private String fileName;
+	/** 图片存放地址. */
+	private String filePath;
+	/** 文件相对地址. */
+	private String fileRelativePath;
+	/** 色情指数. */
+	private String sexIndex;
+	/** 上传时间. */
+	private String uploadTime;
+	/** 文本. */
+	private String content;
+	private Integer isNsfwFile;
+
+	/** 上传时间. */
+	private String startTime;
+	/** 上传时间. */
+	private String endTime;
+	/** 展示内容. */
+	private String reviewHtml;
+
+	public String getReviewHtml() {
+		return reviewHtml;
+	}
+
+	public void setReviewHtml(String reviewHtml) {
+		this.reviewHtml = reviewHtml;
+	}
+
+	public Integer getIsNsfwFile() {
+		return isNsfwFile;
+	}
+
+	public void setIsNsfwFile(Integer isNsfwFile) {
+		this.isNsfwFile = isNsfwFile;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public MultipartFile getCfile() {
+		return cfile;
+	}
+
+	public void setCfile(MultipartFile cfile) {
+		this.cfile = cfile;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public String getSexIndex() {
+		return sexIndex;
+	}
+
+	public void setSexIndex(String sexIndex) {
+		this.sexIndex = sexIndex;
+	}
+
+	public String getUploadTime() {
+		return uploadTime;
+	}
+
+	public void setUploadTime(String uploadTime) {
+		this.uploadTime = uploadTime;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
+	}
+
+	public String getFileRelativePath() {
+		return fileRelativePath;
+	}
+
+	public void setFileRelativePath(String fileRelativePath) {
+		this.fileRelativePath = fileRelativePath;
+	}
+
+	public NsfwFile() {
+		super();
+	}
+
+	public NsfwFile(Integer id, String fileName, String filePath, String sexIndex, String uploadTime,
+			String content) {
+		super();
+		this.id = id;
+		this.fileName = fileName;
+		this.filePath = filePath;
+		this.sexIndex = sexIndex;
+		this.uploadTime = uploadTime;
+		this.content = content;
+	}
+
+	@Override
+	public String toString() {
+		return "NsfwFile [id=" + id + ", cfile=" + cfile + ", fileName=" + fileName + ", filePath=" + filePath
+				+ ", fileRelativePath=" + fileRelativePath + ", sexIndex=" + sexIndex + ", uploadTime=" + uploadTime
+				+ ", content=" + content + ", isNsfwFile=" + isNsfwFile + ", startTime=" + startTime + ", endTime="
+				+ endTime + "]";
+	}
+
+}

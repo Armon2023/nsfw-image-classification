@@ -1,0 +1,23 @@
+package net.cnki.bdap.apps.prs.business.service;
+
+import net.cnki.bdap.apps.prs.persistence.bean.BdapSystem;
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * prs 消息管理 service.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-11 14:41
+ */
+public interface PRSMessageService extends BdapService<BdapSystem> {
+    /**
+     * publish to support(knowledge center).
+     *
+     * @param message .
+     *
+     * @return success or fail.
+     */
+    public boolean sendMessage(ResultMessage message);
+}

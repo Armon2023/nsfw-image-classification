@@ -1,0 +1,70 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()	+ path;
+%>
+<html>
+<head>
+    <title>街道信息主页</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+
+	<link rel="shortcut icon" href="<%=basePath%>/favicon.ico" />
+	<link rel="bookmark" href="<%=basePath%>/favicon.ico" />
+	<link rel="stylesheet" href="<%=basePath%>/static/lib/weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/jquery-weui.css">
+	<link rel="stylesheet" href="<%=basePath%>/static/css/sys.css">
+
+<style>
+   .bodystyle{
+        background:#eee!important;
+    	width:100%;
+    	height:100%; 
+        background-size:100% 100%;
+        padding-bottom: 1px;
+    } 
+</style>
+<script type="text/javascript">
+function submitExtentName(id, countyName, countyLogo){
+	document.getElementById("id").value=id;
+	document.getElementById("countyName").value=countyName;
+	document.getElementById("countyLogo").value=countyLogo;
+	
+	var cnForm =document.getElementById("cnForm");
+	cnForm.submit();
+}
+</script>
+</head>
+<body ontouchstart  class="bodystyle">
+<form action="<%=basePath%>/street" method="post" id="cnForm">
+<input type="hidden" id="id" name="id" value=""/>
+<input type="hidden" id="countyName" name="countyName" value=""/>
+<input type="hidden" id="countyLogo" name="countyLogo" value=""/>	
+</form>	
+	<div style="height:25%;width:100%;float:left">
+		<img src="<%=basePath%>/static/images/top.png" alt="" style="width:100%;height:100%">
+	</div>
+
+	<div class="weui-grids" style="float:left;width: 100%;margin-top: 10px;">
+	
+	<c:forEach items="${list}" var="county">
+		<a href="javascript:return void(0);" onclick="submitExtentName('${county.id}','${county.countyName}', '${county.countyLogo}')" class="weui-grid js_grid">
+			<div class="weui-grid__icon" >
+				<img src="<%=basePath%>/static/images/${county.countyLogo}.jpg" alt="">
+			</div>
+			<p class="weui-grid__label">${county.countyName}区</p>
+		</a> 
+	</c:forEach>  
+	
+		
+	</div>
+	<div style="height:10px;width:100%;float:left;position: fixed;bottom:0;">
+		<img src="<%=basePath%>/static/images/bottom.png" alt="" style="width:100%;height:100%">
+	</div> 
+	<input tpye="hidden" value="2018.12.14">
+</body>
+</html>

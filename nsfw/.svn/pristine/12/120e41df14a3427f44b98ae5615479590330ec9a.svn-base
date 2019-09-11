@@ -1,0 +1,93 @@
+package net.cnki.bdap.apps.prs.business.serviceimpl;
+
+import com.google.gson.Gson;
+import net.cnki.bdap.apps.prs.business.service.PerformanceResultService;
+import net.cnki.bdap.apps.prs.business.service.ResultMessageService;
+import net.cnki.bdap.apps.prs.persistence.bean.PerformanceResult;
+import net.cnki.bdap.apps.prs.persistence.bean.ResultMessage;
+import net.cnki.bdap.common.util.StringUtil;
+import net.cnki.bdap.service.base.BdapServiceImpl;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+import org.activiti.engine.impl.util.json.JSONArray;
+import org.activiti.engine.impl.util.json.JSONObject;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ObjectUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
+/**
+ * 功耗测试结果serviceImpl.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-06 14:28
+ */
+public class PerformanceResultServiceImpl extends BdapServiceImpl<PerformanceResult> implements PerformanceResultService {
+
+    /**
+     * 接收保存功耗信息.
+     *
+     * @param powerInfos 功耗信息.
+     *
+     * @return String.
+     */
+    @Override
+    public String upSendResultPower(String powerInfos) {
+        PerformanceResult performanceResult = new PerformanceResult();
+        int code;
+        String message;
+        JSONObject data = new JSONObject(powerInfos);
+        String uuid = data.getString("uuid");
+        JSONArray powerinfos = data.getJSONArray("powerinfos");
+        if (StringUtils.isNotEmpty(uuid) && StringUtils.isNotEmpty(powerInfos)) {
+            performanceResult.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+            performanceResult.setUuid(uuid);
+            performanceResult.setPowerInfos(powerinfos.toString());
+            performanceResult.setUrl("");
+            PerformanceResultService performanceResultService = BdapServiceFactory.instance().getService(PerformanceResultService.class);
+            performanceResultService.saveOrUpdate(performanceResult);
+            code = 1;
+            message = "成功";
+        } else {
+            code = 0;
+            message = "失败，功耗信息、UUID为空";
+        }
+        ResultMessageService resultMessageService = BdapServiceFactory.instance().getService(ResultMessageService.class);
+        ResultMessage resultMessage = new ResultMessage();
+
+        resultMessage.setId(UUID.randomUUID().toString().replaceAll("-", ""));
+        resultMessage.setCode(code);
+        resultMessage.setMessage(message);
+        resultMessageService.saveOrUpdate(resultMessage);
+
+        Gson gson = new Gson();
+        return gson.toJson(resultMessage);
+
+//        return "{\"jsonStr\" :[{\"code\":\"" + resultMessage.getCode() + "\", \"message\":\"" + resultMessage.getMessage() + "\"}]}";
+    }
+
+    /**
+     * 根据ID查询.
+     *
+     * @param id PerformanceResult id .
+     *
+     * @return String
+     */
+    @Override
+    public String findById(String id) {
+        ResultMessageService resultMessageService = BdapServiceFactory.instance().getService(ResultMessageService.class);
+        List<Object> param = new ArrayList<>();
+        param.add(id);
+        String sql = " SELECT PPR.POWER_INFOS FROM PRS_PERFORMANCE_RESULT PPR WHERE PPR.ID = ? ";
+        List<Object[]> result = resultMessageService.findBySQL(sql, param);
+        String powerInfos = "";
+        for (Object obj : result) {
+            if (!ObjectUtils.isEmpty(obj)) {
+                powerInfos = StringUtil.valueOf(obj);
+            }
+        }
+        return powerInfos;
+    }
+}

@@ -1,0 +1,137 @@
+package net.cnki.bdap.apps.prs.persistence.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * BdapSystem.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-11 14:38
+ */
+public class BdapSystem extends BaseBean {
+    private static final long serialVersionUID = 2930432924562978633L;
+
+    /** 主题id. */
+    private int sysId;
+    /** 实体id. */
+    private String entityId;
+    /** 创建的任务号. */
+    private String taskCode;
+    /** 返回的文件id. */
+    private String fileId;
+
+
+    private String commentEditor;
+    private String commentTpid;
+    /** 调用结果标志. */
+    private Integer resultCode = 1;
+    /** 错误信息. */
+    private String errMsg;
+    /** 刷新节点id. */
+    private String refreshNodeId;
+    /** 焦点节点id. */
+    private String focusNodeId;
+    /** 存放节点参数保存船型id. */
+    private String shipTypeIds;
+    /** 船型名称. */
+    private String shipTypeNames;
+
+
+    public int getSysId() {
+        return sysId;
+    }
+
+    public void setSysId(int sysId) {
+        this.sysId = sysId;
+    }
+
+    public String getCommentEditor() {
+        return commentEditor;
+    }
+
+    public void setCommentEditor(String commentEditor) {
+        this.commentEditor = commentEditor;
+    }
+
+    public String getCommentTpid() {
+        return commentTpid;
+    }
+
+    public void setCommentTpid(String commentTpid) {
+        this.commentTpid = commentTpid;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
+    }
+
+    public Integer getResultCode() {
+        return resultCode;
+    }
+
+    public void setResultCode(Integer resultCode) {
+        this.resultCode = resultCode;
+    }
+
+    public String getRefreshNodeId() {
+        return refreshNodeId;
+    }
+
+    public void setRefreshNodeId(String refreshNodeId) {
+        this.refreshNodeId = refreshNodeId;
+    }
+
+    public String getFocusNodeId() {
+        return focusNodeId;
+    }
+
+    public void setFocusNodeId(String focusNodeId) {
+        this.focusNodeId = focusNodeId;
+    }
+
+    public String getShipTypeIds() {
+        return shipTypeIds;
+    }
+
+    public void setShipTypeIds(String shipTypeIds) {
+        this.shipTypeIds = shipTypeIds;
+    }
+
+    public String getShipTypeNames() {
+        return shipTypeNames;
+    }
+
+    public void setShipTypeNames(String shipTypeNames) {
+        this.shipTypeNames = shipTypeNames;
+    }
+
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
+    }
+
+    public String getEntityId() {
+        return entityId;
+    }
+
+    public void setEntityId(String entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getFileId() {
+        return fileId;
+    }
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+    }
+
+}

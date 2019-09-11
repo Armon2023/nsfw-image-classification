@@ -1,0 +1,36 @@
+nsfw.file.dir=D:\\local\\nsfw\\uploadfiles\\
+
+nsfw.wdimages.dir=D:\\local\\nsfw\\wdimages\\
+nsfw.log.dir=D:\\nsfw\\logs\\
+nsfw.log.backup.dir=D:\\local\\nsfw\\backup\\
+nsfw.import.excel=D:\\local\\nsfw\\import\\excel\\
+nsfw.temp=D:\\local\\nsfw\\temp\\
+nsfw.temp.revisions=D:\\local\\nsfw\\temp\\revisions\\
+nsfw.temp.norevisions=D:\\local\\nsfw\\temp\\norevisions\\
+nsfw.temp.images=D:\\local\\nsfw\\temp\\images\\
+
+nsfw.redline.index=0.3
+nsfw.images.dir=D:\\local\\nsfw\\images\\
+nsfw.videos.dir=D:\\local\\nsfw\\videos\\
+nsfw.audios.dir=D:\\local\\nsfw\\audios\\
+nsfw.local.server.path=http://192.168.25.39:8080//
+nsfw.server.url=http://192.168.25.83:7981/
+tensorflow.server.url=http://192.168.25.71:8868/eval?image=
+nsfw.server.image.url=http://192.168.25.39:8080/images/
+
+nsfw.image.filter=jpg,png,bmp,gif,svg,jpeg,bmp
+nsfw.video.filter=mp4
+nsfw.audio.filter=wav,pcm,amr
+nsfw.opencv.command=java -jar D:/local/nsfw/cnki.bdap.opencv-2.1.jar %s %s
+# java -jar D:/local/nsfw/cnki.bdap.opencv-2.1.jar D:\local\nsfw\test\test.mp4 D:\local\nsfw\test\images
+
+baidu.api.id=15479052
+baidu.api.key=R49ubeGbIY2omGNTFaL9gdTD
+baidu.api.secret.key=HBNLpwo7z61s4TMgyG9PkHvA6g3a8gVw
+#0yahho 1tensorflow 2baiduAPI
+nsfw.image.mode=2
+
+nsfw.max.trytimes=5
+nsfw.threshold=50000
+nsfw.local.prop=nsfw_local.properties
+

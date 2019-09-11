@@ -1,0 +1,58 @@
+package net.cnki.bdap.business.base.service;
+
+
+import java.io.IOException;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import net.cnki.bdap.persistence.netpolice.bean.SystemFile;
+import net.cnki.bdap.service.base.BdapService;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ */
+public interface SystemFileService extends BdapService<SystemFile> {
+
+	/**
+	 * 
+	 * @param file 上传的文件。
+	 * 
+	 * @return url 上传后服务器存放的路径。
+	 */
+	public String uploadImage(MultipartFile file) throws IOException;
+	
+	/**
+	 * 
+	 * @param file 上传的文件。
+	 * 
+	 * @return url 上传后服务器存放的路径。
+	 */
+	public String uploadVideo(MultipartFile file) throws IOException;
+	
+	/**
+	 * 
+	 * @param type 文件格式。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	public boolean isImage(String type); 
+	
+	/**
+	 * 
+	 * @param type 文件格式(视频)。
+	 * 
+	 * @return boolean 布尔类型。
+	 */
+	public boolean isVideo(String type);  
+
+	/**
+	 * 
+	 * @param url 图片鉴定地址。
+	 * 
+	 * @return String 黄色内容指数。
+	 */
+	public String loadJson (String url);
+}

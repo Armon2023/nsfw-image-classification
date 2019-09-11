@@ -1,0 +1,271 @@
+package net.cnki.bdap.persistence.system.bean;
+
+import net.cnki.bdap.persistence.base.BaseBean;
+
+/**
+ * <p>
+ * save all static drop list data。
+ * </p>
+ * 
+ * @author william
+ * @version 2018.4.16
+ * @since jdk_1.8.0_144
+ *
+ */
+public class SystemMaster extends BaseBean implements Comparable<SystemMaster> {
+
+	private static final long serialVersionUID = 6544012564210138962L;
+	public static final String ORDER_BY_VALUE = "order";
+	public static final int DEFAULT_OPTION = 1;
+
+	/** record id。 */
+	private Integer id;
+	/** the record's parent id。 */
+	private Integer parentId;
+	/** the name of the droplist。 */
+	private String key;
+	/** the value of the option。 */
+	private String value;
+	/** if the record is the leaf。 */
+	private boolean isLeaf;
+	/** if the record is the branch。 */
+	private boolean isBranch;
+	/** the status of the record。 */
+	private int status;
+	/** the type info。 */
+	private int typeCode;
+	/** the order of key。 */
+	private int order;
+	/** if the option is the default option 。 */
+	private int isDefault;
+	private boolean selected = false;
+
+	private SystemMasterType masterType;
+
+	public SystemMaster() {
+	}
+
+	/**
+	 * 有参数Constructor。
+	 * 
+	 * @param key
+	 *            英文名称
+	 * @param value
+	 *            中文名称
+	 */
+	public SystemMaster(SystemMasterType masterType, String key, String value) {
+		this.key = key;
+		this.value = value;
+		this.masterType = masterType;
+	}
+
+	/**
+	 * 获取id。
+	 * 
+	 * @return id 主键。
+	 */
+	public Integer getId() {
+		return id;
+	}
+
+	/**
+	 * 设定id。
+	 * 
+	 * @param id
+	 *            主键。
+	 * @return 当前SystemMaster对象。
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	/**
+	 * 获取父节点ID。
+	 * 
+	 * @return String 父节点ID。
+	 */
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	/**
+	 * 设定父节点ID。
+	 * 
+	 * @param parentId
+	 *            父节点ID。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setParentId(Integer parentId) {
+		this.parentId = parentId;
+		return this;
+	}
+
+	/**
+	 * 获取英文名称。
+	 * 
+	 * @return String 英文名称。
+	 */
+	public String getKey() {
+		return key;
+	}
+
+	/**
+	 * 设定英文名称。
+	 * 
+	 * @param key
+	 *            英文名称。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setKey(String key) {
+		this.key = key;
+		return this;
+	}
+
+	/**
+	 * 获取中文名称。
+	 * 
+	 * @return String 中文名称。
+	 */
+	public String getValue() {
+		return value;
+	}
+
+	/**
+	 * 设定中文名称。
+	 * 
+	 * @param value
+	 *            中文名称。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setValue(String value) {
+		this.value = value;
+		return this;
+	}
+
+	/**
+	 * 获取“是否是叶子节点”。
+	 * 
+	 * @return boolean 是否是叶子节点。
+	 */
+	public boolean getIsLeaf() {
+		return isLeaf;
+	}
+
+	/**
+	 * 设定“是否是叶子节点”。
+	 * 
+	 * @param isLeaf
+	 *            是否是叶子节点。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setIsLeaf(boolean isLeaf) {
+		this.isLeaf = isLeaf;
+		return this;
+	}
+
+	/**
+	 * 获取“是否有子节点”。
+	 * 
+	 * @return boolean 是否有子节点。
+	 */
+	public boolean getIsBranch() {
+		return isBranch;
+	}
+
+	/**
+	 * 设定“是否有子节点”。
+	 * 
+	 * @param isBranch
+	 *            是否有子节点。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setIsBranch(boolean isBranch) {
+		this.isBranch = isBranch;
+		return this;
+	}
+
+	/**
+	 * 获取状态。
+	 * 
+	 * @return int 状态。
+	 */
+	public int getStatus() {
+		return status;
+	}
+
+	/**
+	 * 设定状态。
+	 * 
+	 * @param status
+	 *            状态。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setStatus(int status) {
+		this.status = status;
+		return this;
+	}
+
+	/**
+	 * 获取类型对象。
+	 * 
+	 * @return SystemMasterType类型对象。
+	 */
+	public int getTypeCode() {
+		return typeCode;
+	}
+
+	/**
+	 * 设定类型对象。
+	 * 
+	 * @param typeCode
+	 *            类型编号。
+	 * @return 当前SystemMaster对象。
+	 */
+	public SystemMaster setTypeCode(int typeCode) {
+		this.typeCode = typeCode;
+		return this;
+	}
+
+	/**
+	 * 比较字典内容是否相等。
+	 */
+	@Override
+	public int compareTo(SystemMaster o) {
+		return this.getValue().compareTo(o.getValue());
+	}
+
+	public int getOrder() {
+		return order;
+	}
+
+	public SystemMaster setOrder(int order) {
+		this.order = order;
+		return this;
+	}
+
+	public int getIsDefault() {
+		return isDefault;
+	}
+
+	public SystemMaster setIsDefault(int isDefault) {
+		this.isDefault = isDefault;
+		return this;
+	}
+
+	public SystemMasterType getMasterType() {
+		return masterType;
+	}
+
+	public void setMasterType(SystemMasterType masterType) {
+		this.masterType = masterType;
+	}
+
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+
+}

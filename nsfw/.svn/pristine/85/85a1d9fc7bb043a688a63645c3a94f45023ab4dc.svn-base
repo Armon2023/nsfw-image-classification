@@ -1,0 +1,16 @@
+package net.cnki.bdap.apps.prs.common;
+
+/**
+ * 常量.
+ *
+ * @author goujiajun
+ * @version jdk_1.8.0_201
+ * @since 2019-06-10 15:22
+ */
+public class PRSCommonConstant {
+
+    /** username缓存. */
+    public static final String PRS_CACHE_USERNAME = "prs.cache.username";
+    /** current user 缓存. */
+    public static final String KMIS_CACHE_CURRENT_USER = "kmis.cache.current.user";
+}

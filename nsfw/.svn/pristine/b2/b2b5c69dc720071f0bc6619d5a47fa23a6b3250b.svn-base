@@ -1,0 +1,2551 @@
+package net.cnki.bdap.sys;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.Test;
+
+import net.cnki.bdap.business.system.service.SystemMasterService;
+import net.cnki.bdap.business.system.service.SystemMasterTypeService;
+import net.cnki.bdap.persistence.system.bean.SystemMaster;
+import net.cnki.bdap.persistence.system.bean.SystemMasterType;
+import net.cnki.bdap.service.factory.BdapServiceFactory;
+
+/**
+ * <p>
+ * the system service implementation helper.
+ * </p>
+ * 
+ * 
+ * @author william
+ * @version 2018年11月15日下午3:17:50
+ * @since jdk_1.8.0_144
+ */
+public class MasterServiceTest {
+
+	public MasterServiceTest() {
+
+	}
+
+	@Test
+	public void test_initialize() {
+		initMaster();
+	}
+
+	/**
+	 * initialize the master data.
+	 * 
+	 *
+	 */
+	private void initMaster() {
+		// clear the master data.
+		//clearData();
+		// import master data.
+		importMaster();
+	}
+
+	private void clearData() {
+		SystemMasterService smService = BdapServiceFactory.instance().getService(SystemMasterService.class);
+		smService.clear(3394);
+		smService.executeSQL("drop sequence MASTER_ID_SEQ ", new Object[] {});
+		smService.executeSQL("create sequence MASTER_ID_SEQ increment by 1 cache 20", new Object[] {});
+	}
+
+	private void importMaster() {
+		SystemMasterTypeService typeService = BdapServiceFactory.instance().getService(SystemMasterTypeService.class);
+		SystemMasterService masterService = BdapServiceFactory.instance().getService(SystemMasterService.class);
+
+		SystemMasterType masterType = new SystemMasterType(100, 100, "国家");
+
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType100(masterType));
+		// 闲置。
+		masterType = new SystemMasterType(101, 101, "公约");
+		masterType = typeService.saveOrUpdate(masterType);
+		// 闲置。
+		masterType = new SystemMasterType(102, 102, "试用日期");
+		masterType = typeService.saveOrUpdate(masterType);
+		// 闲置。
+		masterType = new SystemMasterType(103, 103, "Flag转化建议");
+		masterType = typeService.saveOrUpdate(masterType);
+
+		masterType = new SystemMasterType(104, 104, "模板类型");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType104(masterType));
+
+		masterType = new SystemMasterType(105, 105, "船型");
+		masterType = typeService.saveOrUpdate(masterType);
+		// 闲置。
+		masterType = new SystemMasterType(106, 106, "船旗国主管部门");
+		masterType = typeService.saveOrUpdate(masterType);
+
+		masterType = new SystemMasterType(107, 107, "消息状态");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType107(masterType));
+
+		masterType = new SystemMasterType(108, 108, "消息类型");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType108(masterType));
+
+		masterType = new SystemMasterType(109, 109, "问题类型");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType109(masterType));
+
+		masterType = new SystemMasterType(110, 110, "日志级别");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType110(masterType));
+
+		masterType = new SystemMasterType(111, 111, "主题状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType111(masterType));
+
+		masterType = new SystemMasterType(112, 112, "主题类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType112(masterType));
+
+		masterType = new SystemMasterType(113, 113, "提醒状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType113(masterType));
+
+		masterType = new SystemMasterType(114, 114, "任务阶段");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType114(masterType));
+
+		masterType = new SystemMasterType(115, 115, "角色类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType115(masterType));
+
+		masterType = new SystemMasterType(116, 116, "在线状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType116(masterType));
+
+		masterType = new SystemMasterType(117, 117, "任务来源");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType117(masterType));
+
+		masterType = new SystemMasterType(118, 118, "是否修订证书报告");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType118(masterType));
+
+		masterType = new SystemMasterType(120, 120, "文件类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType120(masterType));
+
+		masterType = new SystemMasterType(121, 121, "维护状态（查询用）");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType121(masterType));
+
+		masterType = new SystemMasterType(122, 122, "用户级别");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType122(masterType));
+
+		masterType = new SystemMasterType(123, 123, "前台是否可见");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType123(masterType));
+
+		masterType = new SystemMasterType(124, 124, "工作流程是否可维护");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType124(masterType));
+
+		masterType = new SystemMasterType(125, 125, "是否生成PDF书签");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType125(masterType));
+
+		masterType = new SystemMasterType(126, 126, "激活状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType126(masterType));
+
+		masterType = new SystemMasterType(127, 127, "锁定状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType127(masterType));
+
+		masterType = new SystemMasterType(128, 128, "反馈类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType128(masterType));
+
+		masterType = new SystemMasterType(129, 129, "紧急程度");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType129(masterType));
+
+		masterType = new SystemMasterType(130, 130, "会议类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType130(masterType));
+
+		masterType = new SystemMasterType(131, 131, "公约");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType131(masterType));
+
+		masterType = new SystemMasterType(132, 132, "规则");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType132(masterType));
+
+		masterType = new SystemMasterType(133, 133, "条款状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType133(masterType));
+
+		masterType = new SystemMasterType(134, 134, "反馈状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType134(masterType));
+
+		masterType = new SystemMasterType(135, 135, "反馈来源");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType135(masterType));
+
+		masterType = new SystemMasterType(136, 136, "评分");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType136(masterType));
+
+		masterType = new SystemMasterType(137, 137, "PAQ转化");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType137(masterType));
+
+		masterType = new SystemMasterType(138, 138, "PAQ状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType138(masterType));
+
+		masterType = new SystemMasterType(139, 139, "PAQ类别");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType139(masterType));
+
+		masterType = new SystemMasterType(140, 140, "工作流状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType140(masterType));
+
+		masterType = new SystemMasterType(141, 141, "任务状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType141(masterType));
+
+		masterType = new SystemMasterType(142, 142, "IMO会议");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType142(masterType));
+
+		masterType = new SystemMasterType(143, 143, "IMO分委会");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType143(masterType));
+
+		masterType = new SystemMasterType(144, 144, "IMO会议信息管理人");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType144(masterType));
+
+		masterType = new SystemMasterType(145, 145, "会议文档类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType145(masterType));
+
+		masterType = new SystemMasterType(146, 146, "HotLine");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType146(masterType));
+
+		masterType = new SystemMasterType(147, 147, "专家组");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType147(masterType));
+
+		masterType = new SystemMasterType(148, 148, "须知管理属性");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType148(masterType));
+
+		masterType = new SystemMasterType(149, 149, "须无线电海区");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType149(masterType));
+
+		masterType = new SystemMasterType(150, 150, "转化归属");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType150(masterType));
+
+		masterType = new SystemMasterType(151, 151, "公开程度");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType151(masterType));
+
+		masterType = new SystemMasterType(152, 152, "流程阶段");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType152(masterType));
+
+		masterType = new SystemMasterType(153, 153, "问题性质");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType153(masterType));
+
+		masterType = new SystemMasterType(154, 154, "决议号");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType154(masterType));
+
+		masterType = new SystemMasterType(155, 155, "所属公约");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType155(masterType));
+
+		masterType = new SystemMasterType(156, 156, "iacs会议任务阶段");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType156(masterType));
+
+		masterType = new SystemMasterType(157, 157, "iacs会议种类一");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType157(masterType));
+
+		masterType = new SystemMasterType(158, 158, "iacs会议种类二");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType158(masterType));
+
+		masterType = new SystemMasterType(159, 159, "文件状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType159(masterType));
+
+		masterType = new SystemMasterType(160, 160, "工作流类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType160(masterType));
+
+		masterType = new SystemMasterType(161, 161, "工作流名称");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType161(masterType));
+
+		masterType = new SystemMasterType(162, 162, "IMO会议类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType162(masterType));
+
+		masterType = new SystemMasterType(163, 163, "IMO决议转化");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType163(masterType));
+
+		masterType = new SystemMasterType(164, 164, "IMO通函转化");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType164(masterType));
+
+		masterType = new SystemMasterType(165, 165, "IACS决议转化");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType165(masterType));
+
+		masterType = new SystemMasterType(166, 166, "Panel列表");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType166(masterType));
+
+		masterType = new SystemMasterType(167, 167, "EG列表");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType167(masterType));
+
+		masterType = new SystemMasterType(168, 168, "SG列表");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType168(masterType));
+
+		masterType = new SystemMasterType(169, 169, "日期类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType169(masterType));
+
+		masterType = new SystemMasterType(170, 170, "任务阶段");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType170(masterType));
+
+		masterType = new SystemMasterType(171, 171, "IIS部门");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType171(masterType));
+
+		masterType = new SystemMasterType(172, 172, "iacs会议种类一_选择");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType172(masterType));
+
+		masterType = new SystemMasterType(173, 173, "iacs会议种类二_选择");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType173(masterType));
+
+		masterType = new SystemMasterType(174, 174, "IACS会议国家");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType174(masterType));
+
+		masterType = new SystemMasterType(175, 175, "会议状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType175(masterType));
+
+		masterType = new SystemMasterType(176, 176, "船旗国文件系列");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType176(masterType));
+
+		masterType = new SystemMasterType(177, 177, "安全等级");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType177(masterType));
+
+		masterType = new SystemMasterType(178, 178, "文件状态");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType178(masterType));
+
+		masterType = new SystemMasterType(179, 179, "文档类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType179(masterType));
+
+		masterType = new SystemMasterType(180, 180, "任务概述");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType180(masterType));
+
+		masterType = new SystemMasterType(181, 181, "操作类型");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType181(masterType));
+
+		masterType = new SystemMasterType(182, 182, "编写依据");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType182(masterType));
+
+		masterType = new SystemMasterType(183, 183, "培训对象");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType183(masterType));
+
+		masterType = new SystemMasterType(184, 184, "培训方式");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType184(masterType));
+
+		masterType = new SystemMasterType(185, 185, "评估方式");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType185(masterType));
+
+		masterType = new SystemMasterType(186, 186, "维护原因");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType186(masterType));
+
+		masterType = new SystemMasterType(187, 187, "适用范围");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType187(masterType));
+
+		masterType = new SystemMasterType(188, 188, "是否与我社业务有关");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType188(masterType));
+
+		masterType = new SystemMasterType(189, 189, "是否超出公约要求");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType189(masterType));
+
+		masterType = new SystemMasterType(190, 190, "法定要求是否转化");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType190(masterType));
+
+		masterType = new SystemMasterType(191, 191, "工作类型");
+		masterType = typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType191(masterType));
+
+		masterType = new SystemMasterType(192, 192, "FLAG工作流名称");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType192(masterType));
+
+		masterType = new SystemMasterType(193, 193, "SMD信息来源");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType193(masterType));
+
+		masterType = new SystemMasterType(194, 194, "天气");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType194(masterType));
+
+		masterType = new SystemMasterType(195, 195, "浪向");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType195(masterType));
+
+		masterType = new SystemMasterType(196, 196, "发生损坏/事故时船舶状况");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType196(masterType));
+
+		masterType = new SystemMasterType(197, 197, "装载工况");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType197(masterType));
+
+		masterType = new SystemMasterType(198, 198, "货物类型");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType198(masterType));
+
+		masterType = new SystemMasterType(199, 199, "货物温度");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType199(masterType));
+
+		masterType = new SystemMasterType(200, 200, "货物种类");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType200(masterType));
+
+		masterType = new SystemMasterType(201, 201, "损坏类别");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType201(masterType));
+
+		masterType = new SystemMasterType(202, 202, "损坏/事故原因");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType202(masterType));
+
+		masterType = new SystemMasterType(203, 203, "损坏/事故种类");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType203(masterType));
+
+		masterType = new SystemMasterType(204, 204, "损坏部位");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType204(masterType));
+
+		masterType = new SystemMasterType(205, 205, "损坏所在舱室");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType205(masterType));
+
+		masterType = new SystemMasterType(206, 206, "航区");
+		typeService.saveOrUpdate(masterType);
+		masterService.saveBatch(getType206(masterType));
+
+	}
+
+	/**
+	 * 获取Country属性。
+	 * 
+	 * @return
+	 */
+	private List<SystemMaster> getType100(SystemMasterType masterType) {
+		int typeCode = 100;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "Antigua and Barbuda", "安提瓜岛和巴布达").setTypeCode(typeCode)
+				.setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Australia", "澳大利亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Bahamas", "巴哈马群岛").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Barbados", "巴巴多斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Luxembourg", "卢森堡").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Qatar", "卡塔尔").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Cyprus", "塞浦路斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Denmark", "丹麦").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Dominica", "多米尼加").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Cyprus", "塞浦路斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Bulgaria", "保加利亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Hong Kong,China", "中国香港").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Honduras", "洪都拉斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Belize", "伯利兹").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Israel", "以色列").setTypeCode(typeCode).setOrder(order++));
+		countries
+				.add(new SystemMaster(masterType, "Marshall Islands", "马绍尔群岛").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Cambodia", "柬埔寨").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Kiribati", "基里巴斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Liberia", "利比里亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "United Arab Emirates", "阿拉伯联合酋长国").setTypeCode(typeCode)
+				.setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Jamaica", "牙买加").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Cook Islands", "库克群岛").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Pakistan", "巴基斯坦").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Tanzania", "坦桑尼亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Malaysia", "马来西亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Philippines", "菲律宾").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Mauritius", "毛里求斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Malta", "马耳他").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Greece", "希腊").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Singapore", "新加坡").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "China", "中国").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		countries.add(new SystemMaster(masterType, "Sri Lanka", "斯里兰卡").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Georgia", "格鲁吉亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Myanmar", "缅甸").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Niue", "纽埃岛").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Comoros", "科摩罗").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Palau", "帕劳").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Panama", "巴拿马").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Iran", "伊朗").setTypeCode(typeCode).setOrder(order++));
+		countries.add(
+				new SystemMaster(masterType, "Equatorial Guinea", "赤道几内亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Bolivia", "玻利维亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "South Africa", "南非").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Saint Kitts and nevis", "圣基茨和尼维斯").setTypeCode(typeCode)
+				.setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Sierra leone", "塞拉利昂").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Spain", "西班牙").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Seychelles", "塞舌尔").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "St. Vincent and the Grenadines", "圣文森特和格林纳丁斯").setTypeCode(typeCode)
+				.setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Canada", "加拿大").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Tuvalu", "图瓦卢").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Vanuatu", "瓦努阿图").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "Vietnam", "越南").setTypeCode(typeCode).setOrder(order++));
+
+		// 返回countries。
+		return countries;
+	}
+
+	private List<SystemMaster> getType104(SystemMasterType masterType) {
+		int typeCode = 104;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		levelList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "Standard Writing", "规范编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Guide Writing", "指南编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Statute Writing", "法规编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(
+				new SystemMaster(masterType, "Certificate Writing", "证书编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Proposal Writing", "提案编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Plan Writing", "预案编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Conference Documents Writing", "会议文件编写").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Main Point News Writing", "要点快报编写").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(
+				new SystemMaster(masterType, "Meeting News Writing", "会议报告编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Publishment News Writing", "报部版快报编写").setTypeCode(typeCode)
+				.setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType107(SystemMasterType masterType) {
+		int typeCode = 107;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "read", "已读").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "unread", "未读").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType108(SystemMasterType masterType) {
+		int typeCode = 108;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "notice", "通知").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "annunciate", "通告").setTypeCode(typeCode).setOrder(order++));
+		levelList
+				.add(new SystemMaster(masterType, "task notification", "任务提醒").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType109(SystemMasterType masterType) {
+		int typeCode = 109;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "internal", "内部").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "external", "外部").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType110(SystemMasterType masterType) {
+		int typeCode = 110;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "ALL", "ALL").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "TRACE", "TRACE").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "DEBUG", "DEBUG").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "INFO", "INFO").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "WARN", "WARN").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "ERROR", "ERROR").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "FATAL", "FATAL").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType111(SystemMasterType masterType) {
+		int typeCode = 111;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "OPEN", "开").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "CLOSE", "关").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType112(SystemMasterType masterType) {
+		int typeCode = 112;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "ALL", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "Problem Feedback", "问题反馈").setTypeCode(typeCode).setOrder(order++));
+		levelList
+				.add(new SystemMaster(masterType, "Agenda management", "议题管理").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IMO meeting management", "IMO会议管理").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IACS meeting management", "IACS会议管理").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IMO resolution transform", "IMO决议转化").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IMO circulars transform", "IMO通函转化").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IACS resolution transform", "IACS决议转化").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Flag", "船旗国转化").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "SMD", "船舶缺陷与事故").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Helpdesk", "客服平台").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IIS", "须知编写").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "File generating", "文件编写").setTypeCode(typeCode).setOrder(order++));
+		levelList
+				.add(new SystemMaster(masterType, "Tech generating", "技术资料编写").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType113(SystemMasterType masterType) {
+		int typeCode = 113;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "ALL", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "OPEN", "开").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "CLOSE", "关").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType114(SystemMasterType masterType) {
+		int typeCode = 114;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "Start", "启动").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Plan", "规划").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Execute", "执行").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Review", "审查").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Ending", "收尾").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType115(SystemMasterType masterType) {
+		int typeCode = 115;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "LeaderUser", "领导用户").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "NormalUser", "普通用户").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Administrator", "管理员").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(
+				new SystemMaster(masterType, "SuperAdministrator", "超级管理员").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(
+				new SystemMaster(masterType, "KCExternalUser", "知识中心外部用户").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(
+				new SystemMaster(masterType, "SPExternalUser", "服务平台外部用户").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType116(SystemMasterType masterType) {
+		int typeCode = 116;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "Online", "在线").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Offline", "离线").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType117(SystemMasterType masterType) {
+		int typeCode = 117;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "Please Select", "请选择...").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "HELP DESK System", "HELP DESK系统").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "IMO/IACS Request Transform Management System", "IMO/IACS要求转化管理系统")
+				.setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "The Flag State Authorization Management System", "船旗国授权管理系统")
+				.setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Machine Sea Damage System", "机海损系统").setTypeCode(typeCode)
+				.setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "KC System", "KC系统").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Site Feedback", "现场反馈意见").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Content Erratum", "内容勘误").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "Other", "其他").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType118(SystemMasterType masterType) {
+		int typeCode = 118;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "Yes", "是").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "No", "否").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		return levelList;
+	}
+
+	private List<SystemMaster> getType120(SystemMasterType masterType) {
+		int typeCode = 120;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "21", "须知").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "53", "通函").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "80", "技术通告").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "87", "检验通知").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "54", "技术提示").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "125", "法定检验实施指南").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+	}
+
+	/**
+	 * 发布状态（查询用）
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType121(SystemMasterType masterType) {
+		int typeCode = 121;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "1", "发布").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "0", "维护").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+
+	}
+
+	private List<SystemMaster> getType122(SystemMasterType masterType) {
+		int typeCode = 122;
+		List<SystemMaster> levelList = new ArrayList<SystemMaster>();
+		int order = 1;
+		levelList.add(new SystemMaster(masterType, "0", "初级－培训介绍内容").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		levelList.add(new SystemMaster(masterType, "1", "中级－检验指导内容").setTypeCode(typeCode).setOrder(order++));
+		levelList.add(new SystemMaster(masterType, "2", "高级－检验经验、案例").setTypeCode(typeCode).setOrder(order++));
+		return levelList;
+
+	}
+
+	private List<SystemMaster> getType123(SystemMasterType masterType) {
+		int typeCode = 123;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "是").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "0", "否").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType124(SystemMasterType masterType) {
+		int typeCode = 124;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "是").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "0", "否").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType125(SystemMasterType masterType) {
+		int typeCode = 125;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "是").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "0", "否").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType126(SystemMasterType masterType) {
+		int typeCode = 126;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Activated", "已激活").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Inactivated", "未激活").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType127(SystemMasterType masterType) {
+		int typeCode = 127;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Locked", "已锁定").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Unlocked", "未锁定").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType128(SystemMasterType masterType) {
+		int typeCode = 128;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Please Select", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "HelpDesk", "HelpDesk").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Flag-Q", "Flag-Q").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IMO Meeting", "IMO会议").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IACS Meeting", "IACS会议").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Surveyor's instructions", "验船师须知").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SMD", "SMD").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType129(SystemMasterType masterType) {
+		int typeCode = 129;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "One weekdays", "1个工作日").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Three weekdays", "3个工作日").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Five weekdays", "5个工作日").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Seven weekdays", "7个工作日").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Ten weekdays", "10个工作日").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType130(SystemMasterType masterType) {
+		int typeCode = 130;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Please Select", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "MSC", "MSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MEPC", "MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MSC-MEPC", "MSC-MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LL", "LL").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FP", "FP").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SLS", "SLS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "TM", "TM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A", "A").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "BWM", "BWM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "DSC", "DSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "COMSAR", "COMSAR").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CSC", "CSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SN", "SN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "STCW", "STCW").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "COLREG", "COLREG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MSC-FAL", "MSC-FAL").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType131(SystemMasterType masterType) {
+		int typeCode = 131;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Please Select", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "SOLAS", "SOLAS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MARPOL", "MARPOL").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Tonnage(TMC) 1969", "Tonnage(TMC) 1969").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "STCW", "STCW").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "AFS", "AFS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "BWM", "BWM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ICLL6", "ICLL6").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CSC", "CSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "HK CONVENTION", "HK CONVENTION").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "HSC Code", "HSC Code").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType132(SystemMasterType masterType) {
+		int typeCode = 132;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Please Select", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "IBC CODE", "IBC CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IGC CODE", "IGC CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "1994 HSC CODE", "1994 HSC CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "2000 HSC CODE", "2000 HSC CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LSA CODE", "LSA CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FSS CODE", "FSS CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FTP CODE", "FTP CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ISM CODE", "ISM CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ISPS CODE", "ISPS CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "NOx CODE", "NOx CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "GRAIN CODE", "GRAIN CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "INF CODE", "INF CODE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "DSC CODE", "DSC CODE").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType133(SystemMasterType masterType) {
+		int typeCode = 133;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Add", "新增").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Modify", "修改").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Replace", "代替").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Delete", "删除").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType134(SystemMasterType masterType) {
+		int typeCode = 134;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Processed", "已处理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Processing", "处理中").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Unprocessed", "未处理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Ignore", "忽略").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 反馈来源。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType135(SystemMasterType masterType) {
+		int typeCode = 135;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(
+				new SystemMaster(masterType, "Technical Information", "技术资料").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Domestic information", "国内资料").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Surveyor's notice", "验船师须知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Test items", "检验项目").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Case information", "案例信息").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Meeting document", "会议文件").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Public information", "公共资料").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Feedback", "问题反馈").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Service Platform", "服务平台").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 评分。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType136(SystemMasterType masterType) {
+		int typeCode = 136;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "1").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "2").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "3").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "4").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "5").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 评分。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType137(SystemMasterType masterType) {
+		int typeCode = 137;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "已转化").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "0", "未转化").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 评分。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType138(SystemMasterType masterType) {
+		int typeCode = 138;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "已发布").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "0", "未发布").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 评分。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType139(SystemMasterType masterType) {
+		int typeCode = 139;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList
+				.add(new SystemMaster(masterType, "external question", "外部问题").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Build classification survey", "建造入级检验").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Service classification survey", "营运入级检验").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Legal inspection", "法定检验").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Certification Audit", "认证审核").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Product Inspection", "产品检验").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Inland Operation of the inspection", "国内营运检验")
+				.setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 工作流状态。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType140(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 140;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "-1", "已关闭").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "0", "未开始").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "进行中").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "30", "已延期").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "已完成").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 任务单状态。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType141(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 141;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "-9.ALL", "全部").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "1.INITIALIZED", "未开始").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2.INPROGRESS", "进行中").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "30.DELAYED", "已延期").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "40.HANG", "无响应").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "50.REJECTED", "已驳回").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6.SUBMITED", "已提交").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9.COMPLETED", "已完成").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO会议。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType142(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 142;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "MSC", "MSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MEPC", "MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ILO", "ILO").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A Convention", "A大会").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Diplomatic conference", "外交大会").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LEG", "法律委员会(LEG)").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO分委会。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType143(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 143;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "SDC", "船舶设计与建造分委会(SDC)").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SSE", "船舶系统与设备分委会(SSE)").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "III", "IMO文件实施分委会(III)").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "NCSR", "航行、通信与搜救分委会(NCSR)").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PPR", "防污染及应对分委会(PPR)").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CCC", "货物运输和集装箱分委会(CCC)").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "HTW", "人为因素、培训和值班分委会(HTW)").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO会议信息管理人。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType144(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 144;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "hxm1000", "韩小明").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "qxq1001", "覃晓青").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "lhy1002", "赖宏宇").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "my1003", "马燕").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "fzy1004", "范云志").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ll1005", "李路").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "wym1006", "王一鸣").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ysz1007", "晏顺兆").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "lby1008", "李碧英").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "yp1009", "岳鹏").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 会议相关文档类型。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType145(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 145;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Standard write", "规范编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Guide write", "指南编写").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Regulation write", "法规编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "plan", "预案编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "proposal", "提案编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "report", "会议报告编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "point", "要点快报编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "express", "报部版快报").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "meetingfile", "会议文件").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * HotLine。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType146(SystemMasterType masterType) {
+		int typeCode = 146;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Please Select", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "qiuyj", "仇英杰").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "wwlu", "陆雯雯").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "tianyuan", "田园").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "zhangling", "张凌").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "zhangzhenjiang", "张振江").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "zhoulu", "周璐").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "flwang", "王分良").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 专家组。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType147(SystemMasterType masterType) {
+		int typeCode = 147;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Build inspection business support group", "建造检验业务支持组")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Operations inspection business support team", "营运检验业务支持组")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Legal inspection business support group", "法定检验业务支持组")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Certification audit business support group", "认证审核业务支持组")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Product inspection business support group", "产品检验业务支持组")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "Domestic operations inspection business support team", "国内营运检验业务支持组")
+						.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Expert group on external issues", "外部问题专家组").setTypeCode(typeCode)
+				.setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 须知管理属性。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType148(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 148;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Management requirement", "管理性要求").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Survey requirement", "检验要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Certificate records", "证书记录报告填写").setTypeCode(typeCode)
+				.setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 须无线电海区。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType149(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 149;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "A1", "A1").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A1+A2", "A1+A2").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A1+A2+A3", "A1+A2+A3").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "A1+A2+A3+A4", "A1+A2+A3+A4").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 转化归属。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType150(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 150;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Translation", "翻译").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Standard", "规范").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Proof,record,report", "证明、记录、报告").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Training,Publicizing&Implementation", "培训、宣贯")
+				.setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Regulation", "法规").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Notice", "须知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Guide", "指南").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Write Circular", "编写通函(通告)").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Features", "专题").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 公开程度
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType151(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 151;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Translation", "对内公开").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "Standard", "对外公开").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 流程阶段
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType152(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 152;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "HotLine", "HotLine分配").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "leader assigned", "组长分配").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Prepare the answer", "编制答案").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "To be released", "待发布").setTypeCode(typeCode).setOrder(order++));
+		/*
+		 * masterList.add(new SystemMaster(masterType,
+		 * "under discussion","讨论中").setTypeCode(typeCode).setOrder(order++));
+		 */
+		masterList.add(new SystemMaster(masterType, "replied", "已回复").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 问题性质。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType153(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 153;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "日常问题").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "管理问题").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "技术问题").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "其他问题").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType154(SystemMasterType masterType) {
+		int typeCode = 154;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "MSC", "MSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MEPC", "MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MSC-MEPC", "MSC-MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LL", "LL").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FP", "FP").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SLS", "SLS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "TM", "TM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A", "A").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "BWM", "BWM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "DSC", "DSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "COMSAR", "COMSAR").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CSC", "CSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SN", "SN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "STCW", "STCW").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "COLREG", "COLREG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MSC-FAL", "MSC-FAL").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType155(SystemMasterType masterType) {
+		int typeCode = 155;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "SOLAS", "SOLAS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MARPOL", "MARPOL").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Tonnage(TMC) 1969", "Tonnage(TMC) 1969").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "STCW", "STCW").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "AFS", "AFS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "BWM", "BWM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ICLL6", "ICLL6").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CSC", "CSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "HK CONVENTION", "HK CONVENTION").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "HSC Code", "HSC Code").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType156(SystemMasterType masterType) {
+		int typeCode = 156;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "All", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "启动", "启动").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "规划", "规划").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "执行", "执行").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "审查", "审查").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "收尾", "收尾").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType157(SystemMasterType masterType) {
+		int typeCode = 157;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "IACS", "IACS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ACS", "ACS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "other", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType158(SystemMasterType masterType) {
+		int typeCode = 158;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(
+				new SystemMaster(masterType, "Council/GPG", "Council/GPG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "EG", "EG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PT", "PT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "other", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 文件状态。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType159(SystemMasterType masterType) {
+		int typeCode = 159;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "有效").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "0", "废").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 工作流类型。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType160(SystemMasterType masterType) {
+		int typeCode = 160;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "100", "PROM_FB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "101", "AGENDA").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "102", "IMO_MTG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "103", "IACS_MTG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "104", "IMO_RTN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "105", "IMO_LTN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "106", "IACS_RTN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "107", "FLAG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "108", "SMD").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "109", "HD").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "110", "IIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "111", "DOC_WRT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "112", "TECH_WRT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "113", "SYS_MNT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "114", "LOGIN").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "115", "KC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "116", "MSG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "117", "PLCR").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "118", "PM").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "119", "IMO_RTNT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "120", "IMO_LTNT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "121", "IACS_RTNT").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 工作流名称。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType161(SystemMasterType masterType) {
+		int typeCode = 161;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "ALL", "全部").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PROM_FB", "问题反馈").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "AGENDA", "议题管理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IMO_MTG", "IMO会议管理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IACS_MTG", "IACS会议管理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IMO_RTN", "IMO决议转化").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IMO_LTN", "IMO通函转化").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IACS_RTN", "IACS决议转化").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FLAG", "船旗国转化").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SMD", "机海损").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "HD", "Helpdesk").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "IIS", "验船师须知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "DOC_WRT", "文件编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "TECH_WRT", "技术资料编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SYS_MNT", "系统管理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LOGIN", "登录").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "KC", "知识中心").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MSG", "消息通知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PLCR", "个人中心").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PM", "项目管理").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "IMO_RTNT", "IMO决议转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "IMO_LTNT", "IMO通函转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "IACS_RTNT", "IACS决议转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "FLAGT", "船旗国转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * IMO会议类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType162(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 162;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "MSC", "MSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "MEPC", "MEPC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ILO", "ILO").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "A Convention", "A大会").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "Diplomatic conference", "外交大会").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "LEG", "LEG").setTypeCode(typeCode).setOrder(order++));
+
+		masterList.add(new SystemMaster(masterType, "SDC", "SDC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "SSE", "SSE").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "III", "III").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "NCSR", "NCSR").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PPR", "PPR").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "CCC", "CCC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "HTW", "HTW").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO会议类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType163(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 163;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "IMO_RTN", "IMO决议转化").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList
+				.add(new SystemMaster(masterType, "IMO_RTNT", "IMO决议转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO会议类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType164(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 164;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "IMO_LTN", "IMO通函转化").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList
+				.add(new SystemMaster(masterType, "IMO_LTNT", "IMO通函转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IMO会议类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType165(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 165;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "IACS_RTN", "IACS决议转化").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(
+				new SystemMaster(masterType, "IACS_RTNT", "IACS决议转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * Panel列表。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType166(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 166;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "safety", "安全：张高峰（上海所）").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(
+				new SystemMaster(masterType, "surroundings", "环境：李路（上海所）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "test", "检验：董博（入级处）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Hull", "船体：洪英(上海所) ").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "Turbine", "轮机：孙武（上海所）").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "security", "网络安全：孙武（上海所）").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * EG列表。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType167(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 167;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "surveyorSafety", "验船师安全：包小兵（综合处）").setTypeCode(typeCode)
+				.setOrder(order++).setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "GBS", "GBS：罗海东（研发中心）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "container", "集装箱：顾晔欣（审图中心）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "legal", "法律：周子珺（总裁办）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "assessment", "综合安全评估：庄磊（上海所）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ISM-ISPS-MLC", "ISM-ISPS-MLC：仇英杰（认证处）").setTypeCode(typeCode)
+				.setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "data", "数据：王立真（信息技术处）").setTypeCode(typeCode).setOrder(order++));
+		masterList
+				.add(new SystemMaster(masterType, "welding", "材料焊接：沈传钊（上海所）").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * SG列表。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType168(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 168;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "coating", "涂层：陈杰（上海所）").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		return masterList;
+
+	}
+
+	/**
+	 * 日期类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType169(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 169;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "工作日").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "节假日").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 任务阶段。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType170(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 170;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "登记").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "分配").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "评审").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "编制").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "审核").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "双语").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "报批").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "发布").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "完成").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "11", "关闭").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * IIS部门。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType171(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 171;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "-1", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "82", "营运入级处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "83", "技术处管理处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "84", "船舶建造处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "85", "认证处管理处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "86", "人力资源处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "111", "船用产品处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "112", "海工检验处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "113", "经营管理处").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "133", "安全质量管理处").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType172(SystemMasterType masterType) {
+		int typeCode = 172;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "IACS", "IACS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "ACS", "ACS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "other", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType173(SystemMasterType masterType) {
+		int typeCode = 173;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(
+				new SystemMaster(masterType, "Council/GPG", "Council/GPG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "EG", "EG").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "PT", "PT").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "other", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	/**
+	 * 获取Country属性。
+	 * 
+	 * @return
+	 */
+	private List<SystemMaster> getType174(SystemMasterType masterType) {
+		int typeCode = 174;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "0", "请选择").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "1", "美国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "2", "日本").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "3", "中国").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		countries.add(new SystemMaster(masterType, "4", "德国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "5", "英国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "6", "葡萄牙").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "7", "印度").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "8", "澳大利亚").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "9", "巴西").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "10", "刚果人民共和国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "11", "法国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "12", "西班牙").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "13", "安哥拉").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "14", "墨西哥").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "15", "加拿大").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "16", "俄罗斯").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "17", "韩国").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "18", "挪威").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "19", "波兰").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "20", "比利时").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "21", "意大利").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "22", "越南").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "23", "印尼").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "24", "瑞典").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "25", "芬兰").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "26", "希腊").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "27", "荷兰").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "28", "朝鲜").setTypeCode(typeCode).setOrder(order++));
+
+		// 返回countries。
+		return countries;
+	}
+
+	/**
+	 * 会议状态。
+	 * 
+	 * @return
+	 */
+	private List<SystemMaster> getType175(SystemMasterType masterType) {
+		int typeCode = 175;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "all", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		countries.add(new SystemMaster(masterType, "unstart", "未开始").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "starting", "进行中").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "end", "结束").setTypeCode(typeCode).setOrder(order++));
+
+		// 返回countries。
+		return countries;
+	}
+
+	/**
+	 * 船旗国文件系列。
+	 *
+	 * @return
+	 */
+	private List<SystemMaster> getType176(SystemMasterType masterType) {
+		int typeCode = 176;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "Directive", "Directive").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		countries.add(new SystemMaster(masterType, "Circular", "Circular").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "IN", "IN").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "e-mail", "e-mail").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "others", "others").setTypeCode(typeCode).setOrder(order++));
+
+		// 返回countries。
+		return countries;
+	}
+
+	/**
+	 * 文件状态。
+	 *
+	 * @return
+	 */
+	private List<SystemMaster> getType178(SystemMasterType masterType) {
+		int typeCode = 178;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "1", "有效").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		countries.add(new SystemMaster(masterType, "0", "作废").setTypeCode(typeCode).setOrder(order++));
+
+		// 返回countries。
+		return countries;
+	}
+
+	/**
+	 * 安全等级。
+	 *
+	 * @return
+	 */
+	private List<SystemMaster> getType177(SystemMasterType masterType) {
+		int typeCode = 177;
+		// 创建Master对象的ArrayList，用countries来接收。
+		List<SystemMaster> countries = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		countries.add(new SystemMaster(masterType, "1", "低").setTypeCode(typeCode).setOrder(order++));
+		countries.add(new SystemMaster(masterType, "3", "高").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		// 返回countries。
+		return countries;
+	}
+
+	/**
+	 * 文档类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType179(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 179;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "全部").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "规范编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "指南编写").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "法规编写").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+
+	}
+
+	private List<SystemMaster> getType180(SystemMasterType masterType) {
+		int typeCode = 180;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "1", "修订或编写法定检验实施指南").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "修改/编制证书").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "编制/修订须知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "编制/修订通函（内）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "编制/ 修订通函（外）").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "编制/修订通告").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "编制/ 修订检验提示").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "编制/修订检验通知").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "仅双语工作").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "修订Check List").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "11", "新增check list").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "12", "修订须知证书报告").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "13", "修订海工证书报告").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 操作类型。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType181(SystemMasterType masterType) {
+		int typeCode = 181;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "1", "新编").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "换版").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "修订").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 编写依据。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType182(SystemMasterType masterType) {
+		int typeCode = 182;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "43", "国际公约、规则的颁布、生效或修订").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "44", "IACS的有关要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "45", "授权船旗国/港口国的有关法定要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "46", "现场检验经验").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "47", "机/海损事故调查结果").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "48", "本社与其他验船机构签订的协议").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(
+				new SystemMaster(masterType, "130", "本社入级规则、规范的修改或补充其他规定").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 培训对象。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType183(SystemMasterType masterType) {
+		int typeCode = 183;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "39", "本社验船师").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "40", "审核员").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "114", "船东/船舶管理公司").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "115", "船舶制造厂").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "116", "船舶设计单位").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "117", "产品制造厂").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 培训方式。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType184(SystemMasterType masterType) {
+		int typeCode = 184;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "1", "集中授课").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "自学").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 评估方式。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType185(SystemMasterType masterType) {
+		int typeCode = 185;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "1", "考试").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "试题").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 获取维护原因属性。
+	 *
+	 * @return
+	 */
+	private List<SystemMaster> getType186(SystemMasterType masterType) {
+		int typeCode = 186;
+		// 创建Parameter对象的ArrayList，用masterList来接收。
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		// 添加key和value。
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "国际公约规则修订新增").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "船旗国要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "审核发现项目纠正").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "本社规范指南修订").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "IACS要求修订").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "外审发现观察项").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "现场反馈").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "机海损").setTypeCode(typeCode).setOrder(order++));
+		// masterList.add(new SystemMaster(masterType, "9",
+		// "外审发现观察项").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "区域组织要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "11", "行业组织要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "12", "IMO通函发布").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "13", "统一明确社内做法").setTypeCode(typeCode).setOrder(order++));
+		// masterList.add(new SystemMaster(masterType, "14",
+		// "其他").setTypeCode(typeCode).setOrder(order++));
+		// 返回masterList。
+		return masterList;
+	}
+
+	/**
+	 * 适用范围。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType187(SystemMasterType masterType) {
+		int typeCode = 187;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+
+		masterList.add(new SystemMaster(masterType, "1", "国际航行海船").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "国内航行海船").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "内河航行船舶").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 是否与我社业务有关。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType188(SystemMasterType masterType) {
+		int typeCode = 188;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Yes", "是").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "No", "否").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 是否超出公约要求。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType189(SystemMasterType masterType) {
+		int typeCode = 189;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Yes", "是").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "No", "否").setTypeCode(typeCode).setOrder(order++));
+
+		return masterList;
+	}
+
+	/**
+	 * 法定要求是否转化。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType190(SystemMasterType masterType) {
+		int typeCode = 190;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "Yes", "是").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "No", "否").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * flag工作类型。
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType191(SystemMasterType masterType) {
+		int typeCode = 191;
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "1", "CCS通告").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "CCS通函").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "船旗国原文翻译").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "法定检验实施指南").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "法定授权管理程序").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "法定授权管理指导手册").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "挂CCS官网").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "基本信息维护").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "检验项目表").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "社文/部门文件").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "11", "审核检查表").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "12", "审核员须知特殊要求").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "13", "协议维护").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "14", "验船师须知").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * FLAG工作流类型。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType192(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 192;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "FLAG", "船旗国转化").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "FLAGT", "船旗国转化_执行任务").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * SMD信息来源。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType193(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 193;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "DSMIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "SAMIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "PSMIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "PSC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "DNV").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "SEA-WEB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "美国NTSB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "加拿大TSB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "澳大利亚ATSB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "加拿大TC").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "11", "IMO GISIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "12", "EWS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "13", "国内机海损信息录入").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "14", "CCS网站").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "15", "SSMIS").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "16", "国际机海损信息录入").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "17", "英国MAIB").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "18", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 天气。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType194(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 194;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "雨").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "晴").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "阴").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "多云").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "风").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "雾").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "雪").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "冰雹").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 浪向。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType195(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 195;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "迎浪").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "斜浪").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "不明").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 发生损坏/事故时船舶状况。
+	 *
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType196(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 196;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "航行中").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "抛锚").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "装货").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "卸货").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "船坞修理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "漂浮修理").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "港内停泊").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "进港").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "出港").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 装载工况
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType197(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 197;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "空载正常压载").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "空载重压载").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "满载均匀装载").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "满载隔舱装载").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "部分装载均匀装载").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "部分装载隔舱装载").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "部分装载严重不均匀装载").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 货物类型
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType198(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 198;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "一般包装货").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "一般散货").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "常温液货").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "集装箱").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 货物温度
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType199(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 199;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "加温液货").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		return masterList;
+	}
+
+	/**
+	 * 货物种类
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType200(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 200;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "重货").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "矿砂").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "钢卷").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 损坏类别
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType201(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 201;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "机损").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "海损").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "机海损").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 损坏/事故原因
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType202(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 202;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "不当操作").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "不可抗力").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "机器故障").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 损坏/事故种类
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType203(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 203;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "1", "碰撞").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "2", "火灾").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "搁浅").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "爆炸").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "触礁").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "刮擦").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 损坏/事故种类
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType204(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 204;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "外板").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "露天主甲板").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "货舱舱口围板").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "货舱盖").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "货舱结构").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "机舱结构").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "首尖舱结构").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "8", "尾尖舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "9", "上层建筑").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "10", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 损坏/事故种类
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType205(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 205;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "干货舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "液油舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "滑油舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "淡水舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "压载舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "空舱").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "其他").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+	/**
+	 * 航区
+	 * 
+	 * @param masterType
+	 * @return
+	 */
+	private List<SystemMaster> getType206(SystemMasterType masterType) {
+		List<SystemMaster> masterList = new ArrayList<SystemMaster>();
+		int typeCode = 206;
+		int order = 1;
+		masterList.add(new SystemMaster(masterType, "0", "--请选择--").setTypeCode(typeCode).setOrder(order++)
+				.setIsDefault(SystemMaster.DEFAULT_OPTION));
+		masterList.add(new SystemMaster(masterType, "1", "无限航区").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "2", "有限航区R3").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "3", "有限航区R2").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "4", "有限航区R1").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "5", "近海航区").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "6", "沿海航区").setTypeCode(typeCode).setOrder(order++));
+		masterList.add(new SystemMaster(masterType, "7", "遮蔽航区").setTypeCode(typeCode).setOrder(order++));
+		return masterList;
+	}
+
+}

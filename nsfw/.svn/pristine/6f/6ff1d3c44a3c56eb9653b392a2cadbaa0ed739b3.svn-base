@@ -1,0 +1,15 @@
+package net.cnki.bdap.persistence.netpolice.dao;
+
+import net.cnki.bdap.persistence.base.BdapBaseDao;
+import net.cnki.bdap.persistence.netpolice.bean.SystemFile;
+
+/**
+ * 
+ * @author wangxu
+ * @version 2019年1月11日
+ * @since jdk_1.8.0_31
+ *
+ */
+public class SystemFileDao extends BdapBaseDao<SystemFile>{
+
+}
