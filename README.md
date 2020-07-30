@@ -1,5 +1,7 @@
 # **nsfw**
 
+项目文件压缩包：http://speedtail.fun/download/nsfw-image-classification.zip
+
 ### introduction
 
 - 基于tensorflow Inception V3模型迁移学习的图片鉴定程序
